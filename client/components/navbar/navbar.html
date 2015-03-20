@@ -1,0 +1,41 @@
+<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="./index.html"><span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></a>
+    </div>
+    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
+          <a ng-href="{{item.link}}">{{item.title}}</a>
+        </li>
+        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <li ng-cloak><a href="./account/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
+        <li ng-cloak><a href="./gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+        <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+      </ul>
+      <form class="navbar-form navbar-right" style="width:500px" action="account/account.html" target="_blank" METHOD="get">
+        <div class="input-group">
+          <input type="text" class="form-control" id="address" name="address" placeholder="r...address ~name">
+          <span class="input-group-addon">
+            <i class="fa fa-search" style="cursor:pointer" onclick="var address=$('#address')[0].value.trim();if(address[0]=='r' || address[0] == '~') document.forms[0].submit();"></i>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+.hidden {display: none;}
+@charset "UTF-8";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+  display: none !important;
+}
+footer{color:gray}
+footer a {
+color: #888888;
+}
+a{color:black}
+.asks{color:green}
+.bids{color:red}
+.gray{color:gray}
+/*currency css begin */
+.currency {font-family: "Lucida Console", Monaco, Monospace; font-size: 15px; color:#FFFFFF; padding: 1px 3px 1px; border-radius: 3px;}
+.XRP {color:#000080;background-color:#98FB98} .XRP:after{content:"XRP"}
+.CNY {background-color:#B22222} .CNY:after{content:"CNY"} 
+.USD {background-color:#4169E1} .USD:after{content:"USD"}
+.JPY {background-color:#483D8B} .JPY:after{content:"JPY"}
+.BTC {background-color:#B8860B} .BTC:after{content:"BTC"}
+.CAD {background-color:#CD5C5C} .CAD:after{content:"CAD"}
+.EUR {background-color:#20B2AA} .EUR:after{content:"EUR"}
+.SGD {background-color:#064008} .SGD:after{content:"SGD"}
+.GBI {background-color:#DAA520} .GBI:after{content:"GBI"}
+.GBP {background-color:#DAA520} .GBP:after{content:"GBP"}
+.CHF {background-color:#DAA520} .CHF:after{content:"CHF"}
+.AUD {background-color:#DAA520} .AUD:after{content:"AUD"}
+.LTC {background-color:#DAA520} .LTC:after{content:"LTC"}
+.KRW {background-color:#DC143C} .KRW:after{content:"KRW"}
+/*currency css end */
+
+/* animation for png loader */
+@keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+       -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+         -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+       -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+         -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+       -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+         -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+       -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+         -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.loading {
+	width:24px;height:24px;
+  -webkit-animation: rotating 1s linear infinite;
+     -moz-animation: rotating 1s linear infinite;
+      -ms-animation: rotating 1s linear infinite;
+       -o-animation: rotating 1s linear infinite;
+          animation: rotating 1s linear infinite;
+}
+#txLoading {
+
+  text-align: center;
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+          transform: translateY(0px);
+  -webkit-transition: all 1s;
+          transition: all 1s;
+}
+.date {width:135px;text-align:right;display: inline-block;}
+.txtype {width:80px;font-weight:bold;display: inline-block}
+
+.filled {text-decoration: line-through;}
+.cancel {text-decoration: line-through;background-color:#FFB6C1}
+.bold {font-weight: bold;}
+.red {color: red;}
+
+.fill{margin-left:50px;}
+.filldate{width:135px;text-align:right;display: inline-block;color:CadetBlue}
+
+.trade-title {width:960px;}
+.trade-title .GATEWAY{width:100px;text-align: center;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .PRICE{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .TOCNY{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .TOUSD{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .HIGH{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .LOW{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .VOLUME{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+.trade-title .WEB{width:100px;text-align: center;margin-left:2px;display: inline-block;font-weight:bold;background-color:#c5c5c5}
+
+.subject0-body {width:440px;border-bottom:1px solid #778899}
+.subject0-body .xh{width:50px;text-align: center;display: inline-block;font-weight:bold;background-color:#f5f5f5}
+.subject0-body .code{width:50px;text-align: right;margin-left:2px;padding-right:10px;display: inline-block;background-color:#f5f5f5}
+.subject0-body .name{width:300px;text-align: left;margin-left:2px;display: inline-block;font-weight:bold;background-color:#f5f5f5}
+.subject0-body .subico{width:20px;text-align: left;margin-left:2px;display: inline-block;background-color:#f5f5f5}
+
+
+

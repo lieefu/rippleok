@@ -1,0 +1,14 @@
+node_modules
+public
+.tmp
+.idea
+client/bower_components
+dist
+/server/config/local.env.js
+#ignore vim tmp file
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~

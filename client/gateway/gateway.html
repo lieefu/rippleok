@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="gatewayApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ripple gateway infomation</title>
+
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+  <!-- endbower -->
+  <link href="../css/rippleok.css" rel="stylesheet">
+
+  <style>
+  .gridhead{
+    font-size:12px;
+    font-weight:bold;
+    background:gainsboro;
+    color:black
+  }
+  .gridhead1{
+    background:gainsboro;
+    color:teal
+  }
+  .gridfooter{
+    background:white;
+  }
+  .even{background: white;}
+  .odd{background: azure;}
+  .panel-heading {
+    padding: 3px 3px;}
+    a[type='text']{color:#333}
+    </style>
+  </head>
+  <body>
+     <div class="navbar navbar-default navbar-static-top" ng-cloak>
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html"><span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></a>
+        </div>
+        <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
+              <a ng-href="{{item.link}}">{{item.title}}</a>
+            </li>
+            <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li ng-cloak><a href="../account/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
+            <li ng-cloak><a href="../gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
+          </ul>
+          <form class="nav navbar-nav navbar-right navbar-form">
+            <div class="input-group" style="width:850px">
+              <input id="address" type="text" class="form-control" placeholder="Currency.issuer {{lang==0?'for example':'例如：'}} USD.rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B Currency/Currency.issuer">
+              <span class="input-group-btn" style="width:150px">
+                <button class="btn btn-primary" type="button" onclick="queryGatewayInfo();">Let's go. ripple<span style="font-weight:bold;color:#FF9933;">OK</span> »</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <div class="container"  ng-controller="GatewayCtrl" ng-cloak>
+      <div class="row">
+        <div class="col-md-12">
+          <b>{{lang==0?'Name':'网关名称'}}：</b>{{gateway.name}}
+          <b>{{lang==0?'Address':'地址'}}：</b><a type='text' href="../account/account.html#{{gateway.address}}" target="_blank">{{gateway.address}}</a>
+          <b>{{lang==0?'Web':'官网'}}：</b><a href='{{gateway.weburl}}' target='_blank'>{{gateway.weburl}}</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {{goods.currency}}.{{goods.issuer}}/{{money.currency}}.{{money.issuer}}
+        </div>
+      </div>
+      <!-- ---------------------------------------------------------------- -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-md-10">
+                  <h3 class="panel-title" style="margin-top:3px">{{lang==0?'Gateway offer list':'网关挂单列表'}}</h3>
+                </div>
+                <div class="col-md-2" style="text-align:right">
+                  <button type="button" id="loadoffersbtn" class="btn btn-xs btn-link" data-loading-text="Loading...">Fresh</button>
+                  <button type="button" id="showoffersbtn" class="btn btn-xs btn-link" data-toggle="collapse" data-open-text="+" data-target="#offersdiv">-</button>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body" style="max-height: 530px;overflow-y:auto;overflow-x:hidden">
+              <div id="offersdiv" class="row ng-cloak collapse in" ng-hide="collapsed">
+                <div class="col-md-6" style="border-right: 3px solid #cccccc;">
+                  <div class="row gridhead">
+                    <div class="col-md-2">{{lang==0?'Acount':'挂单人'}}</div>
+                    <div class="col-md-2" style="text-align:right">{{money.currency}} {{lang==0?'SUM':'合计'}}</div>
+                    <div class="col-md-2" style="text-align:right">{{goods.currency}} {{lang==0?'SUM':'合计'}}</div>
+                    <div class="col-md-2" style="text-align:right">{{money.currency}} {{lang==0?'SIZE':'量'}}</div>
+                    <div class="col-md-2" style="text-align:right">{{goods.currency}} {{lang==0?'SIZE':'量'}}</div>
+                    <div class="col-md-2" style="text-align:center">{{lang==0?'BID Price':'买价'}}</div>
+                  </div>
+                  <div class="row gridhead1">
+                    <div class="col-md-10" style="text-align:left">{{lang==0?'The latest data Time':'获取数据时间'}}:{{buyofferstime}}</div>
+                    <div class="col-md-2 gridhead" style="text-align:center">{{money.currency}}</div>
+                  </div>
+                  <div class="row" ng-repeat="offer in buyoffers|limitTo:pagesize" ng-class="{'even':$even,'odd':$odd}" >
+                    <div class="col-md-2" data-toggle="tooltip" data-placement="right" title="{{offer.account}}">
+                      <a type='text' href="../account/account.html#{{offer.account}}" target="_blank">{{offer.account_short}}</a></div>
+                      <div class="col-md-2" style="text-align:right">{{offer.moneysum}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.goodssum}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.moneysize}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.goodssize}}</div>
+                      <div class="col-md-2" style="text-align:center">{{offer.price}}</div>
+                    </div>
+                    <div class="row gridfooter">
+                      <div class="col-md-7" style="text-align:center"  ng-show="restbuyofferssize>0">
+                        <a href="javascript:void(0)" ng-click="getmore();">{{lang==0?'Show more offers. Remainder':'显示更多买单 剩余'}}: <span class="badge">{{restbuyofferssize}}</span>...</a>
+                      </div>
+                      <div class="col-md-5" style="text-align:center" ng-show="pagesize>20">
+                        <a href="javascript:void(0)" ng-click="getfirstpage();">{{lang==0?'Show First page':'显示第一页'}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6" style="border-right: 3px solid #cccccc;">
+                    <div class="row gridhead">
+                      <div class="col-md-2" style="text-align:center">{{lang==0?'ASK Price':'卖价'}}</div>
+                      <div class="col-md-2" style="text-align:right">{{goods.currency}} {{lang==0?'SIZE':'量'}}</div>
+                      <div class="col-md-2" style="text-align:right">{{money.currency}} {{lang==0?'SIZE':'量'}}</div>
+                      <div class="col-md-2" style="text-align:right">{{goods.currency}} {{lang==0?'SUM':'合计'}}</div>
+                      <div class="col-md-2" style="text-align:right">{{money.currency}} {{lang==0?'SUM':'合计'}}</div>
+                      <div class="col-md-2">{{lang==0?'Acount':'挂单人'}}</div>
+                    </div>
+                    <div class="row gridhead1">
+                      <div class="col-md-2 gridhead" style="text-align:center">{{money.currency}}</div>
+                      <div class="col-md-10" style="text-align:right">{{lang==0?'The latest data Time':'获取数据时间'}}:{{saleofferstime}}</div>
+                    </div>
+                    <div class="row" ng-repeat="offer in saleoffers|limitTo:pagesize" ng-class="{'even':$even,'odd':$odd}">
+                      <div class="col-md-2" style="text-align:center">{{offer.price}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.goodssize}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.moneysize}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.goodssum}}</div>
+                      <div class="col-md-2" style="text-align:right">{{offer.moneysum}}</div>
+                      <div class="col-md-2" data-toggle="tooltip" data-placement="left" title="{{offer.account}}">
+                        <a type='text' href="../account/account.html#{{offer.account}}" target="_blank">{{offer.account_short}}</a></div>
+                      </div>
+                      <div class="row gridfooter">
+                        <div class="col-md-9" style="text-align:center" ng-show="restsaleofferssize>0">
+                          <a href="javascript:void(0)" ng-click="getmore();">{{lang==0?'Show more offers. Remainder':'显示更多卖单 剩余'}}:<span class="badge">{{restsaleofferssize}}</span>...</a>
+                        </div>
+                        <div class="col-md-3" style="text-align:center" ng-show="restsaleofferssize>0">
+                          <a href="javascript:void(0)" ng-click="getall();">{{lang==0?'Show ALL offers':'显示所有挂单'}}</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ------------------------------------------------------------ -->
+
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h3 class="panel-title" style="margin-top:3px">{{lang==0?'Trade log':'交易记录'}}</h3>
+                    </div>
+
+                    <div class="col-md-6" style="text-align:right">
+                      <span class="panel-title" class="inline" style="margin-top:3px">{{lang==0?'Show offer action':'显示挂单消单操作'}}</span>
+                      <div id="onoffofferlog" class="btn-group btn-toggle" ng-click="onoffOfferLog()">
+                        <button class="btn btn-xs btn-default" value="true">ON</button>
+                        <button class="btn btn-xs btn-info active" value="false">OFF</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="panel-body" style="max-height: 200px;overflow-y: auto;">
+                  <div id="txLoading" class="bold" style="display:none">
+                    <img src="../img/ripplelogo.png" class="loading">Loading gateway data...
+                  </div>
+
+                  <div class="row" ng-repeat="log in loglist track by $index|limitTo:300">
+                    <div class="col-md-12"><span>{{log.datetime}}</span><span style="color:{{log.color}};padding-left:20px;">{{log.info}}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- ----------------------------------------------------------------- -->
+        <!-- bower:js -->
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="../bower_components/angular-resource/angular-resource.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
+        <script src="../bower_components/angular-socket-io/socket.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="../bower_components/ripple/ripple.js"></script>
+        <script src="../bower_components/async/lib/async.js"></script>
+        <script src="../bower_components/echarts/build/dist/echarts.js"></script>
+        <script src="../bower_components/moment/moment.js"></script>
+        <!-- endbower -->
+
+        <script src="../js/ripple-gateways.js"></script>
+        <script src="../js/ripple-remote.js"></script>
+        <script src="../js/rippleok-util.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/gatewayinfo.js"></script>
+        <script>
+        $('#loadoffersbtn').click(function (){
+          var $btn=$(this).button('loading');
+          loadoffers(function(){$btn.button('reset');});
+        });
+
+        $("#showoffersbtn").click(function(){
+          $(this).button('toggle');
+          if ($(this).text()==="-"){
+            $(this).button('open');
+          }else {
+            $(this).button('reset');
+          }
+        });
+        </script>
+      </body>
+      </html>
