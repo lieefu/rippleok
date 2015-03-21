@@ -10,22 +10,22 @@ app.controller('GatewayCtrl',function($scope) {
 	$scope.money=money;
 	$scope.buyoffers=[];
 	$scope.saleoffers=[];
-	$scope.pagesize=15;
+	$scope.pagesize=25;
 	$scope.getmore=function(){
 		$scope.pagesize+=20;
 		$scope.restsaleofferssize=$scope.saleoffers.length-$scope.pagesize;
-		$scope.restbuyofferssize=$scope.buyoffers.length-$scope.pagesize;				
+		$scope.restbuyofferssize=$scope.buyoffers.length-$scope.pagesize;
     }
 	$scope.getall=function(){
 		$scope.pagesize=$scope.saleoffers.length;
 		if($scope.pagesize<$scope.buyoffers.length) $scope.pagesize=$scope.buyoffers.length
 		$scope.restsaleofferssize=$scope.saleoffers.length-$scope.pagesize;
-		$scope.restbuyofferssize=$scope.buyoffers.length-$scope.pagesize;				
+		$scope.restbuyofferssize=$scope.buyoffers.length-$scope.pagesize;
     }
 	$scope.getfirstpage=function(){
 		$scope.pagesize=20;
 		$scope.restsaleofferssize=$scope.saleoffers.length-$scope.pagesize;
-		$scope.restbuyofferssize=$scope.buyoffers.length-$scope.pagesize;				
+		$scope.restbuyofferssize=$scope.buyoffers.length-$scope.pagesize;
     }
 	$scope.loglist=[];
 	$scope.onOfferlog=false;
@@ -37,6 +37,6 @@ app.controller('GatewayCtrl',function($scope) {
 		//console.log(togglebtn.find('.active').attr("value"));
 		$scope.onOfferlog=togglebtn.find('.active').attr("value")=="true";
 		//if($scope.onOfferlog) console.log("真");else console.log("假");
-	}			
-   
+	}
+
 });

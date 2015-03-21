@@ -52,8 +52,7 @@ module.exports = function(app) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
-    app.use('/gateway',express.static(path.join(config.root, 'client/gateway')));
-    app.use('/account',express.static(path.join(config.root, 'client/account')));
+    app.use('/ledger',express.static(path.join(config.root, 'client/ledget')));
     app.set('appPath', 'client');
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last

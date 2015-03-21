@@ -17,8 +17,8 @@
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
       </ul>
       <ul class="nav navbar-nav">
-        <li ng-cloak><a href="./account/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
-        <li ng-cloak><a href="./gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
+        <li ng-cloak><a href="./ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
+        <li ng-cloak><a href="./ledger/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -28,7 +28,7 @@
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
-      <form class="navbar-form navbar-right" style="width:500px" action="account/account.html" target="_blank" METHOD="get">
+      <form class="navbar-form navbar-right" style="width:500px" action="ledger/account.html" target="_blank" METHOD="get">
         <div class="input-group">
           <input type="text" class="form-control" id="address" name="address" placeholder="r...address ~name">
           <span class="input-group-addon">
