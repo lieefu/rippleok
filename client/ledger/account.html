@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-cn" ng-app="accountApp">
-
+<html lang="zh-cn">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
+  <base href=".">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ripple Pay Protocol Portal">
+  <meta name="description" content="RippleOK query ripple account address infomation">
   <meta name="author" content="rippleOK">
   <link rel="icon" href="/favicon.ico">
 
-  <title>Ripple Pay Protocol Portal</title>
+  <title>RippleOK query ripple account address infomationl</title>
   <!-- bower:css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
@@ -23,46 +23,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif] -->
-  <style>
-    .gridhead {
-      font-size: 12px;
-      font-weight: bold;
-      background: gainsboro;
-      color: black
-    }
-
-    .gridhead1 {
-      background: gainsboro;
-      color: teal
-    }
-
-    .gridfooter {
-      background: white;
-    }
-
-    .even {
-      background: white;
-    }
-
-    .odd {
-      background: azure;
-    }
-
-    .panel-heading {
-      padding: 3px 3px;
-    }
-
-    a[type='text'] {
-      color: #333
-    }
-
-    .gap {
-      border-right: 3px solid #fff;
-    }
-  </style>
 </head>
 
-<body>
+<body  ng-app="accountApp">
   <div class="navbar navbar-default navbar-static-top" ng-cloak>
     <div class="container">
       <div class="navbar-header">
@@ -346,32 +309,34 @@
     <div id="accountlines"></div>
     <div id="accountoffers"></div>
     <div id="accounttxs"></div>
+    <footer ng-include="'../components/footer/footer.html'"></footer>
+  </div>
 
-    <!-- bower:js -->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../bower_components/angular-resource/angular-resource.js"></script>
-    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
-    <script src="../bower_components/angular-socket-io/socket.js"></script>
-    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="../bower_components/ripple/ripple.js"></script>
-    <script src="../bower_components/async/lib/async.js"></script>
-    <script src="../bower_components/echarts/build/dist/echarts.js"></script>
-    <script src="../bower_components/moment/moment.js"></script>
-    <!-- endbower -->
-
-
-    <script src="../js/ripple-remote.js"></script>
-    <script src="../js/rippleok-util.js"></script>
+  <!-- bower:js -->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
+  <script src="../bower_components/angular-socket-io/socket.js"></script>
+  <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="../bower_components/ripple/ripple.js"></script>
+  <script src="../bower_components/async/lib/async.js"></script>
+  <script src="../bower_components/echarts/build/dist/echarts.js"></script>
+  <script src="../bower_components/moment/moment.js"></script>
+  <!-- endbower -->
 
 
-    <script src="account/js/app.js"></script>
-    <script src="account/js/controllers.js"></script>
-    <script src="account/js/accountinfo.js"></script>
+  <script src="../js/ripple-remote.js"></script>
+  <script src="../js/rippleok-util.js"></script>
+
+  <script src="account/js/app.js"></script>
+  <script src="account/js/controllers.js"></script>
+  <script src="account/js/accountinfo.js"></script>
+  <script src="account/js/filter.js"></script>
 </body>
 
 </html>

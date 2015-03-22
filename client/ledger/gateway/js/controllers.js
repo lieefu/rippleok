@@ -1,10 +1,14 @@
 'use strict';
 
 var g$scope;
-var app=angular.module('gatewayApp', []);
+var app=angular.module('gatewayApp');
 app.controller('GatewayCtrl',function($scope) {
 	g$scope=$scope;
 	$scope.lang=getLang();
+	$scope.setlang=function(l){
+		$scope.lang=l;
+		saveLang(l);
+	}
 	$scope.gateway=gateway;
 	$scope.goods=goods;
 	$scope.money=money;

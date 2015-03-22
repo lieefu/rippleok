@@ -23,7 +23,7 @@
     <tbody  ng-repeat="market in markets">
       <tr ng-repeat="gateway in market.gateways">
         <td style="vertical-align:middle" ng-if="$first" rowspan="{{market.gateways.length}}"><span class="currency {{market.currency}}"></span>{{market.name}}</td>
-        <td><a href="./gateway/gateway.html#{{market.currency}}.{{gateway.address}}"  target="_blank">{{gateway.name}}</a></td>
+        <td><a href="./ledger/gateway.html#{{market.currency}}.{{gateway.address}}"  target="_blank">{{gateway.name}}</a></td>
         <td style="text-align:right"><span id="{{market.currency}}{{gateway.address}}" data-toggle="popover" data-placement="right" data-content="" class="{{gateway.price.action}}">{{gateway.price.value}}</span>{{market.symbol}}</td>
         <td style="text-align:right;color:gray" ng-if="lang==1">{{gateway.price.value|exchgrate:'CNY':market.currency|number:7}}</td>
         <td style="text-align:right;color:gray" ng-if="lang==0">{{gateway.price.value|exchgrate:'USD':market.currency|number:7}}</td>
@@ -39,5 +39,4 @@
     <div class="col-md-12 text-right">{{startTime}}---{{endTime}}</div>
   </div>
 </div>
-<hr>
-<div ng-include="'components/footer/footer.html'"></div>
+<footer ng-include="'components/footer/footer.html'"></footer>

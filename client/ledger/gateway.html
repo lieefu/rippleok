@@ -1,54 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh-cn" ng-app="gatewayApp">
+<html lang="zh-cn">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <base href=".">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ripple gateway infomation</title>
-
+  <meta name="description" content="RippleOK query ripple gateway infomation">
+  <title>RippleOK query ripple gateway infomation</title>
   <!-- bower:css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
   <link href="../css/rippleok.css" rel="stylesheet">
-
-  <style>
-    .gridhead {
-      font-size: 12px;
-      font-weight: bold;
-      background: Snow;
-      color: black
-    }
-
-    .gridhead1 {
-      background: white;
-      color: Beige
-    }
-
-    .gridfooter {
-      background: white;
-    }
-
-    .even {
-      background: white;
-    }
-
-    .odd {
-      background: Beige ;
-    }
-
-    .panel-heading {
-      padding: 3px 3px;
-    }
-
-    a[type='text'] {
-      color: #333
-    }
-  </style>
 </head>
 
-<body>
+<body  ng-app="gatewayApp">
   <div class="navbar navbar-default navbar-static-top" ng-cloak>
     <div class="container">
       <div class="navbar-header">
@@ -222,6 +189,7 @@
         </div>
       </div>
     </div>
+    <footer ng-include="'../components/footer/footer.html'"></footer>
   </div>
 
   <!-- ----------------------------------------------------------------- -->

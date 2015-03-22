@@ -39,7 +39,7 @@ function shortTX(tx){
 	return tx.substring(0,6)+"...";
 }
 function shortAccount(account){
-	if(account=="") return "";
+	if(!account||account=="") return "";
 	if(ripplenameMap[account]) {
 		return ripplenameMap[account];
 	}else{
@@ -80,10 +80,10 @@ function toAmount(amount,meta) {
 		amt.issuer = '';
 	}
 	return amt;}
-function getIssuer(meta,amount){	
+function getIssuer(meta,amount){
 	for(i in meta.AffectedNodes){
 		var n = meta.AffectedNodes[i].ModifiedNode;
-		if(n && n.LedgerEntryType === "RippleState" && n.FinalFields.HighLimit && 
+		if(n && n.LedgerEntryType === "RippleState" && n.FinalFields.HighLimit &&
 			n.FinalFields.HighLimit.currency === amount.currency) {
 			var high = n.FinalFields.HighLimit;
 			var low = n.FinalFields.LowLimit;

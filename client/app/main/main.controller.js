@@ -13,7 +13,7 @@ angular.module('rippleokApp')
 .controller('MainCtrl', function ($scope, $http, socket) {
   g$scope=$scope;
   g$http = $http;
-  $scope.startTime=moment({hour: 0, minute: 0}).format('YYYY-MM-DD HH:mm:ss');
+  $scope.startTime=moment({ minute: 0, second: 0}).subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
   $scope.endTime=moment().format('YYYY-MM-DD HH:mm:ss');
   $scope.lang=getLang();
   $scope.markets=Markets;
@@ -68,7 +68,8 @@ function loadGatewayHistoryPrice(gateway,callback){
     format : "json"
   }
   //console.log("loadGatewayHistoryPrice",gateway);
-  reqdata.startTime = moment({hour: 0, minute: 0});//moment().subtract(1, 'days').utc().format();
+  //reqdata.startTime = moment({hour: 0, minute: 0});//moment().subtract(1, 'days').utc().format();
+  reqdata.startTime = moment({ minute: 0, second: 0}).subtract(1, 'days').utc().format();
   reqdata.endTime = moment().utc().format();
   reqdata.counter.currency=gateway.iou;
   reqdata.counter.issuer=gateway.address;

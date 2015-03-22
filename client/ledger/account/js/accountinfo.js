@@ -125,14 +125,11 @@ $(document).ready(function() {
 	if (separator == "") return;
 	account=$("#address")[0].value = url.split(separator)[1].trim();
 	url = url.split(separator)[0];
-	console.log(account);
 	if (account.length <= 0) return;
 	window.location.href = url + "#" + account;
-	console.log(account);
 	rippleName(account);
-	console.log(account);
 	if (account[0] == '~') {
-		console.log(account+'return');
+		//console.log(account+'return');
 		return;
 	}
 
@@ -144,7 +141,7 @@ $(document).ready(function() {
 function queryAccountInfo() {
 	account = $("#address")[0].value;
 	window.location.href = url + "#" + account;
-	console.log(window.location.href );
+	//console.log(window.location.href );
 	window.location.reload();
 }
 
@@ -454,6 +451,7 @@ function getTXS(Sequence) {
 function procOfferCreate(account, tx, meta) {
 
 	if (tx.Account == account) { //本账户创建的offer
+
 		var TXS = getTXS(tx.Sequence);
 		TXS.TransactionType = tx.TransactionType;
 		TXS.TakerGets = tx.TakerGets;
@@ -602,14 +600,17 @@ function procAffectedNodes(account, tx, meta) {
 
 function parseMemos(memos) {
 	var ret = "";
+	//console.log("memos",memos);
 	for (var memo in memos) {
 		var mType = Utils.hexToString(memos[memo].Memo.MemoType);
-		var mData = Utils.hexToString(memos[memo].Memo.MemoData);
+		var mData = memos[memo].Memo.MemoData?Utils.hexToString(memos[memo].Memo.MemoData):'';
+		var mFormat=memos[memo].Memo.MemoFormat?Utils.hexToString(memos[memo].Memo.MemoFormat):'';
 		try {
 			mData = JSON.stringify(JSON.parse(mData), null, 2);
 		} catch (e) {};
-		ret += mType + ":" + mData + ";";
+		ret += mType + ":" + mData +':'+ mFormat+ ";";
 	}
+	//console.log("memos",ret);
 	return ret;
 }
 
