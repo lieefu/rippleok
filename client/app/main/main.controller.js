@@ -228,8 +228,7 @@ option = {
           res += '<br/>  收盘(close): ' + params[i].value[1] + ' 最高(high): ' + params[i].value[3];
         }
         else {
-          res += '<br/>交易量(volume): ';
-          res += params[i].value + params[i].seriesName;
+          res += '<br/>交易量(volume): ' + comma(params[i].value) + params[i].seriesName;
         }
       }
       return res;
