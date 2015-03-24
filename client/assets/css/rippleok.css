@@ -125,10 +125,10 @@ a{color:black}
   background: white;
 }
 .even {
-  background: white;
+  background: WhiteSmoke;
 }
 .odd {
-  background: Beige;
+  background: white;
 }
 .panel-heading {
   padding: 3px 3px;

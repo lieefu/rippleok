@@ -12,10 +12,12 @@
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
-  <link href="../css/rippleok.css" rel="stylesheet">
+  <!-- injector:css -->
+  <link rel="stylesheet" href="../assets/css/rippleok.css">
+  <!-- endinjector -->
 </head>
 
-<body  ng-app="gatewayApp">
+<body ng-app="gatewayApp">
   <div class="navbar navbar-default navbar-static-top" ng-cloak>
     <div class="container">
       <div class="navbar-header">
@@ -25,9 +27,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html">
-          <span style="font-weight:bold;color:#428bca;">ripple
-            <span style="font-weight:bold;color:#FF9933;">OK</span>
+        <a class="navbar-brand" href="/" target="_self">
+          <span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></span>
         </a>
       </div>
       <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
@@ -39,7 +40,7 @@
         </ul>
         <ul class="nav navbar-nav">
           <li ng-cloak><a href="../ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
-          <li ng-cloak><a href="../gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
+          <li ng-cloak><a href="../gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA">{{lang==0?'Gateway':'网关'}}</a></li>
         </ul>
         <form class="nav navbar-nav navbar-right navbar-form">
           <div class="input-group" style="width:850px">
@@ -191,7 +192,23 @@
     </div>
     <footer ng-include="'../components/footer/footer.html'"></footer>
   </div>
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
+    ga('create', 'UA-59774071-1', 'auto');
+    ga('send', 'pageview');
+  </script>
   <!-- ----------------------------------------------------------------- -->
   <!-- bower:js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -200,7 +217,6 @@
   <script src="../bower_components/angular-resource/angular-resource.js"></script>
   <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
   <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
-  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
   <script src="../bower_components/angular-socket-io/socket.js"></script>
   <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -210,12 +226,14 @@
   <script src="../bower_components/moment/moment.js"></script>
   <!-- endbower -->
 
-  <script src="../js/ripple-gateways.js"></script>
-  <script src="../js/ripple-remote.js"></script>
-  <script src="../js/rippleok-util.js"></script>
+  <!-- injector:js -->
+  <script src="../assets/js/ripple-gateways.js"></script>
+  <script src="../assets/js/ripple-remote.js"></script>
+  <script src="../assets/js/rippleok-util.js"></script>
   <script src="gateway/js/app.js"></script>
   <script src="gateway/js/controllers.js"></script>
   <script src="gateway/js/gatewayinfo.js"></script>
+  <!-- endinjector -->
   <script>
     $('#loadoffersbtn').click(function() {
       var $btn = $(this).button('loading');

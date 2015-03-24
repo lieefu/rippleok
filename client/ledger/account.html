@@ -15,8 +15,9 @@
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
-
-  <link href="../css/rippleok.css" rel="stylesheet">
+  <!-- injector:css -->
+  <link rel="stylesheet" href="../assets/css/rippleok.css">
+  <!-- endinjector -->
 
   <!--  HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries  -->
   <!-- [if lt IE 9]>
@@ -35,10 +36,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html">
-          <span style="font-weight:bold;color:#428bca;">ripple
-            <span style="font-weight:bold;color:#FF9933;">OK</span>
-        </a>
+        <a class="navbar-brand" href="/" target="_self">
+          <span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></span>        </a>
       </div>
       <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
@@ -48,7 +47,7 @@
           <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
         </ul>
         <ul class="nav navbar-nav">
-          <li ng-cloak><a href="account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
+          <li ng-cloak><a href="account.html">{{lang==0?'Account':'账号'}}</a></li>
           <li ng-cloak><a href="gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
         </ul>
         <form class="nav navbar-nav navbar-right navbar-form">
@@ -311,7 +310,23 @@
     <div id="accounttxs"></div>
     <footer ng-include="'../components/footer/footer.html'"></footer>
   </div>
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
+    ga('create', 'UA-59774071-1', 'auto');
+    ga('send', 'pageview');
+  </script>
   <!-- bower:js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/angular/angular.js"></script>
@@ -319,7 +334,6 @@
   <script src="../bower_components/angular-resource/angular-resource.js"></script>
   <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
   <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
-  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
   <script src="../bower_components/angular-socket-io/socket.js"></script>
   <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -329,14 +343,15 @@
   <script src="../bower_components/moment/moment.js"></script>
   <!-- endbower -->
 
-
-  <script src="../js/ripple-remote.js"></script>
-  <script src="../js/rippleok-util.js"></script>
-
+  <!-- injector:js -->
+  <script src="../assets/js/ripple-remote.js"></script>
+  <script src="../assets/js/rippleok-util.js"></script>
+  <script src="account/js/accountinfo.js"></script>
   <script src="account/js/app.js"></script>
   <script src="account/js/controllers.js"></script>
-  <script src="account/js/accountinfo.js"></script>
   <script src="account/js/filter.js"></script>
+  <!-- endinjector -->
+
 </body>
 
 </html>

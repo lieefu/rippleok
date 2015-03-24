@@ -7,7 +7,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./index.html"><span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></a>
+      <a class="navbar-brand" href="./index.html">
+        <span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></span>      </a>
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
@@ -24,8 +25,14 @@
       <ul class="nav navbar-nav navbar-right">
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+        <li ng-show="isLoggedIn()">
+          <p class="navbar-text">Hello {{ getCurrentUser().name }}</p>
+        </li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}">
+          <a href="/settings">
+            <span class="glyphicon glyphicon-cog"></span>
+          </a>
+        </li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
       <form class="navbar-form navbar-right" style="width:500px" action="ledger/account.html" target="_blank" METHOD="get">

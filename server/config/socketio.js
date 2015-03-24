@@ -14,7 +14,7 @@ function onDisconnect(socket) {
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
-    console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
+    console.info('socket info :[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
 
   // Insert sockets below
@@ -38,10 +38,13 @@ module.exports = function (socketio) {
   // }));
 
   socketio.on('connection', function (socket) {
-    socket.address = socket.handshake.address !== null ?
-            socket.handshake.address.address + ':' + socket.handshake.address.port :
-            process.env.DOMAIN;
-
+    //console.log(socket.client.request.connection._peername);
+    //{ address: '127.0.0.1', family: 'IPv4', port: 37293 }
+    var peername=socket.client.request.connection._peername;
+    // socket.address = socket.handshake.address !== null ?
+    //         socket.handshake.address.address + ':' + socket.handshake.address.port :
+    //         process.env.DOMAIN;
+    socket.address=peername.address + ":" + peername.port;
     socket.connectedAt = new Date();
 
     // Call onDisconnect.

@@ -9,10 +9,13 @@ var Kgateway={
   name:'bitstamp',
   address:'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
 }
+var rippledataurl1='https://api.ripplecharts.com/api/offers_exercised';
+var rippledataurl2='http://192.168.0.100:5993/api/offers_exercised';
 angular.module('rippleokApp')
 .controller('MainCtrl', function ($scope, $http, socket) {
   g$scope=$scope;
   g$http = $http;
+  $scope.showKchart=true;
   $scope.startTime=moment({ minute: 0, second: 0}).subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
   $scope.endTime=moment().format('YYYY-MM-DD HH:mm:ss');
   $scope.lang=getLang();
@@ -75,6 +78,7 @@ function loadGatewayHistoryPrice(gateway,callback){
   reqdata.counter.issuer=gateway.address;
   loadRippleData(reqdata,function(err,res){
     if(err){
+      console.log("error:",err,res);
       callback(err);
       return;
     }
@@ -123,11 +127,12 @@ function loadMarketsHistoryPrice(){
 }
 
 function loadRippleData(reqdata,callback){
-  var rippledataurl1='https://api.ripplecharts.com/api/offers_exercised';
-  var rippledataurl2='http://192.168.0.100:5993/api/offers_exercised';
   g$http.post(rippledataurl1,reqdata).success(function(res){
+    //console.log("success:",res);
     callback(null,res);
   }).error(function(err){
+    console.log("error:",err);//net::ERR_CONNECTION_REFUSED 异常发生时，err is null
+    if(_.isNull(err)){err="exception";}
     callback(err);
   });
 }
@@ -148,8 +153,9 @@ function showXRPkChart(){
   reqdata.counter.issuer=Kgateway.address;
   loadRippleData(reqdata,function(err,res){
     if(err) {
+      g$scope.showKchart=false;
       myChart.hideLoading();
-      alert('数据加载失败，Load data failed：'+err);
+      console.log('数据加载失败，Load data failed：'+err);
       return;
     }
     //console.log(res);
