@@ -8,13 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="RippleOK query ripple gateway infomation">
   <title>RippleOK query ripple gateway infomation</title>
+  <!-- build:css(client/ledger) gateway/gateway-lib.min.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp,client}/ledger) gateway/gateway.min.css -->
   <!-- injector:css -->
   <link rel="stylesheet" href="../assets/css/rippleok.css">
   <!-- endinjector -->
+  <!-- endbuild -->
 </head>
 
 <body ng-app="gatewayApp">
@@ -222,6 +226,7 @@
     ga('send', 'pageview');
   </script>
   <!-- ----------------------------------------------------------------- -->
+  <!-- build:js({.tmp,client}/ledger) gateway/gateway-lib.min.js -->
   <!-- bower:js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/angular/angular.js"></script>
@@ -237,7 +242,9 @@
   <script src="../bower_components/echarts/build/dist/echarts.js"></script>
   <script src="../bower_components/moment/moment.js"></script>
   <!-- endbower -->
+  <!-- endbuild -->
 
+  <!-- build:js({.tmp,client}/ledger) gateway/gateway.min.js -->
   <!-- injector:js -->
   <script src="../assets/js/ripple-gateways.js"></script>
   <script src="../assets/js/ripple-remote.js"></script>
@@ -246,6 +253,7 @@
   <script src="gateway/js/controllers.js"></script>
   <script src="gateway/js/gatewayinfo.js"></script>
   <!-- endinjector -->
+  <!-- endbuild -->
   <script>
     $('#loadoffersbtn').click(function() {
       var $btn = $(this).button('loading');

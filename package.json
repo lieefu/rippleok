@@ -35,7 +35,7 @@
     "grunt": "~0.4.4",
     "grunt-angular-templates": "^0.5.4",
     "grunt-autoprefixer": "^2.2.0",
-    "grunt-build-control": "DaftMonk/grunt-build-control",
+    "grunt-build-control": "^0.3.0",
     "grunt-concurrent": "~0.5.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.4.0",
