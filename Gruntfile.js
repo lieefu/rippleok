@@ -162,16 +162,13 @@ module.exports = function(grunt) {
 		// Add vendor prefixed styles
 		autoprefixer: {
 			options: {
-				browsers: ['last 1 version']
+				browsers: ['last 2 version']
 			},
 			dist: {
-				files: [{
-					expand: true,
-					cwd: '.tmp/',
-					src: '{,*/}*.css',
-					dest: '.tmp/'
-				}]
-			}
+					src: '.tmp/concat/app/{,*/}*.css'
+					//dest: '.tmp/'
+			},
+			dev:{}
 		},
 
 		// Debugging with node inspector
@@ -221,16 +218,14 @@ module.exports = function(grunt) {
 		},
 
 		// Renames files for browser caching purposes
-		rev: {
+		filerev: {
 			dist: {
-				files: {
-					src: [
-						'<%= ripplok.dist %>/public/{,*/}*.js',
-						'<%= ripplok.dist %>/public/{,*/}*.css',
-						'<%= ripplok.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-						'<%= ripplok.dist %>/public/assets/fonts/*'
-					]
-				}
+				src: [
+					'<%= ripplok.dist %>/public/{,*/}*.js',
+					'<%= ripplok.dist %>/public/{,*/}*.css',
+					'<%= ripplok.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+					'<%= ripplok.dist %>/public/assets/fonts/*'
+				]
 			}
 		},
 
@@ -238,7 +233,7 @@ module.exports = function(grunt) {
 		// concat, minify and revision files. Creates configurations in memory so
 		// additional tasks can operate on them
 		useminPrepare: {
-			html: ['<%= ripplok.client %>/index.html'],
+			html: ['<%= ripplok.client %>/index.html','<%= ripplok.client %>/ledger/account.html'],
 			options: {
 				dest: '<%= ripplok.dist %>/public'
 			}
@@ -313,7 +308,7 @@ module.exports = function(grunt) {
 					removeScriptTypeAttributes: true,
 					removeStyleLinkTypeAttributes: true
 				},
-				usemin: 'app/app.js'
+				usemin: 'app/rippleok.min.js'
 			},
 			main: {
 				cwd: '<%= ripplok.client %>',
@@ -345,8 +340,12 @@ module.exports = function(grunt) {
 					src: [
 						'*.{ico,png,txt}',
 						'.htaccess',
-						'bower_components/**/*',
-						'assets/images/{,*/}*.{webp}',
+						//'bower_components/**/*',
+						'bower_components/echarts/build/dist/chart/*',
+						'bower_components/font-awesome/fonts/*',
+						'bower_components/es5-shim/*.js',
+						'bower_components/json3/lib/json3.min.js',
+						'assets/images/{,*/}*.{ico,webp}',
 						'assets/fonts/**/*',
 						'index.html'
 					]
@@ -456,7 +455,7 @@ module.exports = function(grunt) {
 			// Inject application script files into index.html (doesn't include bower)
 			scripts: {
 				options: {
-          relative: true,
+					relative: true,
 					starttag: '<!-- injector:js -->',
 					endtag: '<!-- endinjector -->'
 				},
@@ -468,24 +467,24 @@ module.exports = function(grunt) {
 						'!{.tmp,<%= ripplok.client %>}/{app,components,assets}/**/*.spec.js',
 						'!{.tmp,<%= ripplok.client %>}/{app,components,assets}/**/*.mock.js'
 					],
-          '<%= ripplok.client %>/ledger/account.html': [
-            '{.tmp,<%= ripplok.client %>}/assets/**/*.js',
-            '{.tmp,<%= ripplok.client %>}/ledger/account/**/*.js',
-            '!{.tmp,<%= ripplok.client %>}/assets/**/ripple-gateways.js',
-            '!{.tmp,<%= ripplok.client %>}/assets/**/ripple-price.js'
-          ],
-          '<%= ripplok.client %>/ledger/gateway.html': [
-            '{.tmp,<%= ripplok.client %>}/assets/**/*.js',
-            '{.tmp,<%= ripplok.client %>}/ledger/gateway/**/*.js',
-            '!{.tmp,<%= ripplok.client %>}/assets/**/ripple-price.js'
-          ]
+					'<%= ripplok.client %>/ledger/account.html': [
+						'{.tmp,<%= ripplok.client %>}/assets/**/*.js',
+						'{.tmp,<%= ripplok.client %>}/ledger/account/**/*.js',
+						'!{.tmp,<%= ripplok.client %>}/assets/**/ripple-gateways.js',
+						'!{.tmp,<%= ripplok.client %>}/assets/**/ripple-price.js'
+					],
+					'<%= ripplok.client %>/ledger/gateway.html': [
+						'{.tmp,<%= ripplok.client %>}/assets/**/*.js',
+						'{.tmp,<%= ripplok.client %>}/ledger/gateway/**/*.js',
+						'!{.tmp,<%= ripplok.client %>}/assets/**/ripple-price.js'
+					]
 				}
 			},
 
 			// Inject component css into index.html
 			css: {
 				options: {
-          relative: true,
+					relative: true,
 					starttag: '<!-- injector:css -->',
 					endtag: '<!-- endinjector -->'
 				},
@@ -493,10 +492,10 @@ module.exports = function(grunt) {
 					'<%= ripplok.client %>/index.html': [
 						'<%= ripplok.client %>/{app,components,assets}/**/*.css'
 					],
-          '<%= ripplok.client %>/ledger/account.html': [
+					'<%= ripplok.client %>/ledger/account.html': [
 						'<%= ripplok.client %>/assets/**/*.css'
 					],
-          '<%= ripplok.client %>/ledger/gateway.html': [
+					'<%= ripplok.client %>/ledger/gateway.html': [
 						'<%= ripplok.client %>/assets/**/*.css'
 					]
 				}
@@ -532,7 +531,7 @@ module.exports = function(grunt) {
 				'concurrent:server',
 				'injector',
 				'wiredep',
-				'autoprefixer',
+				'autoprefixer:dev',
 				'concurrent:debug'
 			]);
 		}
@@ -543,7 +542,7 @@ module.exports = function(grunt) {
 			'concurrent:server',
 			'injector',
 			'wiredep',
-			'autoprefixer',
+			'autoprefixer:dev',
 			'express:dev',
 			'wait',
 			'open',
@@ -596,15 +595,15 @@ module.exports = function(grunt) {
 		'injector',
 		'wiredep',
 		'useminPrepare',
-		'autoprefixer',
 		'ngtemplates',
 		'concat',
+		'autoprefixer',
 		'ngAnnotate',
 		'copy:dist',
-		'cdnify',
+		//'cdnify',
 		'cssmin',
 		'uglify',
-		'rev',
+		//'filerev',
 		'usemin'
 	]);
 

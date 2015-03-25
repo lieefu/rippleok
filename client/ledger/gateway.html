@@ -27,20 +27,28 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/" target="_self">
-          <span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></span>
-        </a>
+        <div class="navbar-brand">
+          <a href="/" target="_self">
+            <span style="font-weight:bold;color:#428bca;">ripple<font style="font-weight:bold;color:#FF9933;">OK</font></span>
+          </a>
+        </div>
       </div>
       <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
           <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
           </li>
-          <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+          <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}">
+            <a href="/admin">Admin</a>
+          </li>
         </ul>
         <ul class="nav navbar-nav">
-          <li ng-cloak><a href="../ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
-          <li ng-cloak><a href="../gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA">{{lang==0?'Gateway':'网关'}}</a></li>
+          <li ng-cloak>
+            <a href="../ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a>
+          </li>
+          <li ng-cloak>
+            <a href="../gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA">{{lang==0?'Gateway':'网关'}}</a>
+          </li>
         </ul>
         <form class="nav navbar-nav navbar-right navbar-form">
           <div class="input-group" style="width:850px">
@@ -60,8 +68,10 @@
     <div class="row">
       <div class="col-md-12">
         <b>{{lang==0?'Name':'网关名称'}}：</b>{{gateway.name}}
-        <b>{{lang==0?'Address':'地址'}}：</b><a type='text' href="../ledger/account.html#{{gateway.address}}" target="_blank">{{gateway.address}}</a>
-        <b>{{lang==0?'Web':'官网'}}：</b><a href='{{gateway.weburl}}' target='_blank'>{{gateway.weburl}}</a>
+        <b>{{lang==0?'Address':'地址'}}：</b>
+        <a type='text' href="../ledger/account.html#{{gateway.address}}" target="_blank">{{gateway.address}}</a>
+        <b>{{lang==0?'Web':'官网'}}：</b>
+        <a href='{{gateway.weburl}}' target='_blank'>{{gateway.weburl}}</a>
       </div>
     </div>
     <div class="row">
@@ -101,7 +111,8 @@
                 </div>
                 <div class="row" ng-repeat="offer in buyoffers|limitTo:pagesize" ng-class="{'even':$even,'odd':$odd}">
                   <div class="col-md-2" data-toggle="tooltip" data-placement="right" title="{{offer.account}}">
-                    <a type='text' href="../ledger/account.html#{{offer.account}}" target="_blank">{{offer.account_short}}</a></div>
+                    <a type='text' href="../ledger/account.html#{{offer.account}}" target="_blank">{{offer.account_short}}</a>
+                  </div>
                   <div class="col-md-2" style="text-align:right">{{offer.moneysum}}</div>
                   <div class="col-md-2" style="text-align:right">{{offer.goodssum}}</div>
                   <div class="col-md-2" style="text-align:right">{{offer.moneysize}}</div>
@@ -137,7 +148,8 @@
                   <div class="col-md-2" style="text-align:right">{{offer.goodssum}}</div>
                   <div class="col-md-2" style="text-align:right">{{offer.moneysum}}</div>
                   <div class="col-md-2" data-toggle="tooltip" data-placement="left" title="{{offer.account}}">
-                    <a type='text' href="../ledger/account.html#{{offer.account}}" target="_blank">{{offer.account_short}}</a></div>
+                    <a type='text' href="../ledger/account.html#{{offer.account}}" target="_blank">{{offer.account_short}}</a>
+                  </div>
                 </div>
                 <div class="row gridfooter">
                   <div class="col-md-9" style="text-align:center" ng-show="restsaleofferssize>0">
@@ -220,8 +232,8 @@
   <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
   <script src="../bower_components/angular-socket-io/socket.js"></script>
   <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="../bower_components/ripple/ripple.js"></script>
   <script src="../bower_components/async/lib/async.js"></script>
+  <script src="../bower_components/ripple/ripple.js"></script>
   <script src="../bower_components/echarts/build/dist/echarts.js"></script>
   <script src="../bower_components/moment/moment.js"></script>
   <!-- endbower -->

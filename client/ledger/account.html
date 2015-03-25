@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
@@ -26,7 +27,7 @@
     <![endif] -->
 </head>
 
-<body  ng-app="accountApp">
+<body ng-app="accountApp">
   <div class="navbar navbar-default navbar-static-top" ng-cloak>
     <div class="container">
       <div class="navbar-header">
@@ -36,19 +37,28 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/" target="_self">
-          <span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></span>        </a>
+        <div class="navbar-brand">
+          <a href="/" target="_self">
+            <span style="font-weight:bold;color:#428bca;">ripple<font style="font-weight:bold;color:#FF9933;">OK</font></span>
+          </a>
+        </div>
       </div>
       <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
           <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
           </li>
-          <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+          <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}">
+            <a href="/admin">Admin</a>
+          </li>
         </ul>
         <ul class="nav navbar-nav">
-          <li ng-cloak><a href="account.html">{{lang==0?'Account':'账号'}}</a></li>
-          <li ng-cloak><a href="gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
+          <li ng-cloak>
+            <a href="account.html">{{lang==0?'Account':'账号'}}</a>
+          </li>
+          <li ng-cloak>
+            <a href="gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a>
+          </li>
         </ul>
         <form class="nav navbar-nav navbar-right navbar-form">
           <div class="input-group" style="width:500px">
@@ -68,8 +78,10 @@
     <div class="row">
       <div class="col-md-8">
         <div class="row">
-          <div class="col-md-12"><b>{{lang==0?'Ripple Name':'瑞波名'}}：</b>
-            <span id="ripplename"></span> <b>{{lang==0?'Address':'地址'}}：</b>
+          <div class="col-md-12">
+            <b>{{lang==0?'Ripple Name':'瑞波名'}}：</b>
+            <span id="ripplename"></span>
+            <b>{{lang==0?'Address':'地址'}}：</b>
             <span id="rippleaddress">
               <span>
           </div>
@@ -119,7 +131,9 @@
                 <div class="row" ng-repeat="fund in funds" ng-class="{'even':$even,'odd':$odd}">
                   <div class="col-md-1 gap" style="text-align:center">{{fund.currency}}</div>
                   <div class="col-md-3 gap" style="text-align:right">{{fund.amount}}</div>
-                  <div class="col-md-5 gap" style="text-align:left"><a href='account.html#{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a></div>
+                  <div class="col-md-5 gap" style="text-align:left">
+                    <a href='account.html#{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a>
+                  </div>
                   <div class="col-md-2 gap" style="text-align:right">{{fund.limit}}</div>
                   <div class="col-md-1" style="text-align:center">{{fund.no_ripple|checkmark}}</div>
                 </div>
@@ -168,12 +182,11 @@
                 </div>
                 <div class="row" ng-repeat="offer in offers" ng-class="{'even':$even,'odd':$odd}">
                   <div class="col-md-5 gap" style="text-align:right">
-                    <span style="color:{{offer.color}}"><b>{{offer.prompt1}}</b></span>
-                    {{offer.goods}}
-                    <span title='{{offer.goodsissuer}}'><a href='account.html#{{offer.goodsissuer}}' target="_blank">{{offer.goodsissuer|shortAccount|bracket}}</span></a></div>
+                    <span style="color:{{offer.color}}"><b>{{offer.prompt1}}</b></span> {{offer.goods}}
+                    <span title='{{offer.goodsissuer}}'><a href='account.html#{{offer.goodsissuer}}' target="_blank">{{offer.goodsissuer|shortAccount|bracket}}</span></a>
+                  </div>
                   <div class="col-md-5 gap">
-                    <span style="color:{{offer.color}}"><b>{{offer.prompt2}}</b></span>
-                    {{offer.money}}
+                    <span style="color:{{offer.color}}"><b>{{offer.prompt2}}</b></span> {{offer.money}}
                     <span title='{{offer.moneyissuer}}'><a href='account.html#{{offer.moneyissuer}}' target="_blank">{{offer.moneyissuer|shortAccount|bracket}}</a></span>
                   </div>
                   <div class="col-md-2">{{offer.price}}</div>
@@ -210,7 +223,8 @@
                 <div class="row" ng-if="tx.TransactionType=='TrustSet'">
                   <div class="col-md-12">
                     <span class="date" style="color:grey">{{tx.date}}</span>
-                    <span class="txtype">{{tx.TransactionType}}</span> Seq:<b>{{tx.Sequence}}</b>
+                    <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                    <b>{{tx.Sequence}}</b>
                     <span><b>Trust Amount</b> {{tx.LimitAmount.value}}{{tx.LimitAmount.currency}} <a href='account.html#{{tx.LimitAmount.issuer}}' target="_blank">{{tx.LimitAmount.issuer}}{{tx.LimitAmount.issuer|toname|bracket}}</a></span>
                     <span><b>Fee:</b> {{tx.Fee}}drop</span>
                     <span>TX hash:{{tx.txhash|shortTX}}</span>
@@ -221,7 +235,8 @@
                 <div class="row" ng-if="tx.TransactionType=='OfferCancel'">
                   <div class="col-md-12">
                     <span class="date" style="color:grey">{{tx.date}}</span>
-                    <span class="txtype">{{tx.TransactionType}}</span> Seq:<b>{{tx.Sequence}}</b>
+                    <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                    <b>{{tx.Sequence}}</b>
                     <span><b>Cancel OfferSequence</b> {{tx.OfferSequence}} </span>
                     <span><b>Fee:</b> {{tx.Fee}}drop</span>
                     <span>TX hash:{{tx.txhash|shortTX}}</span>
@@ -232,7 +247,8 @@
                 <div class="row" ng-if="tx.TransactionType=='Payment'">
                   <div class="col-md-12">
                     <span class="date" style="color:grey">{{tx.date}}</span>
-                    <span class="txtype">{{tx.TransactionType}}</span> Seq:<b>{{tx.Sequence}}</b>
+                    <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                    <b>{{tx.Sequence}}</b>
                     <span><b>{{tx.type}}</b> {{tx.amount.value}}{{tx.amount.currency}}<a href='account.html#{{tx.amount.issuer}}' target="_blank">{{tx.amount.issuer|shortAccount|bracket}}</a> </span>
                     <span><b>{{tx.prep}}</b> {{tx.counterparty}}{{tx.counterparty|toname|bracket}}</span>
                     <span>TX hash:{{tx.txhash|shortTX}}</span>
@@ -243,13 +259,13 @@
                 <div class="row" ng-if="tx.TransactionType=='OfferCreate'">
                   <div class="col-md-11 {{tx.classname}}">
                     <span class="date" style="color:grey">{{tx.date}}</span>
-                    <span class="txtype">{{tx.TransactionType}}</span> Seq:<b>{{tx.Sequence}}</b>
-                    <span style="color:{{tx.color}}"><b> {{tx.prompt1}}</b></span>
-                    {{tx.goods}}
+                    <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                    <b>{{tx.Sequence}}</b>
+                    <span style="color:{{tx.color}}"><b> {{tx.prompt1}}</b></span> {{tx.goods}}
                     <span title='{{tx.goodsissuer}}'><a href='account.html#{{tx.goodsissuer}}' target="_blank">{{tx.goodsissuer|shortAccount|bracket}}</a></span>
-                    <span style="color:{{tx.color}}"><b>  {{tx.prompt2}}</b></span>
-                    {{tx.money}}
-                    <span title='{{tx.moneyissuer}}'><a href='account.html#{{tx.moneyissuer}}' target="_blank">{{tx.moneyissuer|shortAccount|bracket}}</a></span> <b>Price:</b>{{tx.price}}
+                    <span style="color:{{tx.color}}"><b>  {{tx.prompt2}}</b></span> {{tx.money}}
+                    <span title='{{tx.moneyissuer}}'><a href='account.html#{{tx.moneyissuer}}' target="_blank">{{tx.moneyissuer|shortAccount|bracket}}</a></span>
+                    <b>Price:</b>{{tx.price}}
                     <b>TX hash:</b>
                     <span title='{{tx.txhash}}'>{{tx.txhash|shortTX}}</span>
                   </div>
@@ -262,14 +278,17 @@
                   <div class="row" ng-repeat="fill in tx.fills" style="background-color:azure;color:DarkSlateGray">
                     <div class="col-md-12" ng-if="fill.TransactionType=='OfferCancel'">
                       <span class="filldate">{{fill.date}}</span>
-                      <span class="txtype">{{fill.TransactionType}}</span> Seq:<b>{{fill.Sequence}}</b> <b>TX hash:</b>
+                      <span class="txtype">{{fill.TransactionType}}</span> Seq:
+                      <b>{{fill.Sequence}}</b>
+                      <b>TX hash:</b>
                       <span title='{{fill.txhash}}'>{{fill.txhash|shortTX}}</span>
                       <br>
                     </div>
                     <div class="col-md-12" ng-if="fill.TransactionType!='OfferCancel'">
                       <span class="filldate">{{fill.date}}</span>
                       <span><b>Volume:</b>{{fill.volume[0]}} {{fill.volume[1]}}</span>
-                      <span><b>Trader:</b>{{fill.Account}} <b>{{fill.TransactionType}}</b></span> <b>TX hash:</b>
+                      <span><b>Trader:</b>{{fill.Account}} <b>{{fill.TransactionType}}</b></span>
+                      <b>TX hash:</b>
                       <span title='{{fill.txhash}}'>{{fill.txhash|shortTX}}</span>
                       <br>
                       <span class="filldate"></span>
@@ -337,12 +356,12 @@
   <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
   <script src="../bower_components/angular-socket-io/socket.js"></script>
   <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="../bower_components/ripple/ripple.js"></script>
   <script src="../bower_components/async/lib/async.js"></script>
+  <script src="../bower_components/ripple/ripple.js"></script>
   <script src="../bower_components/echarts/build/dist/echarts.js"></script>
   <script src="../bower_components/moment/moment.js"></script>
   <!-- endbower -->
-
+  <!-- build:js({.tmp,client}/ledger) ledger/account/account.min.js -->
   <!-- injector:js -->
   <script src="../assets/js/ripple-remote.js"></script>
   <script src="../assets/js/rippleok-util.js"></script>
@@ -351,6 +370,7 @@
   <script src="account/js/controllers.js"></script>
   <script src="account/js/filter.js"></script>
   <!-- endinjector -->
+  <!-- endbuild -->
 
 </body>
 

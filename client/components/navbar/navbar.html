@@ -7,24 +7,37 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./index.html">
-        <span style="font-weight:bold;color:#428bca;">ripple<span style="font-weight:bold;color:#FF9933;">OK</span></span>      </a>
+      <div class="navbar-brand">
+        <a href="/" target="_self">
+          <span style="font-weight:bold;color:#428bca;">ripple<font style="font-weight:bold;color:#FF9933;">OK</font></span>
+        </a>
+      </div>
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
           <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}">
+          <a href="/admin">Admin</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav">
-        <li ng-cloak><a href="./ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a></li>
-        <li ng-cloak><a href="./ledger/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a></li>
+        <li ng-cloak>
+          <a href="./ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a>
+        </li>
+        <li ng-cloak>
+          <a href="./ledger/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}">
+          <a href="/signup">Sign up</a>
+        </li>
+        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}">
+          <a href="/login">Login</a>
+        </li>
         <li ng-show="isLoggedIn()">
           <p class="navbar-text">Hello {{ getCurrentUser().name }}</p>
         </li>
@@ -33,7 +46,9 @@
             <span class="glyphicon glyphicon-cog"></span>
           </a>
         </li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}">
+          <a href="" ng-click="logout()">Logout</a>
+        </li>
       </ul>
       <form class="navbar-form navbar-right" style="width:500px" action="ledger/account.html" target="_blank" METHOD="get">
         <div class="input-group">
