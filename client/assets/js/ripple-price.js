@@ -114,111 +114,132 @@ gateways:
 */
 ];
 //setTimeout(loadExchgRate,10000);
-function loadExchgRate(market,callback){
-	var curr=market.currency;
-	if(curr=="BTC") {callback();return;}
+if (async) {
+	async.eachSeries(Markets, loadExchgRate, function(err) {
+		if (err) console.log(err);
+	});
+} else {
+	console.log("loadExchgRate,async not loaded");
+}
+
+function loadExchgRate(market, callback) {
+	var curr = market.currency;
+	if (curr == "BTC") {
+		callback();
+		return;
+	}
 	//var url="http://api.k780.com:88/?app=finance.rate&scur=USD&tcur="+curr+"&appkey=12416&sign=79a36d1d8c108269e7e354cc5e8a89fe&format=json";
-	var url="http://api.k780.com:88/?app=finance.rate&scur=USD&tcur="+curr+"&appkey=12416&sign=79a36d1d8c108269e7e354cc5e8a89fe&format=json&jsoncallback=?";
+	var url = "http://api.k780.com:88/?app=finance.rate&scur=USD&tcur=" + curr + "&appkey=12416&sign=79a36d1d8c108269e7e354cc5e8a89fe&format=json&jsoncallback=?";
 	//var url="https://id.ripple.com/v1/user/razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA";
-	$.getJSON(url,function(data){
+	$.getJSON(url, function(data) {
 		//console.log(data);
-		if(data.success=="1"){
-			var tcur=data.result.tcur;
-			var rate=data.result.rate;
-			ExchgRate[tcur]=rate;
+		if (data.success == "1") {
+			var tcur = data.result.tcur;
+			var rate = data.result.rate;
+			ExchgRate[tcur] = rate;
 			callback();
 			//console.log(tcur,rate);
-		}else{
+		} else {
 			callback(err);
 		}
 	});
 }
-async.eachSeries(Markets,loadExchgRate,function(err){
-	if(err) console.log(err);
-});
 
-function subscribe(){
+
+function subscribe() {
 	var book;
-	Markets.forEach(function(Market)
-	{
+	Markets.forEach(function(Market) {
 		//console.log("init Market"+Market.name);
 		var gateways = Market.gateways;
-		gateways.forEach(function(gateway)
-		{
+		gateways.forEach(function(gateway) {
 			//console.log("init gateway:"+Gateways[gateway.address].name);
-			['asks','bids'].forEach(function(action){
-				if(action == "asks"){
-					book = remote.book({currency_gets:'XRP', issuer_gets:null, currency_pays:Market.currency, issuer_pays:gateway.address});
-				}else{
-					book = remote.book({currency_gets:Market.currency, issuer_gets:gateway.address, currency_pays:'XRP', issuer_pays:null});
+			['asks', 'bids'].forEach(function(action) {
+				if (action == "asks") {
+					book = remote.book({
+						currency_gets: 'XRP',
+						issuer_gets: null,
+						currency_pays: Market.currency,
+						issuer_pays: gateway.address
+					});
+				} else {
+					book = remote.book({
+						currency_gets: Market.currency,
+						issuer_gets: gateway.address,
+						currency_pays: 'XRP',
+						issuer_pays: null
+					});
 
 				}
-				book.on("trade", function(tradeGets, tradePays){tradeListener(action, tradeGets, tradePays, Market.currency, gateway)});
+				book.on("trade", function(tradeGets, tradePays) {
+					tradeListener(action, tradeGets, tradePays, Market.currency, gateway)
+				});
 			});
 		});
 	});
 	g$scope.$apply();
 }
-function resubscribe(){
+
+function resubscribe() {
 	//console.log("timeout fresh-------------------------------------------------------");
-	lastfreshdate=new Date();
-	for(var id in remote._books){
+	lastfreshdate = new Date();
+	for (var id in remote._books) {
 		remote._books[id].unsubscribe();
 	}
-	remote._books={};
+	remote._books = {};
 	subscribe();
 }
-var lastfreshdate=new Date();
-setInterval(function(){if((new Date() - lastfreshdate)>180000) resubscribe();}, 30000);//超过3分钟强制刷新数据，解决自动刷新意外终止问题
-function tradeListener(action, tradeGets, tradePays, currency, gateway)
-{
-	lastfreshdate=new Date();
+var lastfreshdate = new Date();
+setInterval(function() {
+	if ((new Date() - lastfreshdate) > 180000) resubscribe();
+}, 30000); //超过3分钟强制刷新数据，解决自动刷新意外终止问题
+function tradeListener(action, tradeGets, tradePays, currency, gateway) {
+	lastfreshdate = new Date();
 	var price;
 	var xrpamount;
 	var coinamount;
 	var pricecolor;
-	var volumexrp,volumeiou;
+	var volumexrp, volumeiou;
 	// Ripple-lib bug
-	if (tradeGets.is_valid() ||  tradePays.is_valid()){
-		if(action == "asks"){
+	if (tradeGets.is_valid() || tradePays.is_valid()) {
+		if (action == "asks") {
 			price = tradeGets.ratio_human(tradePays).to_human();
 			xrpamount = tradePays.to_human();
 			coinamount = tradeGets.to_human();
 			volumexrp = tradePays.to_number();
 			volumeiou = tradeGets.to_number();
-			pricecolor="green";
-		}else{
+			pricecolor = "green";
+		} else {
 			price = tradePays.ratio_human(tradeGets).to_human();
 			xrpamount = tradeGets.to_human();
 			coinamount = tradePays.to_human();
 			volumexrp = tradeGets.to_number();
 			volumeiou = tradePays.to_number();
-			pricecolor="red";
+			pricecolor = "red";
 		}
-		price=price.substring(0,9);
-		if( _.isNaN(price) ||price<=0 || _.isNaN(volumexrp)||volumexrp<1000000) return;//有时候数值价格小到0
-		if(price<(gateway.price.low||999999)) gateway.price.low=price;
-		if(price>gateway.price.high) gateway.price.high=price;
-		gateway.price.value=price;
-		gateway.price.action=action;
-		gateway.volume.xrp+=droptoxrp(volumexrp);
-		gateway.volume.iou+=volumeiou;
-		g$scope.endTime=moment().format('YYYY-MM-DD HH:mm:ss');
+		price = price.substring(0, 9);
+		if (_.isNaN(price) || price <= 0 || _.isNaN(volumexrp) || volumexrp < 1000000) return; //有时候数值价格小到0
+		if (price < (gateway.price.low || 999999)) gateway.price.low = price;
+		if (price > gateway.price.high) gateway.price.high = price;
+		gateway.price.value = price;
+		gateway.price.action = action;
+		gateway.volume.xrp += droptoxrp(volumexrp);
+		gateway.volume.iou += volumeiou;
+		g$scope.endTime = moment().format('YYYY-MM-DD HH:mm:ss');
 		g$scope.$apply();
 
-		var trade={};
-		trade.price=price;
-		trade.time=stringDate(new Date());
-		var pos=xrpamount.indexOf('.');
-		if(pos>0) xrpamount=xrpamount.substring(0,pos);//xrp数量取整
-		trade.size=xrpamount+"XRP";
-		if(window.localStorage){
-			var tradedata={};
-			if(localStorage.tradedata){
-				tradedata=JSON.parse(localStorage.tradedata);
+		var trade = {};
+		trade.price = price;
+		trade.time = stringDate(new Date());
+		var pos = xrpamount.indexOf('.');
+		if (pos > 0) xrpamount = xrpamount.substring(0, pos); //xrp数量取整
+		trade.size = xrpamount + "XRP";
+		if (window.localStorage) {
+			var tradedata = {};
+			if (localStorage.tradedata) {
+				tradedata = JSON.parse(localStorage.tradedata);
 			}
-			tradedata[currency+gateway.address]=trade;
-			localStorage.tradedata=JSON.stringify(tradedata);
+			tradedata[currency + gateway.address] = trade;
+			localStorage.tradedata = JSON.stringify(tradedata);
 		}
 		// var content=$("#"+currency+gateway.address).attr("data-content");
 		// if(content.length>1500)

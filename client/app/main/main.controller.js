@@ -6,8 +6,8 @@ var g$scope;
 var g$http;
 var Kgateway={
   currency:'USD',
-  name:'bitstamp',
-  address:'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B'
+  name:'snapswap',
+  address:'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q'
 }
 var rippledataurl1='https://api.ripplecharts.com/api/offers_exercised';
 var rippledataurl2='http://192.168.0.100:5993/api/offers_exercised';
@@ -33,12 +33,14 @@ angular.module('rippleokApp')
     return;
   }
   initprice();
-  loadMarketsHistoryPrice();
+
   // /////////////////////////////////
 
   require.config({
     paths: {
-      echarts: 'bower_components/echarts/build/dist/'
+      //echarts: 'bower_components/echarts/build/dist/'
+      //echarts: 'http://echarts.baidu.com/build/dist'
+      echarts:'https://cdnjs.cloudflare.com/ajax/libs/echarts/2.2.1/'
     }
   });
   // 使用
@@ -56,6 +58,7 @@ angular.module('rippleokApp')
       //console.log("main controller start,myChart is",myChart);
       myChart = ec.init(document.getElementById('kchart'));
       showXRPkChart();
+      loadMarketsHistoryPrice();
     }
   );
   // /////////////////////////////////////

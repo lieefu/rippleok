@@ -12,13 +12,13 @@
   <link rel="icon" href="/favicon.ico">
 
   <title>RippleOK query ripple account address infomationl</title>
-  <!-- build:css(client/ledger) account/account-lib.min.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"/>
+  <!-- build:libcss ../assets/css/rippleok-lib.min.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
-  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
   <!-- endbuild -->
-  <!-- build:css({.tmp,client}/ledger) account/account.min.css -->
+  <!-- build:libcss ../assets/css/rippleok.min.css -->
   <!-- injector:css -->
   <link rel="stylesheet" href="../assets/css/rippleok.css">
   <!-- endinjector -->
@@ -349,7 +349,12 @@
     ga('create', 'UA-59774071-1', 'auto');
     ga('send', 'pageview');
   </script>
-  <!-- build:js({.tmp,client}/ledger) account/account-lib.min.js -->
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.map"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+  <![endif]-->
+
+  <!-- build:libjs ../assets/js/rippleok-lib.min.js -->
   <!-- bower:js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/angular/angular.js"></script>
@@ -360,14 +365,10 @@
   <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
   <script src="../bower_components/angular-socket-io/socket.js"></script>
   <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="../bower_components/async/lib/async.js"></script>
   <script src="../bower_components/ripple/ripple.js"></script>
-  <script src="../bower_components/echarts/build/dist/echarts.js"></script>
-  <script src="../bower_components/moment/moment.js"></script>
-  <!-- endbower -->
-  <!-- endbuild -->
+  <!-- endbower --><!-- endbuild -->
 
-  <!-- build:js({.tmp,client}/ledger) account/account.min.js -->
+  <!-- build:js({.tmp,client}/ledger) js/account.min.js -->
   <!-- injector:js -->
   <script src="../assets/js/ripple-remote.js"></script>
   <script src="../assets/js/rippleok-util.js"></script>
