@@ -15,7 +15,6 @@ module.exports = function(grunt) {
 		useminPrepare: 'grunt-usemin',
 		ngtemplates: 'grunt-angular-templates',
 		cdnify: 'grunt-google-cdn',
-		protractor: 'grunt-protractor-runner',
 		buildcontrol: 'grunt-build-control'
 	});
 
@@ -68,17 +67,6 @@ module.exports = function(grunt) {
 					'<%= rippleok.client %>/{app,components}/**/*.css'
 				],
 				tasks: ['injector:css']
-			},
-			mochaTest: {
-				files: ['server/**/*.spec.js'],
-				tasks: ['env:test', 'mochaTest']
-			},
-			jsTest: {
-				files: [
-					'<%= rippleok.client %>/{app,components}/**/*.spec.js',
-					'<%= rippleok.client %>/{app,components}/**/*.mock.js'
-				],
-				tasks: ['newer:jshint:all', 'karma']
 			},
 			gruntfile: {
 				files: ['Gruntfile.js']
@@ -446,35 +434,6 @@ module.exports = function(grunt) {
 				'svgmin'
 			]
 		},
-
-		// Test settings
-		karma: {
-			unit: {
-				configFile: 'karma.conf.js',
-				singleRun: true
-			}
-		},
-
-		mochaTest: {
-			options: {
-				reporter: 'spec'
-			},
-			src: ['server/**/*.spec.js']
-		},
-
-		protractor: {
-			options: {
-				configFile: 'protractor.conf.js'
-			},
-			chrome: {
-				options: {
-					args: {
-						browser: 'chrome'
-					}
-				}
-			}
-		},
-
 		env: {
 			test: {
 				NODE_ENV: 'test'
@@ -590,40 +549,6 @@ module.exports = function(grunt) {
 		grunt.task.run(['serve']);
 	});
 
-	grunt.registerTask('test', function(target) {
-		if (target === 'server') {
-			return grunt.task.run([
-				'env:all',
-				'env:test',
-				'mochaTest'
-			]);
-		} else if (target === 'client') {
-			return grunt.task.run([
-				'clean:server',
-				'env:all',
-				'concurrent:test',
-				'injector',
-				'autoprefixer',
-				'karma'
-			]);
-		} else if (target === 'e2e') {
-			return grunt.task.run([
-				'clean:server',
-				'env:all',
-				'env:test',
-				'concurrent:test',
-				'injector',
-				'wiredep',
-				'autoprefixer',
-				'express:dev',
-				'protractor'
-			]);
-		} else grunt.task.run([
-			'test:server',
-			'test:client'
-		]);
-	});
-
 	grunt.registerTask('build', [
 		'clean:dist',
 		'concurrent:dist',
@@ -644,7 +569,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', [
 		'newer:jshint',
-		'test',
 		'build'
 	]);
 };
