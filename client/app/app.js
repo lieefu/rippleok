@@ -4,7 +4,7 @@ angular.module('rippleokApp', [
 		'ngCookies',
 		'ngResource',
 		'ngSanitize',
-		'btford.socket-io',
+		//'btford.socket-io',
 		'ui.router'
 	])
 	.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

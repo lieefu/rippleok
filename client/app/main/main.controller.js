@@ -12,7 +12,7 @@ var Kgateway={
 var rippledataurl1='https://api.ripplecharts.com/api/offers_exercised';
 var rippledataurl2='http://192.168.0.100:5993/api/offers_exercised';
 angular.module('rippleokApp')
-.controller('MainCtrl', function ($scope, $http, socket) {
+.controller('MainCtrl', function ($scope, $http) {
   g$scope=$scope;
   g$http = $http;
   $scope.showKchart=true;
