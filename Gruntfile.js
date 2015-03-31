@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 					'{.tmp,<%= rippleok.client %>}/{app,components}/**/*.js',
 					'!{.tmp,<%= rippleok.client %>}{app,components}/**/*.spec.js',
 					'!{.tmp,<%= rippleok.client %>}/{app,components}/**/*.mock.js',
-					'<%= rippleok.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+					'<%= rippleok.client %>/assets/img/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
 				],
 				options: {
 					livereload: true
@@ -211,7 +211,7 @@ module.exports = function(grunt) {
 				src: [
 					'<%= rippleok.dist %>/public/{,*/}*.js',
 					'<%= rippleok.dist %>/public/{,*/}*.css',
-					'<%= rippleok.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+					'<%= rippleok.dist %>/public/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
 					'<%= rippleok.dist %>/public/assets/fonts/*'
 				]
 			}
@@ -241,7 +241,7 @@ module.exports = function(grunt) {
 			css: ['<%= rippleok.dist %>/public/{,*/css/}*.css'],
 			js: ['<%= rippleok.dist %>/public/{,*/js/}*.js'],
 			options: {
-				assetsDirs: ['<%= rippleok.dist %>/public', '<%= rippleok.dist %>/public/assets/images'],
+				assetsDirs: ['<%= rippleok.dist %>/public', '<%= rippleok.dist %>/public/assets/img'],
 				blockReplacements: {
 					// our 'replacement block'
 					libjs: function(block) {
@@ -255,7 +255,7 @@ module.exports = function(grunt) {
 				// This is so we update image references in our ng-templates
 				patterns: {
 					js: [
-						[/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+						[/(assets\/img\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved img']
 					]
 				}
 			}
@@ -266,9 +266,9 @@ module.exports = function(grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= rippleok.client %>/assets/images',
+					cwd: '<%= rippleok.client %>/assets/img',
 					src: '{,*/}*.{png,jpg,jpeg,gif}',
-					dest: '<%= rippleok.dist %>/public/assets/images'
+					dest: '<%= rippleok.dist %>/public/assets/img'
 				}]
 			}
 		},
@@ -277,9 +277,9 @@ module.exports = function(grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= rippleok.client %>/assets/images',
+					cwd: '<%= rippleok.client %>/assets/img',
 					src: '{,*/}*.svg',
-					dest: '<%= rippleok.dist %>/public/assets/images'
+					dest: '<%= rippleok.dist %>/public/assets/img'
 				}]
 			}
 		},
@@ -366,7 +366,7 @@ module.exports = function(grunt) {
 					src: [
 						'*.{ico,png,txt}',
 						'.htaccess',
-						'assets/images/{,*/}*.{ico,webp}',
+						'assets/img/{,*/}*.{ico,webp}',
 						'assets/fonts/**/*',
 						'index.html',
 						'ledger/*.html',
@@ -374,8 +374,8 @@ module.exports = function(grunt) {
 					]
 				}, {
 					expand: true,
-					cwd: '.tmp/images',
-					dest: '<%= rippleok.dist %>/public/assets/images',
+					cwd: '.tmp/img',
+					dest: '<%= rippleok.dist %>/public/assets/img',
 					src: ['generated/*']
 				}, {
 					expand: true,

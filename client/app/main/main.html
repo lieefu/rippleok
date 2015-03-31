@@ -34,9 +34,11 @@
         <td style="text-align:right;vertical-align:middle" ng-if="$first" rowspan="{{market.gateways.length}}">{{ExchgRate[market.currency]|number:2}}{{market.currency}}</td>
       </tr>
     </tbody>
+    <tfoot align="center">
+      <tr>
+        <td style="text-align:right" colspan="10">{{startTime}}------{{endTime}}</td>  
+      </tr>
+    </tfoot>
   </table>
-  <div class="row">
-    <div class="col-md-12 text-right">{{startTime}}---{{endTime}}</div>
-  </div>
 </div>
 <footer ng-include="'components/footer/footer.html'"></footer>

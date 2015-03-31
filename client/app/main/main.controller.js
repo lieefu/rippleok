@@ -253,7 +253,7 @@ option = {
       fresh : {
         show : true,
         title : getLang()==0?'Reload data':'刷新数据',
-        icon : 'assets/images/refresh.ico',
+        icon : 'assets/img/refresh.ico',
         onclick : function (){
           //alert('myToolHandler')
           showXRPkChart();
