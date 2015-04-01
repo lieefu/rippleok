@@ -20,6 +20,7 @@ if(config.seedDB) { require('./config/seed'); }
 // Setup server
 var app = express();
 var server = require('http').createServer(app);
+app.enable('trust proxy');
 var socketio = require('socket.io')(server, {
   serveClient: true,//(config.env === 'production') ? false : true,
   path: '/socket.io-client'

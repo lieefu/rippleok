@@ -38,8 +38,9 @@ angular.module('rippleokApp', [
 	};
 })
 
-.run(function($rootScope, $location, Auth) {
+.run(function($rootScope, $location,$http, Auth) {
 	// Redirect to login if route requires auth and you're not logged in
+	$http.get('/auth').success(function(res){console.log(res);}).error(function(err){console.log('debug info:notejs not start');})
 	$rootScope.$on('$stateChangeStart', function(event, next) {
 		Auth.isLoggedInAsync(function(loggedIn) {
 			if (next.authenticate && !loggedIn) {
