@@ -3,7 +3,7 @@
 <div class="container" ng-show="showKchart">
   <div id="kchart" style="height:300px"></div>
 </div>
-<hr>
+<br>
 <div class="container" ng-cloak>
   <table class="table table-bordered table-condensed table-hover">
     <thead align="center">
@@ -24,7 +24,7 @@
       <tr ng-repeat="gateway in market.gateways">
         <td style="vertical-align:middle" ng-if="$first" rowspan="{{market.gateways.length}}"><span class="currency {{market.currency}}"></span>{{market.name}}</td>
         <td><a href="./ledger/gateway.html#{{market.currency}}.{{gateway.address}}"  target="_blank">{{gateway.name}}</a></td>
-        <td style="text-align:right"><span id="{{market.currency}}{{gateway.address}}" data-toggle="popover" data-placement="right" data-content="" class="{{gateway.price.action}}">{{gateway.price.value}}</span>{{market.symbol}}</td>
+        <td style="text-align:right"><span  style="cursor:pointer" ng-click="showK({currency:market.currency,name:gateway.name,address:gateway.address})" class="{{gateway.price.action}}">{{gateway.price.value}}</span>{{market.symbol}}</td>
         <td style="text-align:right;color:gray" ng-if="lang==1">{{gateway.price.value|exchgrate:'CNY':market.currency|number:7}}</td>
         <td style="text-align:right;color:gray" ng-if="lang==0">{{gateway.price.value|exchgrate:'USD':market.currency|number:7}}</td>
         <td style="text-align:right">{{gateway.volume.xrp|number:0}}</td>
@@ -36,9 +36,9 @@
     </tbody>
     <tfoot align="center">
       <tr>
-        <td style="text-align:right" colspan="10">{{startTime}}------{{endTime}}</td>  
+        <td style="text-align:right" colspan="10">{{startTime}}------{{endTime}}</td>
       </tr>
     </tfoot>
   </table>
+  <footer ng-include="'components/footer/footer.html'"></footer><br>
 </div>
-<footer ng-include="'components/footer/footer.html'"></footer>

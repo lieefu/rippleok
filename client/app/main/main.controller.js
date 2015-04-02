@@ -25,6 +25,13 @@ angular.module('rippleokApp')
     $scope.lang=l;
     saveLang(l);
   }
+  $scope.showK=function(kgw){
+    //console.log(kgw);
+    Kgateway.currency = kgw.currency;
+    Kgateway.name = kgw.name;
+    Kgateway.address = kgw.address;
+    showXRPkChart();
+  }
   //console.log("main controller start,echarts is",echarts);
   //防止ui_router切换回本视图时重新刷新K线图
   if(echarts){
@@ -154,6 +161,7 @@ function showXRPkChart(){
   reqdata.endTime = moment().utc().format();
   reqdata.counter.currency=Kgateway.currency;
   reqdata.counter.issuer=Kgateway.address;
+  //console.log(reqdata);
   loadRippleData(reqdata,function(err,res){
     if(err) {
       g$scope.showKchart=false;
@@ -162,6 +170,7 @@ function showXRPkChart(){
       return;
     }
     //console.log(res);
+    myChart.clear();
     option.title.text=reqdata.base.currency+'/'+reqdata.counter.currency+'.' +Kgateway.name + (getLang()==0?' candlestick':' K线图');
     option.title.subtext='                '+moment(res.startTime).format("YYYY-MM-DD HH:mm")+'---'+moment(res.endTime).format("YYYY-MM-DD HH:mm");
     option.xAxis[0].data=[];
@@ -186,6 +195,7 @@ function showXRPkChart(){
       //option.series[0].data.push(results[i].baseVolume<1000||results[i].baseVolume>100000?'-':results[i].baseVolume);
       option.series[0].data.push(Math.round(results[i].baseVolume));
       option.series[1].data.push([results[i].open.toFixed(5) ,results[i].close.toFixed(5),results[i].low.toFixed(5),results[i].high.toFixed(5)]);
+      //console.log(results[i].open.toFixed(5));
     }
     //	console.log(option.xAxis[0].data);
     //console.log(option.series[1].data);
