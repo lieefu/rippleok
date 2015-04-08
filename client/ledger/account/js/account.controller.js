@@ -1,7 +1,71 @@
-remote.connect(function() {
+'use strict';
 
-	//accountlines('razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA');
+var g$scope;
+var app = angular.module('accountApp');
+app.controller('AccountCtrl', function($scope,$location) {
+	g$scope = $scope;
+	$scope.lang = getLang();
+	$scope.setlang = function(l) {
+		$scope.lang = l;
+		saveLang(l);
+	}
+	$scope.funds = []; //持有资金
+	$scope.issuers = []; //发行资金，一般是网关
+	$scope.accountsetting = []; //账号的设置信息
+	$scope.offers = []; //市场交易挂单
+	$scope.txs = []; //历史交易，简称TX
+	$scope.showfills = function(filldiv) {
+		$(filldiv).slideToggle(1000);
+	}
+  $scope.queryAccountInfo = function () {
+  	account = $("#address")[0].value;
+  	//window.location.href = url + "#" + account;
+    $location.hash(account)
+  	console.log(window.location.href ,url);
+  	window.location.reload();
+    return false;
+  }
+  var urlhash = $location.hash();
+  //console.log("urlhash:",urlhash);
+  account = $("#address")[0].value = urlhash;
+  if (account.length <= 0) return;
+  url=$location.path();
+  rippleName(account);
+	if (account[0] == '~') {
+		//console.log(account+'return');
+		return;
+	}
+	accountinfo(account);
+	accountoffers(account);
+	loadTXS();
 });
+/////////////////////////////////////////////////////////
+//$("#address")[0].value='raQ5Lk4WwEzqYVy83Afwq2FL6vKTaN7PQ';
+var istimeout = false;
+var account;
+var url;
+// $(document).ready(function() {
+// 	url = decodeURIComponent(document.URL);
+// 	var separator = "";
+// 	if (url.indexOf("#") >= 0) separator = "#";
+// 	if (separator == "") return;
+// 	account = $("#address")[0].value = url.split(separator)[1].trim();
+// 	url = url.split(separator)[0];
+// 	if (account.length <= 0) return;
+// 	window.location.href = url + "#" + account;
+// 	rippleName(account);
+// 	if (account[0] == '~') {
+// 		//console.log(account+'return');
+// 		return;
+// 	}
+// 	accountinfo(account);
+// 	accountoffers(account);
+// 	loadTXS();
+// });
+
+
+
+remote.connect(function() {});
 
 function accountinfo(account) {
 	var req = remote.request('account_info', {
@@ -53,7 +117,7 @@ function accountlines(account) {
 function accountoffers(account) {
 	//console.log("account_offers .............");
 	g$scope.offers = [];
-	g$scope.$apply();
+	//g$scope.$apply();
 
 	var req = remote.request('account_offers', {
 		account: account
@@ -96,56 +160,26 @@ function loadMoreTXS() {
 }
 
 function accounttxs(account) {
-		//console.log("account_tx .............f");
-		txoptions.account = account;
-		var req = remote.request('account_tx', txoptions);
-		req.request(function(err, res) {
-			$("#txLoading").hide();
-			if (!err) {
-				//$("#accounttxs").html(JSON.stringify(res));
-				//console.log("account_tx  .............success"+res.transactions.length);
-				if (res.transactions.length > 0) {
-					$("#loadmore").show();
-					procTransactions(res);
-				}
-			} else {
-				console.log("account_tx error:" + err);
+	//console.log("account_tx .............f");
+	txoptions.account = account;
+	var req = remote.request('account_tx', txoptions);
+	req.request(function(err, res) {
+		$("#txLoading").hide();
+		if (!err) {
+			//$("#accounttxs").html(JSON.stringify(res));
+			//console.log("account_tx  .............success"+res.transactions.length);
+			if (res.transactions.length > 0) {
+				$("#loadmore").show();
+				procTransactions(res);
 			}
-		});
-	}
-	//$("#address")[0].value='raQ5Lk4WwEzqYVy83Afwq2FL6vKTaN7PQ';
-var istimeout = false;
-var account;
-var url;
-$(document).ready(function() {
-	url = decodeURIComponent(document.URL);
-	var separator = "";
-	if (url.indexOf("#") >= 0) separator = "#";
-	if (url.indexOf("?address=") >= 0) separator = "?address=";
-	if (separator == "") return;
-	account=$("#address")[0].value = url.split(separator)[1].trim();
-	url = url.split(separator)[0];
-	if (account.length <= 0) return;
-	window.location.href = url + "#" + account;
-	rippleName(account);
-	if (account[0] == '~') {
-		//console.log(account+'return');
-		return;
-	}
-
-	accountinfo(account);
-	accountoffers(account);
-	loadTXS();
-});
-
-function queryAccountInfo() {
-	account = $("#address")[0].value;
-	window.location.href = url + "#" + account;
-	//console.log(window.location.href );
-	window.location.reload();
+		} else {
+			console.log("account_tx error:" + err);
+		}
+	});
 }
 
 function rippleName(address) {
+  //console.log(address);
 	$("#ripplename").html("loading");
 	$.getJSON("https://id.ripple.com/v1/user/" + address, {}, function(res) {
 		if (res.exists) {
@@ -250,14 +284,14 @@ function procAccountLines(data) {
 		} else { //debt (amount < 0)
 			if (currency in debt) {
 				debt[currency] += +amount;
-				debtCount[currency] ++;
+				debtCount[currency]++;
 			} else {
 				debt[currency] = +amount;
 				debtCount[currency] = 1;
 			}
 		}
 		if (limit_peer > 0 && amount == 0) { //trust only
-			if (currency in trustCount) trustCount[currency] ++;
+			if (currency in trustCount) trustCount[currency]++;
 			else trustCount[currency] = 1;
 		}
 	}
@@ -433,7 +467,6 @@ function getTXS(Sequence) {
 		"Sequence": Sequence,
 		"TransactionType": null,
 		"TakerGets": null,
-		"TakerGets": null,
 		"TakerPays": null,
 		"Fee": null,
 		"date": null,
@@ -603,12 +636,12 @@ function parseMemos(memos) {
 	//console.log("memos",memos);
 	for (var memo in memos) {
 		var mType = Utils.hexToString(memos[memo].Memo.MemoType);
-		var mData = memos[memo].Memo.MemoData?Utils.hexToString(memos[memo].Memo.MemoData):'';
-		var mFormat=memos[memo].Memo.MemoFormat?Utils.hexToString(memos[memo].Memo.MemoFormat):'';
+		var mData = memos[memo].Memo.MemoData ? Utils.hexToString(memos[memo].Memo.MemoData) : '';
+		var mFormat = memos[memo].Memo.MemoFormat ? Utils.hexToString(memos[memo].Memo.MemoFormat) : '';
 		try {
 			mData = JSON.stringify(JSON.parse(mData), null, 2);
 		} catch (e) {};
-		ret += mType + ":" + mData +':'+ mFormat+ ";";
+		ret += mType + ":" + mData + ':' + mFormat + ";";
 	}
 	//console.log("memos",ret);
 	return ret;

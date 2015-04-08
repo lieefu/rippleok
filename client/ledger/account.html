@@ -31,6 +31,7 @@
 </head>
 
 <body ng-app="accountApp">
+  <div class="container" ng-controller="AccountCtrl" ng-cloak>
   <div class="navbar navbar-default navbar-static-top" ng-cloak>
     <div class="container">
       <div class="navbar-header">
@@ -67,7 +68,7 @@
           <div class="input-group" style="width:500px">
             <input id="address" type="text" class="form-control" placeholder="r...address">
             <span class="input-group-btn" style="width:150px">
-              <button class="btn btn-primary" type="button" onclick="queryAccountInfo();">Let's go. ripple
+              <button class="btn btn-primary" type="button" ng-click="queryAccountInfo();">Let's go. ripple
                 <span style="font-weight:bold;color:#FF9933;">OK</span> »</button>
             </span>
           </div>
@@ -76,7 +77,7 @@
     </div>
   </div>
 
-  <div class="container" ng-controller="AccountCtrl" ng-cloak>
+
     <!-- ----------------------------------------------------------------- -->
     <div class="row">
       <div class="col-md-8">
@@ -230,7 +231,7 @@
                     <b>{{tx.Sequence}}</b>
                     <span><b>Trust Amount</b> {{tx.LimitAmount.value}}{{tx.LimitAmount.currency}} <a href='account.html#{{tx.LimitAmount.issuer}}' target="_blank">{{tx.LimitAmount.issuer}}{{tx.LimitAmount.issuer|toname|bracket}}</a></span>
                     <span><b>Fee:</b> {{tx.Fee}}drop</span>
-                    <span>TX hash:{{tx.txhash|shortTX}}</span>
+                    <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|shortTX}}</a></span>
                   </div>
                 </div>
                 <!-- -----------------------------------------------ng-if="tx.TransactionType=='TrustSet'" end -->
@@ -242,7 +243,7 @@
                     <b>{{tx.Sequence}}</b>
                     <span><b>Cancel OfferSequence</b> {{tx.OfferSequence}} </span>
                     <span><b>Fee:</b> {{tx.Fee}}drop</span>
-                    <span>TX hash:{{tx.txhash|shortTX}}</span>
+                    <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|shortTX}}</a></span>
                   </div>
                 </div>
                 <!-- -----------------------------------------------ng-if="tx.TransactionType=='OfferCancel'" end -->
@@ -253,8 +254,8 @@
                     <span class="txtype">{{tx.TransactionType}}</span> Seq:
                     <b>{{tx.Sequence}}</b>
                     <span><b>{{tx.type}}</b> {{tx.amount.value}}{{tx.amount.currency}}<a href='account.html#{{tx.amount.issuer}}' target="_blank">{{tx.amount.issuer|shortAccount|bracket}}</a> </span>
-                    <span><b>{{tx.prep}}</b> {{tx.counterparty}}{{tx.counterparty|toname|bracket}}</span>
-                    <span>TX hash:{{tx.txhash|shortTX}}</span>
+                    <span><b>{{tx.prep}}</b> <a href='account.html#{{tx.counterparty}}' target="_blank">{{tx.counterparty}}{{tx.counterparty|toname|bracket}}</a></span>
+                    <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|shortTX}}</a></span>
                   </div>
                 </div>
                 <!-- -----------------------------------------------ng-if="tx.TransactionType=='Payment'" end -->
@@ -270,7 +271,7 @@
                     <span title='{{tx.moneyissuer}}'><a href='account.html#{{tx.moneyissuer}}' target="_blank">{{tx.moneyissuer|shortAccount|bracket}}</a></span>
                     <b>Price:</b>{{tx.price}}
                     <b>TX hash:</b>
-                    <span title='{{tx.txhash}}'>{{tx.txhash|shortTX}}</span>
+                    <span title='{{tx.txhash}}'><a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|shortTX}}<</a>/span>
                   </div>
                   <div class="col-md-1" style="text-align:right;cursor:pointer" ng-click="showfills('#fill'+tx.Sequence);" ng-show="tx.fills.length>0">
                     Filled log
@@ -284,15 +285,15 @@
                       <span class="txtype">{{fill.TransactionType}}</span> Seq:
                       <b>{{fill.Sequence}}</b>
                       <b>TX hash:</b>
-                      <span title='{{fill.txhash}}'>{{fill.txhash|shortTX}}</span>
+                      <span title='{{fill.txhash}}'><a href='transaction.html#{{fill.txhash}}' target="_blank">{{fill.txhash|shortTX}}</a></span>
                       <br>
                     </div>
                     <div class="col-md-12" ng-if="fill.TransactionType!='OfferCancel'">
                       <span class="filldate">{{fill.date}}</span>
                       <span><b>Volume:</b>{{fill.volume[0]}} {{fill.volume[1]}}</span>
-                      <span><b>Trader:</b>{{fill.Account}} <b>{{fill.TransactionType}}</b></span>
+                      <span><b>Trader:</b><a href='account.html#{{fill.Account}}' target="_blank">{{fill.Account|shortAccount|bracket}}</a> <b>{{fill.TransactionType}}</b></span>
                       <b>TX hash:</b>
-                      <span title='{{fill.txhash}}'>{{fill.txhash|shortTX}}</span>
+                      <span title='{{fill.txhash}}'><a href='transaction.html#{{tx.txhash}}' target="_blank">{{fill.txhash|shortTX}}</a></span>
                       <br>
                       <span class="filldate"></span>
                       <span><b>OfferBalance:</b>{{fill.OfferBalance[0]}} {{fill.OfferBalance[1]}}</span>
@@ -371,9 +372,8 @@
   <!-- injector:js -->
   <script src="../assets/js/ripple-remote.js"></script>
   <script src="../assets/js/rippleok-util.js"></script>
-  <script src="account/js/accountinfo.js"></script>
   <script src="account/js/app.js"></script>
-  <script src="account/js/controllers.js"></script>
+  <script src="account/js/account.controller.js"></script>
   <script src="account/js/filter.js"></script>
   <!-- endinjector -->
   <!-- endbuild -->

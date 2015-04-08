@@ -50,11 +50,11 @@
           <a href="" ng-click="logout()">Logout</a>
         </li>
       </ul>
-      <form class="navbar-form navbar-right" style="width:500px" action="ledger/account.html" target="_blank" METHOD="get">
+      <form class="navbar-form navbar-right" style="width:500px" action="" target="_blank" METHOD="get">
         <div class="input-group">
-          <input type="text" class="form-control" id="address" name="address" placeholder="r...address ~name">
+          <input type="text" class="form-control" id="address" placeholder="r...address ~name transactoin hash">
           <span class="input-group-addon">
-            <i class="fa fa-search" style="cursor:pointer" onclick="var address=$('#address')[0].value.trim();if(address[0]=='r' || address[0] == '~') document.forms[0].submit();"></i>
+            <i class="fa fa-search" style="cursor:pointer" ng-click="clickQuery()"></i>
           </span>
         </div>
       </form>

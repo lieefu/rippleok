@@ -198,7 +198,8 @@ module.exports = function(grunt) {
 			target: {
 				src: ['<%= rippleok.client %>/index.html',
 					'<%= rippleok.client %>/ledger/gateway.html',
-					'<%= rippleok.client %>/ledger/account.html'
+					'<%= rippleok.client %>/ledger/account.html',
+					'<%= rippleok.client %>/ledger/transaction.html'
 				],
 				ignorePath: '<%= rippleok.client %>/',
 				exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/']
@@ -463,15 +464,24 @@ module.exports = function(grunt) {
 					],
 					'<%= rippleok.client %>/ledger/account.html': [
 						'{.tmp,<%= rippleok.client %>}/assets/**/*.js',
+						'{.tmp,<%= rippleok.client %>}/ledger/account/**/app.js',
 						'{.tmp,<%= rippleok.client %>}/ledger/account/**/*.js',
 						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-gateways.js',
 						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-price.js'
 					],
 					'<%= rippleok.client %>/ledger/gateway.html': [
 						'{.tmp,<%= rippleok.client %>}/assets/**/*.js',
+						'{.tmp,<%= rippleok.client %>}/ledger/gateway/**/app.js',
 						'{.tmp,<%= rippleok.client %>}/ledger/gateway/**/*.js',
 						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-price.js'
-					]
+					],
+					'<%= rippleok.client %>/ledger/transaction.html': [
+						'{.tmp,<%= rippleok.client %>}/assets/**/*.js',
+						'{.tmp,<%= rippleok.client %>}/ledger/transaction/**/app.js',
+						'{.tmp,<%= rippleok.client %>}/ledger/transaction/**/*.js',
+						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-gateways.js',
+						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-price.js'
+					],
 				}
 			},
 
