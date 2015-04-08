@@ -164,9 +164,9 @@ function loadRippleData(reqdata, callback) {
 			data: reqdata,
 			dataType: 'json'
 		})
-		.done(function(json) {
-			callback(null, json);
-			console.log("JSON Data: " + json);
+		.done(function(res) {
+			callback(null, res);
+			//console.log("JSON Data: " + res);
 		})
 		.fail(function(jqxhr, textStatus, error) {
 			var err = textStatus + ", " + error;

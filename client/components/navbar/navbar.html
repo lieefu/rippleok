@@ -24,6 +24,9 @@
       </ul>
       <ul class="nav navbar-nav">
         <li ng-cloak>
+          <a href="./ledger/transaction.html" target="_blank">{{lang==0?'Transaction':'交易'}}</a>
+        </li>
+        <li ng-cloak>
           <a href="./ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a>
         </li>
         <li ng-cloak>
@@ -52,7 +55,7 @@
       </ul>
       <form class="navbar-form navbar-right" style="width:500px" action="" target="_blank" METHOD="get">
         <div class="input-group">
-          <input type="text" class="form-control" id="address" placeholder="r...address ~name transactoin hash">
+          <input type="text" class="form-control" id="address" placeholder="r...address ~name Transaction hash">
           <span class="input-group-addon">
             <i class="fa fa-search" style="cursor:pointer" ng-click="clickQuery()"></i>
           </span>
