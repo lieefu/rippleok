@@ -71,7 +71,7 @@
           </ul>
           <form class="nav navbar-nav navbar-right navbar-form">
             <div class="input-group" style="width:500px">
-              <input id="address" type="text" class="form-control" placeholder="r...address">
+              <input id="address" type="text" class="form-control" placeholder="r...address"  ng-keypress="($event.which === 13)?queryAccountInfo():0">
               <span class="input-group-btn" style="width:150px">
                 <button class="btn btn-primary" type="button" ng-click="queryAccountInfo();">Let's go. ripple
                   <span style="font-weight:bold;color:#FF9933;">OK</span> »</button>
@@ -132,26 +132,26 @@
 
                 <div class="row gridhead" ng-show="funds.length>0">
                   <div class="col-md-1 gap">currency</div>
-                  <div class="col-md-3 gap">amount</div>
                   <div class="col-md-5 gap">issuer</div>
-                  <div class="col-md-2 gap">limit</div>
+                  <div class="col-md-3 gap" style="text-align:right">amount</div>
+                  <div class="col-md-2 gap" style="text-align:right">limit</div>
                   <div class="col-md-1">no-ripple</div>
                 </div>
                 <div class="row" ng-repeat="fund in funds" ng-class="{'even':$even,'odd':$odd}">
                   <div class="col-md-1 gap" style="text-align:center">{{fund.currency}}</div>
-                  <div class="col-md-3 gap" style="text-align:right">{{fund.amount}}</div>
                   <div class="col-md-5 gap" style="text-align:left">
                     <a href='account.html#{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a>
                   </div>
+                  <div class="col-md-3 gap" style="text-align:right">{{fund.amount}}</div>
                   <div class="col-md-2 gap" style="text-align:right">{{fund.limit}}</div>
                   <div class="col-md-1" style="text-align:center">{{fund.no_ripple|checkmark}}</div>
                 </div>
 
                 <div class="row gridhead" ng-show="issuers.length>0">
                   <div class="col-md-1 gap">Currency</div>
-                  <div class="col-md-3 gap">Issuer Currency Amount</div>
-                  <div class="col-md-3 gap">Depositor count</div>
-                  <div class="col-md-5 gap">Trust lines</div>
+                  <div class="col-md-3 gap" style="text-align:right">Issuer Currency Amount</div>
+                  <div class="col-md-3 gap" style="text-align:right">Depositor count</div>
+                  <div class="col-md-5 gap" style="text-align:right">Trust lines</div>
                 </div>
                 <div class="row" ng-repeat="issuer in issuers">
                   <div class="col-md-1 gap" style="text-align:center">{{issuer.currency}}</div>

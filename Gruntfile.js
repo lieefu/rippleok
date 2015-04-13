@@ -229,7 +229,7 @@ module.exports = function(grunt) {
 				}
 			},
 			target2: {
-				src: ['<%= rippleok.client %>/ledger/account.html', '<%= rippleok.client %>/ledger/gateway.html'],
+				src: ['<%= rippleok.client %>/ledger/account.html', '<%= rippleok.client %>/ledger/gateway.html','<%= rippleok.client %>/ledger/transaction.html'],
 				options: {
 					dest: '<%= rippleok.dist %>/public/ledger'
 				}
@@ -345,6 +345,16 @@ module.exports = function(grunt) {
 					module: 'gatewayApp',
 					prefix: '../',
 					usemin: 'js/gateway.min.js'
+				}
+			},
+      transaction: {
+				cwd: '<%= rippleok.client %>',
+				src: ['components/footer/*.html'],
+				dest: '.tmp/transaction-templates.js',
+				options: {
+					module: 'transactionApp',
+					prefix: '../',
+					usemin: 'js/transaction.min.js'
 				}
 			}
 		},
@@ -500,6 +510,9 @@ module.exports = function(grunt) {
 						'<%= rippleok.client %>/assets/**/*.css'
 					],
 					'<%= rippleok.client %>/ledger/gateway.html': [
+						'<%= rippleok.client %>/assets/**/*.css'
+					],
+					'<%= rippleok.client %>/ledger/transaction.html': [
 						'<%= rippleok.client %>/assets/**/*.css'
 					]
 				}

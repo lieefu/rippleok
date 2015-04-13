@@ -59,7 +59,9 @@ function accountinfo(account) {
     }
   });
 }
-
+var debt = {}; //amount
+var debtCount = {}; //funded accounts
+var trustCount = {}; //trust without fund
 function accountlines(account) {
   //console.log("account_lines .............");
   g$scope.funds = [];
@@ -73,20 +75,33 @@ function accountlines(account) {
       $("#requery").attr("class", "");
     }
   }, 30000);
-  var req = remote.request('account_lines', {
-    account: account
-  });
-  req.request(function(err, res) {
-    if (!err) {
-      //$("#accountlines").html(JSON.stringify(res));
-      //console.log("account_lines .............success"+res.lines.length);
-      istimeout = false;
-      $("#requery").attr("class", "hide");
-      procAccountLines(res);
-    } else {
-      console.log("account_lines error:" + err);
-    }
-  });
+  var options = {
+    account: account,
+    ledger: 'validated'
+  }
+  debt = {}; //amount
+  debtCount = {}; //funded accounts
+  trustCount = {}; //trust without fund
+  getLines(options);
+  function getLines(options){
+    //console.log("options:",JSON.stringify(options));
+    remote.requestAccountLines(options,  function(err, res) {
+        if (!err) {
+          //$("#accountlines").html(JSON.stringify(res));
+          //console.log("account_lines .............success"+res.lines.length);
+          istimeout = false;
+          $("#requery").attr("class", "hide");
+          procAccountLines(res);
+          if(res.marker){
+            options.marker = res.marker;
+            options.ledger = res.ledger_index;//?res.ledger_index:res.ledger_current_index;
+            getLines(options);
+          }
+        } else {
+          console.log("account_lines error:" + err);
+        }
+      });
+  }
 }
 
 function accountoffers(account) {
@@ -234,9 +249,6 @@ function procAccountInfo(accountinfo) {
 
 function procAccountLines(data) {
   var lines = data.lines;
-  var debt = {}; //amount
-  var debtCount = {}; //funded accounts
-  var trustCount = {}; //trust without fund
   var curname;
   for (var index in lines) {
     var node = lines[index];
@@ -246,7 +258,7 @@ function procAccountLines(data) {
     var limit = node.limit;
     var limit_peer = node.limit_peer;
     var no_ripple = node.no_ripple;
-    if (amount >= 0) { //credit
+    if (amount >= 0) { //credit 拥有别人发行的资金余额
       if (limit > 0) {
         curname = currency;
         if (curname == "0158415500000000C1F76FF6ECB0BAC600000000") curname = "XAU";
@@ -272,6 +284,7 @@ function procAccountLines(data) {
       else trustCount[currency] = 1;
     }
   }
+  g$scope.issuers=[];
   for (var cur in debt) {
     if (!(cur in trustCount)) trustCount[cur] = 0;
     curname = cur;

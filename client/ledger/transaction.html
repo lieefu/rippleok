@@ -388,7 +388,7 @@
           </ul>
           <form class="nav navbar-nav navbar-right navbar-form">
             <div class="input-group" style="width:720px">
-              <input id="address" type="text" class="form-control" placeholder="Transaction Hash" ng-trim="true" ng-model="TXid">
+              <input id="address" type="text" class="form-control" placeholder="Transaction Hash" ng-trim="true" ng-model="TXid"  ng-keypress="($event.which === 13)?clickGetTX(TXid):0">
               <span class="input-group-btn" style="width:150px">
               <button class="btn btn-primary" type="button"  ng-click="clickGetTX(TXid)">Let's go. ripple
                 <span style="font-weight:bold;color:#FF9933;">OK</span> »</button>
