@@ -7,11 +7,11 @@
   <base href=".">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="RippleOK query ripple transaction infomation">
+  <meta name="description" content="RippleOK query ripple ledger infomation">
   <meta name="author" content="rippleOK">
   <link rel="icon" href="/favicon.ico">
 
-  <title>RippleOK query ripple transaction infomationl</title>
+  <title>RippleOK query ripple ledger infomationl</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
   <!-- build:libcss ../assets/css/rippleok-lib.min.css -->
   <!-- bower:css -->
@@ -349,8 +349,8 @@
   </style>
 </head>
 
-<body ng-app="transactionApp">
-  <div class="container" ng-controller="TransactionCtrl" ng-cloak>
+<body ng-app="ledgerApp">
+  <div class="container" ng-controller="LedgerCtrl" ng-cloak>
     <div class="navbar navbar-default navbar-static-top" ng-cloak>
       <div class="container">
         <div class="navbar-header">
@@ -376,14 +376,14 @@
             </li>
           </ul>
           <ul class="nav navbar-nav">
-            <li ng-cloak>
-              <a href="ledger.html" target="_blank">{{lang==0?'Ledger':'总账'}}</a>
-            </li>
             <li ng-cloak class="active">
-              <a href="transaction.html"  class="bold">{{lang==0?'Transaction':'交易'}}</a>
+              <a href="ledger.html" class="bold">{{lang==0?'Ledger':'总账'}}</a>
             </li>
             <li ng-cloak>
-              <a href="account.html" target="_blank">{{lang==0?'Account':'账号'}}</a>
+              <a href="transaction.html"  target="_blank">{{lang==0?'Transaction':'交易'}}</a>
+            </li>
+            <li ng-cloak>
+              <a href="account.html"  target="_blank">{{lang==0?'Account':'账号'}}</a>
             </li>
             <li ng-cloak>
               <a href="gateway.html" target="_blank">{{lang==0?'Gateway':'网关'}}</a>
@@ -391,9 +391,9 @@
           </ul>
           <form class="nav navbar-nav navbar-right navbar-form">
             <div class="input-group" style="width:720px">
-              <input id="address" type="text" class="form-control" placeholder="Transaction Hash" ng-trim="true" ng-model="TXid"  ng-keypress="($event.which === 13)?clickGetTX(TXid):0">
+              <input id="address" type="text" class="form-control" placeholder="Ledger index or hash" ng-trim="true" ng-model="ledgerid"  ng-keypress="($event.which === 13)?clickGetTX(ledgerid):0">
               <span class="input-group-btn" style="width:150px">
-              <button class="btn btn-primary" type="button"  ng-click="clickGetTX(TXid)">Let's go. ripple
+              <button class="btn btn-primary" type="button"  ng-click="clickGetTX(ledgerid)">Let's go. ripple
                 <span style="font-weight:bold;color:#FF9933;">OK</span> »</button>
               </span>
             </div>
@@ -415,10 +415,10 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane" id="jsonview">...</div>
       <div role="tabpanel" class="tab-pane" id="jsonraw">
-        <pre class="JsonView">{{transactioninfo}}</pre>
+        <pre class="JsonView">{{ledgerinfo}}</pre>
       </div>
       <div id="dataLoading" class="bold" align="center" style="display:none">
-        <img src="img/ripplelogo.png" class="loading">Loading transaction data...
+        <img src="img/ripplelogo.png" class="loading">Loading ledger data...
       </div>
     </div>
     <footer ng-include="'../components/footer/footer.html'"></footer>
@@ -453,13 +453,13 @@
   <!-- endbower -->
   <!-- endbuild -->
 
-  <!-- build:js({.tmp,client}/ledger) js/transaction.min.js -->
+  <!-- build:js({.tmp,client}/ledger) js/ledger.min.js -->
   <!-- injector:js -->
   <script src="../assets/js/ripple-remote.js"></script>
   <script src="../assets/js/rippleok-util.js"></script>
-  <script src="transaction/js/app.js"></script>
-  <script src="transaction/js/filter.js"></script>
-  <script src="transaction/js/tx.controller.js"></script>
+  <script src="ledger/js/app.js"></script>
+  <script src="ledger/js/filter.js"></script>
+  <script src="ledger/js/ledger.controller.js"></script>
   <!-- endinjector -->
   <!-- endbuild -->
 

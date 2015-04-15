@@ -27,6 +27,16 @@
 </head>
 
 <body ng-app="gatewayApp">
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-61799066-1', 'auto');
+ga('send', 'pageview');
+
+</script>
   <div class="navbar navbar-default navbar-static-top" ng-cloak>
     <div class="container">
       <div class="navbar-header">
@@ -53,17 +63,20 @@
         </ul>
         <ul class="nav navbar-nav">
           <li ng-cloak>
-            <a href="./ledger/transaction.html" target="_blank">{{lang==0?'Transaction':'交易'}}</a>
+            <a href="ledger.html" target="_blank">{{lang==0?'Ledger':'总账'}}</a>
           </li>
           <li ng-cloak>
-            <a href="../ledger/account.html" target="_blank">{{lang==0?'Account':'账号'}}</a>
+            <a href="transaction.html" target="_blank">{{lang==0?'Transaction':'交易'}}</a>
           </li>
           <li ng-cloak>
-            <a href="../gateway/gateway.html#CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA">{{lang==0?'Gateway':'网关'}}</a>
+            <a href="account.html" target="_blank">{{lang==0?'Account':'账号'}}</a>
+          </li>
+          <li ng-cloak class="active">
+            <a href="gateway.html"  class="bold">{{lang==0?'Gateway':'网关'}}</a>
           </li>
         </ul>
         <form class="nav navbar-nav navbar-right navbar-form">
-          <div class="input-group" style="width:850px">
+          <div class="input-group" style="width:800px">
             <input id="address" type="text" class="form-control" onkeydown='if(event.keyCode==13){queryGatewayInfo();}' placeholder="Currency.issuer {{lang==0?'for example':'例如：'}} USD.rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B Currency/Currency.issuer">
             <span class="input-group-btn" style="width:150px">
               <button class="btn btn-primary" type="button" onclick="queryGatewayInfo();">Let's go. ripple
@@ -216,22 +229,15 @@
     </div>
     <footer ng-include="'../components/footer/footer.html'"></footer>
   </div>
-  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
-    (function(i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r;
-      i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-      a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-59774071-1', 'auto');
+    ga('create', 'UA-61799066-1', 'auto');
     ga('send', 'pageview');
+
   </script>
   <!-- ----------------------------------------------------------------- -->
   <!--[if lt IE 9]>

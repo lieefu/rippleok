@@ -90,6 +90,7 @@ a{color:black}
 .filled {text-decoration: line-through;}
 .cancel {text-decoration: line-through;background-color:#FFB6C1}
 .bold {font-weight: bold;}
+.currpage {font-weight:bold;}
 .red {color: red;}
 
 .fill{margin-left:50px;}

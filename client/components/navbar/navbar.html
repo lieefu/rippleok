@@ -24,6 +24,9 @@
       </ul>
       <ul class="nav navbar-nav">
         <li ng-cloak>
+          <a href="./ledger/ledger.html#32570" target="_blank">{{lang==0?'Ledger':'总账'}}</a>
+        </li>
+        <li ng-cloak>
           <a href="./ledger/transaction.html" target="_blank">{{lang==0?'Transaction':'交易'}}</a>
         </li>
         <li ng-cloak>
@@ -53,9 +56,9 @@
           <a href="" ng-click="logout()">Logout</a>
         </li>
       </ul>
-      <form class="navbar-form navbar-right" style="width:500px" action="" target="_blank" METHOD="get">
+      <form class="navbar-form navbar-right" style="width:600px" target="_blank" METHOD="get">
         <div class="input-group">
-          <input type="text" class="form-control" id="address" placeholder="r...address ~name Transaction hash">
+          <input type="text" class="form-control" ng-model="xid" ng-keypress="($event.which === 13)?clickQuery():0" placeholder="r...address ~name LedgerIndex TXhash">
           <span class="input-group-addon">
             <i class="fa fa-search" style="cursor:pointer" ng-click="clickQuery()"></i>
           </span>

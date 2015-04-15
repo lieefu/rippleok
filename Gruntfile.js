@@ -199,7 +199,8 @@ module.exports = function(grunt) {
 				src: ['<%= rippleok.client %>/index.html',
 					'<%= rippleok.client %>/ledger/gateway.html',
 					'<%= rippleok.client %>/ledger/account.html',
-					'<%= rippleok.client %>/ledger/transaction.html'
+					'<%= rippleok.client %>/ledger/transaction.html',
+					'<%= rippleok.client %>/ledger/ledger.html'
 				],
 				ignorePath: '<%= rippleok.client %>/',
 				exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/']
@@ -229,7 +230,12 @@ module.exports = function(grunt) {
 				}
 			},
 			target2: {
-				src: ['<%= rippleok.client %>/ledger/account.html', '<%= rippleok.client %>/ledger/gateway.html','<%= rippleok.client %>/ledger/transaction.html'],
+				src: [
+					'<%= rippleok.client %>/ledger/account.html',
+					'<%= rippleok.client %>/ledger/gateway.html',
+					'<%= rippleok.client %>/ledger/transaction.html',
+					'<%= rippleok.client %>/ledger/ledger.html'
+				],
 				options: {
 					dest: '<%= rippleok.dist %>/public/ledger'
 				}
@@ -355,6 +361,16 @@ module.exports = function(grunt) {
 					module: 'transactionApp',
 					prefix: '../',
 					usemin: 'js/transaction.min.js'
+				}
+			},
+      ledger: {
+				cwd: '<%= rippleok.client %>',
+				src: ['components/footer/*.html'],
+				dest: '.tmp/ledger-templates.js',
+				options: {
+					module: 'ledgerApp',
+					prefix: '../',
+					usemin: 'js/ledger.min.js'
 				}
 			}
 		},
@@ -492,6 +508,13 @@ module.exports = function(grunt) {
 						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-gateways.js',
 						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-price.js'
 					],
+					'<%= rippleok.client %>/ledger/ledger.html': [
+						'{.tmp,<%= rippleok.client %>}/assets/**/*.js',
+						'{.tmp,<%= rippleok.client %>}/ledger/ledger/**/app.js',
+						'{.tmp,<%= rippleok.client %>}/ledger/ledger/**/*.js',
+						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-gateways.js',
+						'!{.tmp,<%= rippleok.client %>}/assets/**/ripple-price.js'
+					]
 				}
 			},
 
@@ -513,6 +536,9 @@ module.exports = function(grunt) {
 						'<%= rippleok.client %>/assets/**/*.css'
 					],
 					'<%= rippleok.client %>/ledger/transaction.html': [
+						'<%= rippleok.client %>/assets/**/*.css'
+					],
+					'<%= rippleok.client %>/ledger/ledger.html': [
 						'<%= rippleok.client %>/assets/**/*.css'
 					]
 				}
