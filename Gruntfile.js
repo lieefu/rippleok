@@ -477,8 +477,8 @@ module.exports = function(grunt) {
 			scripts: {
 				options: {
 					relative: true,
-					starttag: '<!-- injector:js -->',
-					endtag: '<!-- endinjector -->'
+					starttag: '<!-- inject:js -->',
+					endtag: '<!-- endinject -->'
 				},
 				files: {
 					'<%= rippleok.client %>/index.html': [
@@ -522,8 +522,8 @@ module.exports = function(grunt) {
 			css: {
 				options: {
 					relative: true,
-					starttag: '<!-- injector:css -->',
-					endtag: '<!-- endinjector -->'
+					starttag: '<!-- inject:css -->',
+					endtag: '<!-- endinject -->'
 				},
 				files: {
 					'<%= rippleok.client %>/index.html': [

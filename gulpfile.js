@@ -11,7 +11,9 @@ var plugins = gulpLoadPlugins({
 		'run-sequence',
 		'main-bower-files',
 		'minimist',
-		'lazypipe'
+		'lazypipe',
+		'main-bower-files',
+		'event-stream'
 	], // the glob(s) to search for
 	//config: 'package.json', // where to find the plugins, by default  searched up from process.cwd()
 	scope: ['dependencies', 'devDependencies', 'peerDependencies'], // which keys in the config to look within
@@ -20,7 +22,9 @@ var plugins = gulpLoadPlugins({
 	lazy: true, // whether the plugins should be lazy loaded on demand
 	rename: {
 		'gulp-if': 'gulpif',
-		'autoprefixer-core': 'autoprefixer'
+		'autoprefixer-core': 'autoprefixer',
+		'main-bower-files':'bowerFiles',
+		'event-stream':'es'
 	} // a mapping of plugins to rename
 });
 
@@ -93,5 +97,11 @@ gulp.task('html', function() {
 });
 
 gulp.task('serve', function() {
-
+	gulp.src('./client/index.html')
+  .pipe(plugins.inject(gulp.src(plugins.bowerFiles(), {read: false}), {name: 'bower'}))
+  .pipe(plugins.inject(plugins.es.merge(
+		gulp.src('./client/**/*.css', {read: false}).pipe(plugins.debug()),
+    gulp.src('./client/app/**/*.js', {read: false}).pipe(plugins.debug())
+  )))
+  .pipe(gulp.dest('./dist'));
 })
