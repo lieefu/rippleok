@@ -1,6 +1,6 @@
 {
   "name": "rippleok",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "server/app.js",
   "dependencies": {
     "body-parser": "~1.5.0",
