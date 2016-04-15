@@ -128,11 +128,14 @@ function accountoffers(account) {
 	// curl 'https://history.ripple.com/v1/accounts/raQ5Lk4WwEzqYVy83Afwq2FL6vKTaN7PQ/transactions?limit=50&offset=50&type=Payment,OfferCreate,OfferCancel,TrustSet,AccountSet' -H 'Origin: https://www.rippletrade.com' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.152 Safari/537.36' -H 'Accept: application/json, text/plain, */*' -H 'Referer: https://www.rippletrade.com/' -H 'Connection: keep-alive' --compressed
 	//curl 'https://history.ripple.com/v1/accounts/raQ5Lk4WwEzqYVy83Afwq2FL6vKTaN7PQ/transactions?count=true&type=Payment,OfferCreate,OfferCancel,TrustSet,AccountSet' -H 'Origin: https://www.rippletrade.com' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.152 Safari/537.36' -H 'Accept: application/json, text/plain, */*' -H 'Referer: https://www.rippletrade.com/' -H 'Connection: keep-alive' --compressed
 	//{"result":"success","count":1085}
+	//2016年4月14日 https://history.ripple.com/v1 不再正常服务，更换如下：
+	//https://data.ripple.com/v2/accounts/r9XP6zTCpbXqP7ft7B4dbcKKrGQ7wJkk6n/transactions?limit=100&offset=0&type=
+	//type不支持多个类型，空代表所有
 var txoptions = {
 	account: account,
 	limit: 100,
 	offset: 0,
-	type: 'Payment,OfferCreate,OfferCancel,TrustSet,AccountSet'
+	type: ''//'Payment,OfferCreate,OfferCancel,TrustSet,AccountSet'
 }
 
 function loadTXS() {
@@ -151,14 +154,14 @@ function loadMoreTXS() {
 }
 
 function accounttxs(account) {
-		g$http.get("https://history.ripple.com/v1/accounts/" + account + "/transactions?limit=" + txoptions.limit + "&offset=" + txoptions.offset + "&type=" + txoptions.type)
+		g$http.get("https://data.ripple.com/v2/accounts/" + account + "/transactions?descending=true&limit=" + txoptions.limit + "&offset=" + txoptions.offset + "&type=" + txoptions.type)
 			.success(function(res) {
         $("#txLoading").hide();
 				//$("#accounttxs").html(JSON.stringify(res));
 				//console.log("account_tx  .............success" + res.transactions.length);
-				if (res.transactions.length > 0) {
+				if (res.transactions.length >0) {
 					//console.log(res.transactions);
-					$("#loadmore").show();
+					if(res.transactions.length >= txoptions.limit) $("#loadmore").show();
           res.account=account;
 					procTransactions(res);
 				}
@@ -410,6 +413,9 @@ function procTransactions(data) {
 		//console.log(transaction);
 		//console.log(tx.Account);
 		//console.log(account);
+		var len=transaction.date.length-6;
+		tx.date = transaction.date.substr(0,len);
+		tx.hash = transaction.hash;
 		switch (TransactionType) {
 			case "OfferCreate":
 				procOfferCreate(account, tx, meta);
@@ -436,7 +442,7 @@ function procTrustSet(account, tx, meta) {
 		"TransactionType": tx.TransactionType,
 		"LimitAmount": tx.LimitAmount,
 		"Fee": tx.Fee,
-		"date": rippleDate(tx.date),
+		"date": tx.date ,//rippleDate(tx.date),
 		"txhash": tx.hash
 	});
 }
@@ -448,13 +454,13 @@ function procOfferCancel(account, tx, meta) {
 		"TransactionType": tx.TransactionType,
 		"OfferSequence": tx.OfferSequence,
 		"Fee": tx.Fee,
-		"date": rippleDate(tx.date),
+		"date": tx.date ,//rippleDate(tx.date),
 		"txhash": tx.hash
 	});
 	var fill = {};
 	fill.TransactionType = tx.TransactionType;
 	fill.txhash = tx.hash;
-	fill.date = rippleDate(tx.date);
+	fill.date = tx.date ,//rippleDate(tx.date),
 	fill.Sequence = tx.Sequence;
 	var TXS = getTXS(tx.OfferSequence);
 	TXS.cancel = true;
@@ -490,7 +496,7 @@ function procPayment(account, tx, meta) {
 		"prep": prep,
 		"counterparty": counterparty,
 		"amount": amount,
-		"date": rippleDate(tx.date),
+		"date": tx.date ,//rippleDate(tx.date),
 		"txhash": tx.hash
 	});
 }
@@ -529,7 +535,7 @@ function procOfferCreate(account, tx, meta) {
 		TXS.TakerGets = tx.TakerGets;
 		TXS.TakerPays = tx.TakerPays;
 		TXS.Fee = droptoxrp(tx.Fee);
-		TXS.date = rippleDate(tx.date);
+		TXS.date = tx.date ,//rippleDate(tx.date),
 		TXS.txhash = tx.hash;
 		TXS.memos = parseMemos(tx.Memos);
 		////////////////////
@@ -644,7 +650,7 @@ function procAffectedNodes(account, tx, meta) {
 				fill.TransactionType = tx.TransactionType;
 				fill.Account = tx.Account;
 				fill.txhash = tx.hash;
-				fill.date = rippleDate(tx.date);
+				fill.date = tx.date ;//rippleDate(tx.date)
 				break;
 			case "RippleState": //IOU余额
 				FinalFields = node[nodetype].FinalFields;

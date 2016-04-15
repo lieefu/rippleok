@@ -24,7 +24,7 @@ app.controller('TransactionCtrl', function($scope,$http,$location) {
   function  getTX(txhash){
     $("#dataLoading").show();
     $('.tab-pane').hide();
-    $http.get("https://history.ripple.com/v1/transactions/"+txhash)
+    $http.get("https://data.ripple.com/v2/transactions/"+txhash)
     .success(function(res){
       if(res.result&&res.result==="success"){
         $scope.transactioninfo = JSON.stringify(res.transaction,null,4);

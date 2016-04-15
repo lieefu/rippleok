@@ -1,6 +1,17 @@
 //https://support.ripplelabs.com/hc/en-us/articles/202847686-Gateway-Information
 //https://ripple.com/knowledge_center/gateway-information/
 var Gateways={
+	rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y:{
+		name:'Ripple Fox',
+		ripplename:'~ripplefox',
+		currencies:'STR, FMM, CNY',
+		weburl:'https://ripplefox.com/',
+		hotaddress:[
+          "rLSnkKvMfPD9abLoQFxQJMYyZqJcsqkL3o",
+          "rPcQaiyDxMwLr7Q9eFmn5VnVx2RN57MUmN",
+          "r3ipidkRUZWq8JYVjnSnNMf3v7o69vgLEW"
+        ],
+	},
 	razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA:{
 		name:'Ripple China',
 		ripplename:' ~RippleChina',
@@ -14,25 +25,14 @@ var Gateways={
 		currencies:'BTC,CNY',
 		weburl:'http://www.ripplecn.com/',
 		hotaddress:["rNaptDNfFXo1quhKwMaNPf66iwPqA8YLky", "rno91tGDJeRcnM7EMXj8KG9UTyxRGMMz8s"]
-	},
-	rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y:{
-		name:'Ripple Fox',
-		ripplename:'~ripplefox',
-		currencies:'STR, FMM, CNY',
-		weburl:'https://ripplefox.com/',
-		hotaddress:[
-          "rLSnkKvMfPD9abLoQFxQJMYyZqJcsqkL3o",
-          "rPcQaiyDxMwLr7Q9eFmn5VnVx2RN57MUmN",
-          "r3ipidkRUZWq8JYVjnSnNMf3v7o69vgLEW"
-        ],
-	},
+	},	
 	rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q:{
 		name:'SnapSwap btc2ripple',
 		ripplename:'~SnapSwap',
 		currencies:'USD,EUR,BTC',
 		weburl:'https://snapswap.us',
 		hotaddress:[
-          "ra7JkEzrgeKHdzKgo4EUUVBnxggY4z37kt", 
+          "ra7JkEzrgeKHdzKgo4EUUVBnxggY4z37kt",
           "rQsAshmCjPsxkYnxY9GnmBTAeEUaePDAie",
           "rsTQ7iwrCik9Ugc3zbpcbo2K3SbAdYJss1",
           "rwm98fCBS8tV1YB8CGho8zUPW5J7N41th2",
@@ -122,7 +122,7 @@ var Gateways={
 		ripplename:'~Coinex',
 		currencies:'BTC, USD, NZD, AUD',
 		weburl:'https://www.coinex.co.nz/',
-		hotaddress:["rGAmy1w1ENyTJ9BCAEicYyRM2Yk1iWZ7Z5"] 
+		hotaddress:["rGAmy1w1ENyTJ9BCAEicYyRM2Yk1iWZ7Z5"]
 	},
 	r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ:{
 		name:'Ripplex',

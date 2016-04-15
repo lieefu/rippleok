@@ -38,20 +38,20 @@ var Markets =
 		symbol:'¥',
 		gateways:
 		[
+			{name: 'ripplefox',iou:'CNY', address: 'rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			{name: 'ripplechina',iou:'CNY', address: 'razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
-			{name: 'ripplecn',iou:'CNY', address: 'rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
-			{name: 'ripplefox',iou:'CNY', address: 'rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
+			{name: 'ripplecn',iou:'CNY', address: 'rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
 		]
 	},
-	{
-		name: 'KoreaWon',
-		currency: 'KRW',
-		symbol:'₩',
-		gateways:
-		[
-			{name: 'PaxMonetar',iou:'KRW', address: 'rUkMKjQitpgAM5WTGk79xpjT38DEJY283d',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
-		]
-	},
+	// {
+	// 	name: 'KoreaWon',
+	// 	currency: 'KRW',
+	// 	symbol:'₩',
+	// 	gateways:
+	// 	[
+	// 		{name: 'PaxMonetar',iou:'KRW', address: 'rUkMKjQitpgAM5WTGk79xpjT38DEJY283d',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
+	// 	]
+	// },
 	{
 		name: 'Euro',
 		currency: 'EUR',
@@ -68,7 +68,7 @@ var Markets =
 		symbol:'¥',
 		gateways:
 		[
-			{name: 'TradeJapan',iou:'JPY', address: 'rMAz5ZnK73nyNUL4foAvaxdreczCkG3vA6',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
+			//{name: 'TradeJapan',iou:'JPY', address: 'rMAz5ZnK73nyNUL4foAvaxdreczCkG3vA6',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			{name: 'tokyojpy',iou:'JPY', address: 'r94s8px6kSw1uZ1MV98dhSRTvc6VMPoPcN',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			{name: 'ExchgTokyo',iou:'JPY', address: 'r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
 		]
@@ -82,16 +82,17 @@ var Markets =
 			{name: 'bitstamp',iou:'BTC', address: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			{name: 'btc2ripple',iou:'BTC', address: 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
 		]
-	},
-	{
-		name: 'CanadaDollar',
-		currency: 'CAD',
-		symbol:'$',
-		gateways:
-		[
-			{name: 'RippleUnion',iou:'CAD', address: 'r3ADD8kXSUKHd6zTCKfnKT3zV9EZHjzp1S',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
-		]
 	}
+	// ,
+	// {
+	// 	name: 'CanadaDollar',
+	// 	currency: 'CAD',
+	// 	symbol:'$',
+	// 	gateways:
+	// 	[
+	// 		{name: 'RippleUnion',iou:'CAD', address: 'r3ADD8kXSUKHd6zTCKfnKT3zV9EZHjzp1S',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
+	// 	]
+	// }
 	/*
 	,
 	{
