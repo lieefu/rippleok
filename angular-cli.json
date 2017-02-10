@@ -19,15 +19,15 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.css",
-        "../src/assets/css/rippleok.css",
+        "./assets/css/rippleok.css",
         "styles.css"
       ],
       "scripts": [
          "../node_modules/jquery/dist/jquery.min.js",
           "../node_modules/bootstrap/dist/js/bootstrap.js",
-          "../src/assets/js/ripple.js",
-          "../src/assets/js/rippleok-util.js",
-          "../src/assets/js/ripple-gateways.js"
+          "./app/js/ripple.js",
+          "./app/js/rippleok-util.js",
+          "./app/js/ripple-gateways.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

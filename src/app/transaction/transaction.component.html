@@ -1,3 +1,17 @@
-<p>
-  transaction works!
-</p>
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+    <li role="presentation">
+        <a href="javascript:void" onClick="$('.tab-pane').hide();$('#jsonview').show()" role="tab" data-toggle="tab">JSON view</a>
+    </li>
+    <li role="presentation" class="active">
+        <a href="javascript:void" onClick="$('.tab-pane').hide();$('#jsonraw').show()" role="tab" data-toggle="tab">JSON raw</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="jsonview">...Under construction...</div>
+    <div role="tabpanel" class="tab-pane" id="jsonraw">
+        <pre class="JsonView">{{transactioninfo}}</pre>
+    </div>
+    <div id="dataLoading" class="bold" align="center">
+        <img src="assets/img/ripplelogo.png" class="loading">Loading transaction data...
+    </div>
+</div>

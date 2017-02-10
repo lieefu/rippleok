@@ -14,6 +14,10 @@ import { LedgerComponent } from './ledger/ledger.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { AccountComponent } from './account/account.component';
 import { GatewayComponent } from './gateway/gateway.component';
+import { CheckmarkPipe } from './checkmark.pipe';
+import { ShortPipe } from './short.pipe';
+import { TonamePipe } from './toname.pipe';
+import { BracketPipe } from './bracket.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,11 @@ import { GatewayComponent } from './gateway/gateway.component';
     LedgerComponent,
     TransactionComponent,
     AccountComponent,
-    GatewayComponent
+    GatewayComponent,
+    CheckmarkPipe,
+    ShortPipe,
+    TonamePipe,
+    BracketPipe
   ],
   imports: [
     BrowserModule,

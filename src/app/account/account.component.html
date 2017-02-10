@@ -1,3 +1,255 @@
 <p>
-  account works!
+    account works!
 </p>
+<!-- ----------------------------------------------------------------- -->
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <b>{{gv.lang==0?'Ripple Name':'瑞波名'}}：</b>
+                <span id="ripplename"></span>
+                <b>{{gv.lang==0?'Address':'地址'}}：</b>
+                <span id="rippleaddress"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span id="xrp"></span>
+                <span id="otherinfo"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <span id="avatar"></span>
+        <span id="domain"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <span *ngFor="let set of accountsetting" style="margin-right:6px">{{set.name}}:{{set.value|checkmark}}</span>
+    </div>
+</div>
+<!-- ----------------------------------------------------------- -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="panel-title" style="margin-top:3px">{{gv.lang==0?'Funds list':'资金列表'}}</h3>
+                    </div>
+                    <div class="col-md-9">
+                        <a id="requery" href="#" onclick="queryAccountInfo();" class="hide">{{gv.lang==0?'Download fund list timeout，click this retry':'下载资金列表数据超时，点击这儿重试'}}.</a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="max-height: 530px;overflow-y:auto;overflow-x:hidden">
+                <div id="funddiv" class="row ng-cloak collapse in" ng-hide="collapsed">
+                    <div class="col-md-12">
+
+                        <div class="row gridhead" ng-show="funds.length>0">
+                            <div class="col-md-1 gap">currency</div>
+                            <div class="col-md-5 gap">issuer</div>
+                            <div class="col-md-3 gap" style="text-align:right">amount</div>
+                            <div class="col-md-2 gap" style="text-align:right">limit</div>
+                            <div class="col-md-1">no-ripple</div>
+                        </div>
+                        <div class="row" *ngFor="let fund of funds" [ngClass]="{'even':$even,'odd':$odd}">
+                            <div class="col-md-1 gap" style="text-align:center">{{fund.currency}}</div>
+                            <div class="col-md-5 gap" style="text-align:left">
+                                <a href='account.html#{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a>
+                            </div>
+                            <div class="col-md-3 gap" style="text-align:right">{{fund.amount}}</div>
+                            <div class="col-md-2 gap" style="text-align:right">{{fund.limit}}</div>
+                            <div class="col-md-1" style="text-align:center">{{fund.no_ripple|checkmark}}</div>
+                        </div>
+
+                        <div class="row gridhead" ng-show="issuers.length>0">
+                            <div class="col-md-1 gap">Currency</div>
+                            <div class="col-md-3 gap" style="text-align:right">Issuer Currency Amount</div>
+                            <div class="col-md-3 gap" style="text-align:right">Depositor count</div>
+                            <div class="col-md-5 gap" style="text-align:right">Trust lines</div>
+                        </div>
+                        <div class="row" *ngFor="let issuer of issuers">
+                            <div class="col-md-1 gap" style="text-align:center">{{issuer.currency}}</div>
+                            <div class="col-md-3 gap" style="text-align:right">{{issuer.amount}}</div>
+                            <div class="col-md-3 gap" style="text-align:right">{{issuer.depositor}}</div>
+                            <div class="col-md-5 gap" style="text-align:right">{{issuer.trustlines}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ----------------------------Offers------------------------------- -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="panel-title" style="margin-top:3px">{{gv.lang==0?'Offsers list':'挂单列表'}}</h3>
+                    </div>
+                    <div class="col-md-6" style="text-align:right">
+
+                    </div>
+                </div>
+            </div>
+            <!-- panel-heading  -->
+            <div class="panel-body" style="max-height: 600px;overflow-y: auto;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row gridhead" ng-show="offers.length>0">
+                            <div class="col-md-5 gap" style="text-align:right">{{gv.lang==0?'Base currency':'基础货币'}}</div>
+                            <div class="col-md-5 gap">{{gv.lang==0?'Counter currency':'计数货币'}}</div>
+                            <div class="col-md-2">{{gv.lang==0?'Price':'价格'}}</div>
+                        </div>
+                        <div class="row" *ngFor="let offer of offers" [ngClass]="{'even':$even,'odd':$odd}">
+                            <div class="col-md-5 gap" style="text-align:right">
+                                <span style="color:{{offer.color}}"><b>{{offer.prompt1}}</b></span> {{offer.goods}}
+                                <span title='{{offer.goodsissuer}}'><a href='account.html#{{offer.goodsissuer}}' target="_blank">{{offer.goodsissuer|short:'Account'|bracket}}</a></span>
+                            </div>
+                            <div class="col-md-5 gap">
+                                <span style="color:{{offer.color}}"><b>{{offer.prompt2}}</b></span> {{offer.money}}
+                                <span title='{{offer.moneyissuer}}'><a href='account.html#{{offer.moneyissuer}}' target="_blank">{{offer.moneyissuer|short:'Account'|bracket}}</a></span>
+                            </div>
+                            <div class="col-md-2">{{offer.price}}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- panel-body  -->
+        </div>
+        <!-- panel panel-info  -->
+    </div>
+</div>
+<!-- ----------------------------------tx------------------------------- -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="panel-title" style="margin-top:3px">{{gv.lang==0?'Transactions History':'交易历史'}}</h3>
+                    </div>
+                    <div class="col-md-6" style="text-align:right">
+
+                    </div>
+                </div>
+            </div>
+            <!-- panel-heading  -->
+            <div class="panel-body">
+                <div class="row" *ngFor="let tx of txs">
+                    <div class="col-md-12">
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='TrustSet'" begin -->
+                        <div class="row" ng-if="tx.TransactionType=='TrustSet'">
+                            <div class="col-md-12">
+                                <span class="date" style="color:grey">{{tx.date}}</span>
+                                <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                                <b>{{tx.Sequence}}</b>
+                                <span><b>Trust Amount</b> {{tx.LimitAmount.value}}{{tx.LimitAmount.currency}} <a href='account.html#{{tx.LimitAmount.issuer}}' target="_blank">{{tx.LimitAmount.issuer}}{{tx.LimitAmount.issuer|toname|bracket}}</a></span>
+                                <span><b>Fee:</b> {{tx.Fee}}drop</span>
+                                <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                            </div>
+                        </div>
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='TrustSet'" end -->
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='OfferCancel'" begin -->
+                        <div class="row" ng-if="tx.TransactionType=='OfferCancel'">
+                            <div class="col-md-12">
+                                <span class="date" style="color:grey">{{tx.date}}</span>
+                                <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                                <b>{{tx.Sequence}}</b>
+                                <span><b>Cancel OfferSequence</b> {{tx.OfferSequence}} </span>
+                                <span><b>Fee:</b> {{tx.Fee}}drop</span>
+                                <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                            </div>
+                        </div>
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='OfferCancel'" end -->
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='Payment'" begin -->
+                        <div class="row" ng-if="tx.TransactionType=='Payment'">
+                            <div class="col-md-12">
+                                <span class="date" style="color:grey">{{tx.date}}</span>
+                                <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                                <b>{{tx.Sequence}}</b>
+                                <span><b>{{tx.type}}</b> {{tx.amount.value}}{{tx.amount.currency}}<a href='account.html#{{tx.amount.issuer}}' target="_blank">{{tx.amount.issuer|short:'Account'|bracket}}</a> </span>
+                                <span><b>{{tx.prep}}</b> <a href='account.html#{{tx.counterparty}}' target="_blank">{{tx.counterparty}}{{tx.counterparty|toname|bracket}}</a></span>
+                                <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                            </div>
+                        </div>
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='Payment'" end -->
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='OfferCreate'" begin -->
+                        <div class="row" ng-if="tx.TransactionType=='OfferCreate'">
+                            <div class="col-md-11 {{tx.classname}}">
+                                <span class="date" style="color:grey">{{tx.date}}</span>
+                                <span class="txtype">{{tx.TransactionType}}</span> Seq:
+                                <b>{{tx.Sequence}}</b>
+                                <span style="color:{{tx.color}}"><b> {{tx.prompt1}}</b></span> {{tx.goods}}
+                                <span title='{{tx.goodsissuer}}'><a href='account.html#{{tx.goodsissuer}}' target="_blank">{{tx.goodsissuer|short:'Account'|bracket}}</a></span>
+                                <span style="color:{{tx.color}}"><b>  {{tx.prompt2}}</b></span> {{tx.money}}
+                                <span title='{{tx.moneyissuer}}'><a href='account.html#{{tx.moneyissuer}}' target="_blank">{{tx.moneyissuer|short:'Account'|bracket}}</a></span>
+                                <b>Price:</b>{{tx.price}}
+                                <b>TX hash:</b>
+                                <span title='{{tx.txhash}}'><a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                            </div>
+                            <div class="col-md-1" style="text-align:right;cursor:pointer" ng-click="showfills('#fill'+tx.Sequence);" ng-show="tx.fills.length>0">
+                                Filled log
+                            </div>
+                        </div>
+                        <!-- ------- div fill{{}}  -->
+                        <div class="fill" id="fill{{tx.Sequence}}" style="display:none">
+                            <div class="row" *ngFor="let fill of tx.fills" style="background-color:azure;color:DarkSlateGray">
+                                <div class="col-md-12" ng-if="fill.TransactionType=='OfferCancel'">
+                                    <span class="filldate">{{fill.date}}</span>
+                                    <span class="txtype">{{fill.TransactionType}}</span> Seq:
+                                    <b>{{fill.Sequence}}</b>
+                                    <b>TX hash:</b>
+                                    <span title='{{fill.txhash}}'><a href='transaction.html#{{fill.txhash}}' target="_blank">{{fill.txhash|short:'TX'}}</a></span>
+                                    <br>
+                                </div>
+                                <div class="col-md-12" ng-if="fill.TransactionType!='OfferCancel'">
+                                    <span class="filldate">{{fill.date}}</span>
+                                    <span><b>Volume:</b>{{fill.volume[0]}} {{fill.volume[1]}}</span>
+                                    <span><b>Trader:</b><a href='account.html#{{fill.Account}}' target="_blank">{{fill.Account|short:'Account'|bracket}}</a> <b>{{fill.TransactionType}}</b></span>
+                                    <b>TX hash:</b>
+                                    <span title='{{fill.txhash}}'><a href='transaction.html#{{tx.txhash}}' target="_blank">{{fill.txhash|short:'TX'}}</a></span>
+                                    <br>
+                                    <span class="filldate"></span>
+                                    <span><b>OfferBalance:</b>{{fill.OfferBalance[0]}} {{fill.OfferBalance[1]}}</span>
+                                    <br>
+                                    <span class="filldate"></span>
+                                    <span><b>AccountBalance:</b>{{fill.AccountBalance[0]}} {{fill.AccountBalance[1]}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- div fill{{}}  -->
+                        <!-- -----------------------------------------------ng-if="tx.TransactionType=='OfferCreate'" end -->
+                    </div>
+                </div>
+                <!-- *ngFor="tx of txs"  -->
+                <div class="let row gridfooter">
+                    <div class="col-md-12" style="text-align:center">
+                        <div id="txLoading" class="bold" style="display:none">
+                            <img src="img/ripplelogo.png" class="loading">Loading transactions data...
+                        </div>
+                        <div id="loadmore" style="display:none">
+                            <a href="javascript:void(0)" onClick="loadMoreTXS();">Fetch more transactions</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- gridfooter  -->
+
+            </div>
+            <!-- panel-body  -->
+        </div>
+        <!-- panel panel-info  -->
+    </div>
+</div>
+<!-- ----------------------------------------------------------------- -->
+<div id="accountinfo"></div>
+<div id="accountlines"></div>
+<div id="accountoffers"></div>
+<div id="accounttxs"></div>

@@ -9,8 +9,8 @@ const routes: Routes = [
     {path: '', redirectTo: '/price', pathMatch: 'full'},
     {path: 'price', component: PriceComponent},
     {path: 'ledger/:args', component: LedgerComponent},
-    {path: 'transaction', component: TransactionComponent},
-    {path: 'account', component: AccountComponent},
+    {path: 'transaction/:args', component: TransactionComponent},
+    {path: 'account/:args', component: AccountComponent},
     {path: 'gateway/:args', component: GatewayComponent}
 ];
 

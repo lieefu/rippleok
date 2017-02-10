@@ -66,8 +66,8 @@ export  var Markets =
 		symbol:'€',
 		gateways:
 		[
-      {name: 'bitstamp',iou:'EUR', address: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
-			/*{name: 'SnapSwap',iou:'EUR', address: 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},*/
+      /*{name: 'bitstamp',iou:'EUR', address: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},*/
+			{name: 'SnapSwap',iou:'EUR', address: 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			{name: 'therock',iou:'EUR', address: 'rLEsXccBGNR3UPuPu2hUXPjziKC3qKSBun',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
 		]
 	},
@@ -77,7 +77,7 @@ export  var Markets =
 		symbol:'¥',
 		gateways:
 		[
-      {name: 'bitstamp',iou:'JPY', address: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
+      //{name: 'bitstamp',iou:'JPY', address: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			//{name: 'TradeJapan',iou:'JPY', address: 'rMAz5ZnK73nyNUL4foAvaxdreczCkG3vA6',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},
 			{name: 'tokyojpy',iou:'JPY', address: 'r94s8px6kSw1uZ1MV98dhSRTvc6VMPoPcN',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}
 			//{name: 'ExchgTokyo',iou:'JPY', address: 'r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''}

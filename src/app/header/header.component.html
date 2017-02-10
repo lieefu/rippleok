@@ -24,16 +24,16 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a routerLink="/ledger/32570" target="_blank">{{gv.lang==0?'Ledger':'总账'}}</a>
+                    <li [ngClass]="{active: isActive('ledger')}">
+                        <a routerLink="/ledger/32570" target="_blank" >{{gv.lang==0?'Ledger':'总账'}}</a>
                     </li>
-                    <li>
-                        <a routerLink="/transaction" target="_blank">{{gv.lang==0?'Transaction':'交易'}}</a>
+                    <li  [ngClass]="{active: isActive('transaction')}">
+                        <a routerLink="/transaction/0" target="_blank">{{gv.lang==0?'Transaction':'交易'}}</a>
                     </li>
-                    <li>
-                        <a routerLink="/account" target="_blank">{{gv.lang==0?'Account':'账号'}}</a>
+                    <li  [ngClass]="{active: isActive('account')}">
+                        <a routerLink="/account/0" target="_blank">{{gv.lang==0?'Account':'账号'}}</a>
                     </li>
-                    <li>
+                    <li   [ngClass]="{active: isActive('gateway')}">
                         <a routerLink="/gateway/CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a>
                     </li>
                 </ul>
@@ -57,9 +57,9 @@
                         <a href="" ng-click="logout()">Logout</a>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right" style="width:600px" target="_blank" METHOD="get">
+                <form class="navbar-form navbar-right" style="width:600px" METHOD="get">
                     <div class="input-group" style="width:100%">
-                        <input type="text" class="form-control" [(ngModel)]="xid" name="xid" ng-keypress="($event.which === 13)?clickQuery():0" placeholder="r...address ~name LedgerIndex TXhash" >
+                        <input type="text" class="form-control" [(ngModel)]="xid" name="xid" (keypress)="($event.keyCode === 13)?clickQuery():0" placeholder="r...address ~name LedgerIndex TXhash" >
                         <span class="input-group-addon">
             <i class="fa fa-search" style="cursor:pointer" (click)="clickQuery()"></i>
           </span>
