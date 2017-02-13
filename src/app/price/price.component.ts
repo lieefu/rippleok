@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {ChangeDetector, Markets, ExchgRate, RangeTime} from '../js/ripple-remote.js';
+import {ngChangeDetector, Markets, ExchgRate, RangeTime,startGetPrice} from '../js/ripple-price.js';
 import { GlobalVariable } from '../global-variable';
 @Component({
     selector: 'app-price',
@@ -11,10 +11,11 @@ export class PriceComponent implements OnInit {
         private ref: ChangeDetectorRef,
         private gv: GlobalVariable
     ) {
-        ChangeDetector.ref = ref;
+        ngChangeDetector.ref = ref;
     }
     ngOnInit() {
-    }
+      startGetPrice();
+     }
     markets = Markets;
     ExchgRate = ExchgRate;
     RangeTime = RangeTime;

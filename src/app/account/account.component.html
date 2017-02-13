@@ -26,7 +26,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <span *ngFor="let set of accountsetting" style="margin-right:6px">{{set.name}}:{{set.value|checkmark}}</span>
+        <span *ngFor="let set of account.setting" style="margin-right:6px">{{set.name}}:{{set.value|checkmark}}</span>
     </div>
 </div>
 <!-- ----------------------------------------------------------- -->
@@ -44,17 +44,17 @@
                 </div>
             </div>
             <div class="panel-body" style="max-height: 530px;overflow-y:auto;overflow-x:hidden">
-                <div id="funddiv" class="row ng-cloak collapse in" ng-hide="collapsed">
+                <div id="funddiv" class="row ng-cloak collapse in" [hidden]="collapsed">
                     <div class="col-md-12">
 
-                        <div class="row gridhead" ng-show="funds.length>0">
+                        <div class="row gridhead" [hidden]="account.funds.length<=0">
                             <div class="col-md-1 gap">currency</div>
                             <div class="col-md-5 gap">issuer</div>
                             <div class="col-md-3 gap" style="text-align:right">amount</div>
                             <div class="col-md-2 gap" style="text-align:right">limit</div>
                             <div class="col-md-1">no-ripple</div>
                         </div>
-                        <div class="row" *ngFor="let fund of funds" [ngClass]="{'even':$even,'odd':$odd}">
+                        <div class="row" *ngFor="let fund of account.funds" [ngClass]="{'even':$even,'odd':$odd}">
                             <div class="col-md-1 gap" style="text-align:center">{{fund.currency}}</div>
                             <div class="col-md-5 gap" style="text-align:left">
                                 <a href='account.html#{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a>
@@ -64,13 +64,13 @@
                             <div class="col-md-1" style="text-align:center">{{fund.no_ripple|checkmark}}</div>
                         </div>
 
-                        <div class="row gridhead" ng-show="issuers.length>0">
+                        <div class="row gridhead" [hidden]="account.issuers.length<0">
                             <div class="col-md-1 gap">Currency</div>
                             <div class="col-md-3 gap" style="text-align:right">Issuer Currency Amount</div>
                             <div class="col-md-3 gap" style="text-align:right">Depositor count</div>
                             <div class="col-md-5 gap" style="text-align:right">Trust lines</div>
                         </div>
-                        <div class="row" *ngFor="let issuer of issuers">
+                        <div class="row" *ngFor="let issuer of account.issuers">
                             <div class="col-md-1 gap" style="text-align:center">{{issuer.currency}}</div>
                             <div class="col-md-3 gap" style="text-align:right">{{issuer.amount}}</div>
                             <div class="col-md-3 gap" style="text-align:right">{{issuer.depositor}}</div>
@@ -101,12 +101,12 @@
             <div class="panel-body" style="max-height: 600px;overflow-y: auto;">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="row gridhead" ng-show="offers.length>0">
+                        <div class="row gridhead" [hidden]="account.offers.length<=0">
                             <div class="col-md-5 gap" style="text-align:right">{{gv.lang==0?'Base currency':'基础货币'}}</div>
                             <div class="col-md-5 gap">{{gv.lang==0?'Counter currency':'计数货币'}}</div>
                             <div class="col-md-2">{{gv.lang==0?'Price':'价格'}}</div>
                         </div>
-                        <div class="row" *ngFor="let offer of offers" [ngClass]="{'even':$even,'odd':$odd}">
+                        <div class="row" *ngFor="let offer of account.offers" [ngClass]="{'even':$even,'odd':$odd}">
                             <div class="col-md-5 gap" style="text-align:right">
                                 <span style="color:{{offer.color}}"><b>{{offer.prompt1}}</b></span> {{offer.goods}}
                                 <span title='{{offer.goodsissuer}}'><a href='account.html#{{offer.goodsissuer}}' target="_blank">{{offer.goodsissuer|short:'Account'|bracket}}</a></span>
@@ -143,7 +143,7 @@
             </div>
             <!-- panel-heading  -->
             <div class="panel-body">
-                <div class="row" *ngFor="let tx of txs">
+                <div class="row" *ngFor="let tx of account.txs">
                     <div class="col-md-12">
                         <!-- -----------------------------------------------ng-if="tx.TransactionType=='TrustSet'" begin -->
                         <div class="row" ng-if="tx.TransactionType=='TrustSet'">
@@ -201,7 +201,7 @@
                         </div>
                         <!-- ------- div fill{{}}  -->
                         <div class="fill" id="fill{{tx.Sequence}}" style="display:none">
-                            <div class="row" *ngFor="let fill of tx.fills" style="background-color:azure;color:DarkSlateGray">
+                            <div class="row" *ngFor="let fill of account.tx.fills" style="background-color:azure;color:DarkSlateGray">
                                 <div class="col-md-12" ng-if="fill.TransactionType=='OfferCancel'">
                                     <span class="filldate">{{fill.date}}</span>
                                     <span class="txtype">{{fill.TransactionType}}</span> Seq:
@@ -233,7 +233,7 @@
                 <div class="let row gridfooter">
                     <div class="col-md-12" style="text-align:center">
                         <div id="txLoading" class="bold" style="display:none">
-                            <img src="img/ripplelogo.png" class="loading">Loading transactions data...
+                            <img src="./assets/img/ripplelogo.png" class="loading">Loading transactions data...
                         </div>
                         <div id="loadmore" style="display:none">
                             <a href="javascript:void(0)" onClick="loadMoreTXS();">Fetch more transactions</a>

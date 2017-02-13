@@ -25,9 +25,7 @@
       "scripts": [
          "../node_modules/jquery/dist/jquery.min.js",
           "../node_modules/bootstrap/dist/js/bootstrap.js",
-          "./app/js/ripple.js",
-          "./app/js/rippleok-util.js",
-          "./app/js/ripple-gateways.js"
+          "./app/js/rippleok-util.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
