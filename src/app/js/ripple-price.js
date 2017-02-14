@@ -408,7 +408,7 @@ export function startGetPrice() {
 		rippleConnect(subscribe);
 	}
 	function freshNg(view){
-	  console.log(window.location.pathname);
+	  //console.log(window.location.pathname);
 	  //消除 Attempt to use a destroyed view: detectChanges
 	  if(window.location.pathname.indexOf(view)>=0){
 	      if (ngChangeDetector.ref) ngChangeDetector.ref.detectChanges();

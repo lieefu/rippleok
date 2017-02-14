@@ -25,15 +25,15 @@
                 </ul>
                 <ul class="nav navbar-nav">
                     <li [ngClass]="{active: isActive('ledger')}">
-                        <a routerLink="/ledger/32570" target="_blank" >{{gv.lang==0?'Ledger':'总账'}}</a>
+                        <a routerLink="/ledger/32570" target="_blank">{{gv.lang==0?'Ledger':'总账'}}</a>
                     </li>
-                    <li  [ngClass]="{active: isActive('transaction')}">
+                    <li [ngClass]="{active: isActive('transaction')}">
                         <a routerLink="/transaction/0" target="_blank">{{gv.lang==0?'Transaction':'交易'}}</a>
                     </li>
-                    <li  [ngClass]="{active: isActive('account')}">
+                    <li [ngClass]="{active: isActive('account')}">
                         <a routerLink="/account/0" target="_blank">{{gv.lang==0?'Account':'账号'}}</a>
                     </li>
-                    <li   [ngClass]="{active: isActive('gateway')}">
+                    <li [ngClass]="{active: isActive('gateway')}">
                         <a routerLink="/gateway/CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA" target="_blank">{{lang==0?'Gateway':'网关'}}</a>
                     </li>
                 </ul>
@@ -59,10 +59,11 @@
                 </ul>
                 <form class="navbar-form navbar-right" style="width:600px" METHOD="get">
                     <div class="input-group" style="width:100%">
-                        <input type="text" class="form-control" [(ngModel)]="xid" name="xid" (keypress)="($event.keyCode === 13)?clickQuery():0" placeholder="r...address ~name LedgerIndex TXhash" >
-                        <span class="input-group-addon">
-            <i class="fa fa-search" style="cursor:pointer" (click)="clickQuery()"></i>
-          </span>
+                        <input type="text" class="form-control" [(ngModel)]="xid" name="xid" (keypress)="($event.keyCode === 13)?clickQuery():0" placeholder="r...address ~name LedgerIndex TXhash">
+                        <span class="input-group-btn" style="width:150px">
+                              <button class="btn btn-primary" type="button" (click)="clickQuery();">Let's go. ripple
+                              <span style="font-weight:bold;color:#FF9933;">OK</span> »</button>
+                        </span>
                     </div>
                 </form>
             </div>

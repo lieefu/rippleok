@@ -50,13 +50,13 @@ var debtCount = {}; //funded accounts
 var trustCount = {}; //trust without fund
 
 function accountinfo() {
-    console.log("Begin get ripple account info------" + address);
+    //console.log("Begin get ripple account info------" + address);
     var req = remote.request('account_info', {
         account: address
     });
     req.request(function(err, res) {
         if (!err) {
-            $("#accountinfo").html(JSON.stringify(res));
+            //$("#accountinfo").html(JSON.stringify(res));
             procAccountInfo(res);
             accountlines(address);
             //console.log(res);
@@ -71,6 +71,7 @@ var debt = {}; //amount
 var debtCount = {}; //funded accounts
 var trustCount = {}; //trust without fund
 var istimeout = false;
+
 function accountlines(address) {
     //console.log("account_lines .............");
     funds = [];
@@ -93,12 +94,13 @@ function accountlines(address) {
     trustCount = {}; //trust without fund
     getLines(options);
 }
+
 function getLines(options) {
     //console.log("options:",JSON.stringify(options));
     remote.requestAccountLines(options, function(err, res) {
         if (!err) {
-            $("#accountlines").html(JSON.stringify(res));
-            console.log("account_lines .............success" + res.lines.length);
+            //$("#accountlines").html(JSON.stringify(res));
+            //console.log("account_lines .............success" + res.lines.length);
             istimeout = false;
             $("#requery").attr("class", "hide");
             procAccountLines(res);
@@ -116,7 +118,7 @@ function getLines(options) {
 function accountoffers(address) {
     //console.log("account_offers .............");
     offers = [];
-    //g$scope.$apply();
+    freshNg("account");
 
     var req = remote.request('account_offers', {
         account: address
@@ -127,7 +129,7 @@ function accountoffers(address) {
             //console.log("account_offers  .............success"+res.offers.length);
             procAccountOffers(res);
         } else {
-            //console.log("account_offers error:"+err);
+            console.log("account_offers error:" + err);
         }
     });
 }
@@ -143,32 +145,48 @@ var txoptions = {
 }
 
 function loadTXS() {
+    console.log("loadTXS .............");
     $("#txLoading").show();
     $("#loadmore").hide();
     txs = [];
     txoptions.offset = 0;
     accounttxs(address);
 }
-
-function loadMoreTXS() {
+export function showfills (filldiv) {
+		$(filldiv).slideToggle(1000);
+	}
+export function loadMoreTXS() {
     $("#txLoading").show();
     $("#loadmore").hide();
-    txoptions.offset += txoptions.limit;
+    //txoptions.offset += txoptions.limit;
     accounttxs(address);
 }
 
 function accounttxs(address) {
-    $.get("https://history.ripple.com/v1/accounts/" + address + "/transactions?limit=" + txoptions.limit + "&offset=" + txoptions.offset + "&type=" + txoptions.type,
+  console.log("loadTXS accounttxs............."+address);
+  //https://data.ripple.com/v2/accounts/rJwRzFE2rwVWXKb1SfKfuwjbuPFeTedxxP/transactions?descending=true&limit=100&offset=0&type=
+  var txurl="https://data.ripple.com/v2/accounts/" + address + "/transactions?descending=true&limit=" + txoptions.limit + "&type=";// + txoptions.type
+  if(txoptions.marker){
+    txurl="https://data.ripple.com/v2/accounts/" + address + "/transactions?descending=true&limit=" + txoptions.limit + "&marker=" + txoptions.marker + "&type=";// + txoptions.type
+  }
+    $.get(txurl,
         function(res) {
             $("#txLoading").hide();
             //$("#accounttxs").html(JSON.stringify(res));
-            //console.log("account_tx  .............success" + res.transactions.length);
+            console.log("account_tx  .............success" + res.transactions.length);
+
+            if(res.marker){
+              txoptions.marker = res.marker;
+                $("#loadmore").show();
+            }else{
+              txoptions.marker = null;
+            }
             if (res.transactions.length > 0) {
                 //console.log(res.transactions);
-                $("#loadmore").show();
                 res.account = address;
                 procTransactions(res);
             }
+
         });
     // .error(function(err) {
     //     $("#txLoading").hide();
@@ -208,7 +226,7 @@ var AccountRootFlags = {
 };
 
 function procAccountInfo(accountinfo) {
-    console.log("accountinfo");
+    //console.log("accountinfo");
     var account_data = accountinfo.account_data;
     setting = [];
     $("#rippleaddress").html(account_data.Account);
@@ -288,10 +306,10 @@ function procAccountLines(data) {
 }
 
 function procAccountOffers(data) {
-    var offers = data.offers;
+    var rawoffers = data.offers;
     var prompt1, prompt2;
     var goodssize, moneysize;
-    offers.forEach(function(offer) {
+    rawoffers.forEach(function(offer) {
         //console.log(offer);
         var taker_gets = offer.taker_gets;
         var taker_pays = offer.taker_pays;
@@ -334,9 +352,8 @@ function procAccountOffers(data) {
                 color: "red"
             });
         }
-        freshNg("account");
-
     });
+    freshNg("account");
 }
 
 function procTransactions(data) {
@@ -344,23 +361,25 @@ function procTransactions(data) {
     var transactions = data.transactions;
     transactions.forEach(function(transaction) {
         var tx = transaction.tx;
+        tx.date = transaction.date;
         var meta = transaction.meta;
         var TransactionType = tx.TransactionType;
         //console.log(transaction);
         //console.log(tx.Account);
         //console.log(account);
+        //console.log(transaction);
         switch (TransactionType) {
             case "OfferCreate":
-                procOfferCreate(account, tx, meta);
+                procOfferCreate(address, tx, meta);
                 break;
             case "Payment":
-                procPayment(account, tx, meta);
+                procPayment(address, tx, meta);
                 break;
             case "TrustSet":
-                procTrustSet(account, tx, meta);
+                procTrustSet(address, tx, meta);
                 break;
             case "OfferCancel":
-                procOfferCancel(account, tx, meta);
+                procOfferCancel(address, tx, meta);
                 break;
         }
     });
@@ -368,32 +387,32 @@ function procTransactions(data) {
     //console.log("proc tx"+transactions.length);
 }
 
-function procTrustSet(account, tx, meta) {
-    if (tx.Account != account) return;
+function procTrustSet(address, tx, meta) {
+    if (tx.Account != address) return;
     txs.push({
         "Sequence": tx.Sequence,
         "TransactionType": tx.TransactionType,
         "LimitAmount": tx.LimitAmount,
         "Fee": tx.Fee,
-        "date": rippleDate(tx.date),
+        "date": formatDate(tx.date),
         "txhash": tx.hash
     });
 }
 
-function procOfferCancel(account, tx, meta) {
-    if (tx.Account != account) return;
+function procOfferCancel(address, tx, meta) {
+    if (tx.Account != address) return;
     txs.push({
         "Sequence": tx.Sequence,
         "TransactionType": tx.TransactionType,
         "OfferSequence": tx.OfferSequence,
         "Fee": tx.Fee,
-        "date": rippleDate(tx.date),
+        "date": formatDate(tx.date),
         "txhash": tx.hash
     });
     var fill = {};
     fill.TransactionType = tx.TransactionType;
     fill.txhash = tx.hash;
-    fill.date = rippleDate(tx.date);
+    fill.date = formatDate(tx.date);
     fill.Sequence = tx.Sequence;
     var TXS = getTXS(tx.OfferSequence);
     TXS.cancel = true;
@@ -401,10 +420,10 @@ function procOfferCancel(account, tx, meta) {
     TXS.fills.unshift(fill);
 }
 
-function procPayment(account, tx, meta) {
+function procPayment(address, tx, meta) {
     var amount = toAmount(tx.Amount, meta);
     var type, prep, counterparty, Sequence;
-    if (tx.Account == account) { //本账户发送支付
+    if (tx.Account == address) { //本账户发送支付
         Sequence = tx.Sequence;
         if (tx.Destination === address) {
             type = 'Exchange';
@@ -413,13 +432,13 @@ function procPayment(account, tx, meta) {
             prep = "to";
             counterparty = tx.Destination;
         }
-    } else if (tx.Destination == account) { ////本账户接收支付
+    } else if (tx.Destination == address) { ////本账户接收支付
         Sequence = "null";
         type = 'Receive';
         prep = "from";
         counterparty = tx.Account;
     } else { //该支付交易通过本账户的交易挂单完成的，加入offercreate filled数据中
-        procAffectedNodes(account, tx, meta);
+        procAffectedNodes(address, tx, meta);
         return;
     }
     txs.push({
@@ -429,7 +448,7 @@ function procPayment(account, tx, meta) {
         "prep": prep,
         "counterparty": counterparty,
         "amount": amount,
-        "date": rippleDate(tx.date),
+        "date": formatDate(tx.date),
         "txhash": tx.hash
     });
 }
@@ -459,16 +478,16 @@ function getTXS(Sequence) {
     return tx;
 }
 
-function procOfferCreate(account, tx, meta) {
+function procOfferCreate(address, tx, meta) {
 
-    if (tx.Account == account) { //本账户创建的offer
+    if (tx.Account == address) { //本账户创建的offer
 
         var TXS = getTXS(tx.Sequence);
         TXS.TransactionType = tx.TransactionType;
         TXS.TakerGets = tx.TakerGets;
         TXS.TakerPays = tx.TakerPays;
         TXS.Fee = droptoxrp(tx.Fee);
-        TXS.date = rippleDate(tx.date);
+        TXS.date = formatDate(tx.date);
         TXS.txhash = tx.hash;
         TXS.memos = parseMemos(tx.Memos);
         ////////////////////
@@ -511,11 +530,11 @@ function procOfferCreate(account, tx, meta) {
         }
         ///////////////////////////////
     } else { //其它账户的Offer,影响改变了(交易了)本账户Offer
-        procAffectedNodes(account, tx, meta);
+        procAffectedNodes(address, tx, meta);
     }
 }
 
-function procAffectedNodes(account, tx, meta) {
+function procAffectedNodes(address, tx, meta) {
     var AffectedNodes = meta.AffectedNodes;
     var fill = {
         volume: [],
@@ -533,7 +552,7 @@ function procAffectedNodes(account, tx, meta) {
             case "Offer":
                 FinalFields = node[nodetype].FinalFields;
                 if (!FinalFields) return; //有些Offer 在 nodetype 是CreatedNode 只有 NewFields
-                if (FinalFields.Account != account) return; //未影响本账户Offer
+                if (FinalFields.Account != address) return; //未影响本账户Offer
                 var PreviousFields = node[nodetype].PreviousFields;
                 //console.log("nodetype="+nodetype+"FinalFields="+FinalFields.Account+"       "+account);
                 if (nodetype == "DeletedNode") { //本Offer已经被完成交易
@@ -583,20 +602,20 @@ function procAffectedNodes(account, tx, meta) {
                 fill.TransactionType = tx.TransactionType;
                 fill.Account = tx.Account;
                 fill.txhash = tx.hash;
-                fill.date = rippleDate(tx.date);
+                fill.date = formatDate(tx.date);
                 break;
             case "RippleState": //IOU余额
                 FinalFields = node[nodetype].FinalFields;
                 if (!FinalFields) return;
                 var LowLimit = FinalFields.LowLimit;
                 if (!LowLimit) return;
-                if (LowLimit.issuer != account) return;
+                if (LowLimit.issuer != address) return;
                 fill.AccountBalance.push(FinalFields.Balance.value + FinalFields.Balance.currency);
                 break;
             case "AccountRoot": //XRP余额
                 FinalFields = node[nodetype].FinalFields;
                 if (!FinalFields) return;
-                if (FinalFields.Account != account) return;
+                if (FinalFields.Account != address) return;
                 fill.AccountBalance.push(comma(droptoxrp(FinalFields.Balance)) + "XRP");
                 break;
         } //end switch
@@ -630,7 +649,7 @@ function toTransferRate(rate) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 function freshNg(view) {
-    console.log(window.location.pathname);
+    //console.log(window.location.pathname);
     //消除 Attempt to use a destroyed view: detectChanges
     if (window.location.pathname.indexOf(view) >= 0) {
         if (ngChangeDetector.ref) ngChangeDetector.ref.detectChanges();
