@@ -1,3 +1,143 @@
 <p>
-  gateway works!
+    gateway works!
 </p>
+
+<!-- ----------------------------------------------------------------- -->
+<div class="row">
+    <div class="col-md-12">
+        <b>{{gv.lang==0?'Name':'网关名称'}}：</b>{{ripgw.gateway.name}}
+        <b>{{gv.lang==0?'Address':'地址'}}：</b>
+        <a type='text' href="../account/{{ripgw.gateway.address}}" target="_blank">{{ripgw.gateway.address}}</a>
+        <b>{{gv.lang==0?'Web':'官网'}}：</b>
+        <a href='{{ripgw.gateway.weburl}}' target='_blank'>{{ripgw.gateway.weburl}}</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        {{ripgw.goods.currency}}.{{ripgw.goods.issuer}}/{{ripgw.money.currency}}.{{ripgw.money.issuer}}
+    </div>
+</div>
+<!-- ---------------------------------------------------------------- -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="panel-title" style="margin-top:3px">{{ripgw.lang==0?'Gateway offer list':'网关挂单列表'}}</h3>
+                    </div>
+                    <div class="col-md-2" style="text-align:right">
+                        <button type="button" id="loadoffersbtn" class="btn btn-xs btn-link" data-loading-text="Loading...">Fresh</button>
+                        <button type="button" id="showoffersbtn" class="btn btn-xs btn-link" data-toggle="collapse" data-open-text="+" data-target="#offersdiv">-</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="max-height: 600px;overflow-y:auto;overflow-x:hidden">
+                <div id="offersdiv" class="row  collapse in" [hidden]="collapsed">
+                    <div class="col-md-6" style="border-right: 3px solid #cccccc;">
+                        <div class="row gridhead">
+                            <div class="col-md-2">{{gv.lang==0?'Acount':'挂单人'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.money.currency}} {{gv.lang==0?'SUM':'合计'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.goods.currency}} {{gv.lang==0?'SUM':'合计'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.money.currency}} {{gv.lang==0?'SIZE':'量'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.goods.currency}} {{gv.lang==0?'SIZE':'量'}}</div>
+                            <div class="col-md-2" style="text-align:center">{{gv.lang==0?'BID Price':'买价'}}</div>
+                        </div>
+                        <div class="row gridhead1">
+                            <div class="col-md-10" style="text-align:left">{{gv.lang==0?'The latest data Time':'获取数据时间'}}:{{ripgw.buyofferstime}}</div>
+                            <div class="col-md-2 gridhead" style="text-align:center">{{ripgw.money.currency}}</div>
+                        </div>
+                        <div class="row" *ngFor="let offer of buyoffers|slice:0:pagesize,let index=index" [class.even]="index%2==0" [class.even]="index%2==1">
+                            <div class="col-md-2" data-toggle="tooltip" data-placement="right" title="{{ripgw.offer.account}}">
+                                <a type='text' href="../ledger/account.html#{{ripgw.offer.account}}" target="_blank">{{ripgw.offer.account_short}}</a>
+                            </div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.moneysum}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.goodssum}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.moneysize}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.goodssize}}</div>
+                            <div class="col-md-2" style="text-align:center">{{ripgw.offer.price}}</div>
+                        </div>
+                        <div class="row gridfooter">
+                            <div class="col-md-7" style="text-align:center" [hidden]="restbuyofferssize<=0">
+                                <a href="javascript:void(0)" ng-click="getmore();">{{gv.lang==0?'Show more offers. Remainder':'显示更多买单 剩余'}}: <span class="badge">{{ripgw.restbuyofferssize}}</span>...</a>
+                            </div>
+                            <div class="col-md-5" style="text-align:center" [hidden]="pagesize<=20">
+                                <a href="javascript:void(0)" ng-click="getfirstpage();">{{gv.lang==0?'Show First page':'显示第一页'}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="border-right: 3px solid #cccccc;">
+                        <div class="row gridhead">
+                            <div class="col-md-2" style="text-align:center">{{gv.lang==0?'ASK Price':'卖价'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.goods.currency}} {{gv.lang==0?'SIZE':'量'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.money.currency}} {{gv.lang==0?'SIZE':'量'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.goods.currency}} {{gv.lang==0?'SUM':'合计'}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.money.currency}} {{gv.lang==0?'SUM':'合计'}}</div>
+                            <div class="col-md-2">{{gv.lang==0?'Acount':'挂单人'}}</div>
+                        </div>
+                        <div class="row gridhead1">
+                            <div class="col-md-2 gridhead" style="text-align:center">{{ripgw.money.currency}}</div>
+                            <div class="col-md-10" style="text-align:right">{{gv.lang==0?'The latest data Time':'获取数据时间'}}:{{ripgw.saleofferstime}}</div>
+                        </div>
+                        <div class="row" *ngFor="let offer of saleoffers|slice:0:pagesize,let index=index" [class.even]="index%2==0" [class.even]="index%2==1">
+                            <div class="col-md-2" style="text-align:center">{{ripgw.offer.price}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.goodssize}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.moneysize}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.goodssum}}</div>
+                            <div class="col-md-2" style="text-align:right">{{ripgw.offer.moneysum}}</div>
+                            <div class="col-md-2" data-toggle="tooltip" data-placement="left" title="{{ripgw.offer.account}}">
+                                <a type='text' href="../ledger/account.html#{{ripgw.offer.account}}" target="_blank">{{ripgw.offer.account_short}}</a>
+                            </div>
+                        </div>
+                        <div class="row gridfooter">
+                            <div class="col-md-9" style="text-align:center" [hidden]="restsaleofferssize<=0">
+                                <a href="javascript:void(0)" ng-click="getmore();">{{gv.lang==0?'Show more offers. Remainder':'显示更多卖单 剩余'}}:<span class="badge">{{ripgw.restsaleofferssize}}</span>...</a>
+                            </div>
+                            <div class="col-md-3" style="text-align:center" [hidden]="restsaleofferssize<=0">
+                                <a href="javascript:void(0)" ng-click="getall();">{{gv.lang==0?'Show ALL offers':'显示所有挂单'}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ddd -->
+<!-- ------------------------------------------------------------------ -->
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="panel-title" style="margin-top:3px">{{gv.lang==0?'Trade log':'交易记录'}}</h3>
+                    </div>
+
+                    <div class="col-md-6" style="text-align:right">
+                        <span class="panel-title" class="inline" style="margin-top:3px">{{gv.lang==0?'Show offer action':'显示挂单消单操作'}}</span>
+                        <div id="onoffofferlog" class="btn-group btn-toggle" ng-click="onoffOfferLog()">
+                            <button class="btn btn-xs btn-default" value="true">ON</button>
+                            <button class="btn btn-xs btn-info active" value="false">OFF</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body" style="max-height: 200px;overflow-y: auto;">
+                <div id="txLoading" class="bold" style="display:none">
+                    <img src="assets/img/ripplelogo.png" class="loading">Loading gateway data...
+                </div>
+
+                <div class="row" *ngFor="let log of loglist|slice:0:300">
+                    <div class="col-md-12">
+                        <span>{{ripgw.log.datetime}}</span>
+                        <span style="color:{{ripgw.log.color}};padding-left:20px;">{{ripgw.log.info}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

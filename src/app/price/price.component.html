@@ -16,7 +16,7 @@
     <tbody  *ngFor="let market of markets">
       <tr *ngFor="let gateway of market.gateways;let rowi= index">
         <td style="vertical-align:middle" *ngIf="rowi==0" [attr.rowspan]="market.gateways.length"><span class="currency {{market.currency}}"></span>{{market.name}}</td>
-        <td><a href="./ledger/gateway.html#{{market.currency}}.{{gateway.address}}"  target="_blank">{{gateway.name}}</a></td>
+        <td><a href="./gateway/{{market.currency}}.{{gateway.address}}"  target="_blank">{{gateway.name}}</a></td>
         <td style="text-align:right"><span  style="cursor:pointer" ng-click="showK({currency:market.currency,name:gateway.name,address:gateway.address})" class="{{gateway.price.action}}">{{gateway.price.value}}</span>{{market.symbol}}</td>
         <td style="text-align:right;color:gray" *ngIf="gv.lang==1">{{gateway.price.value|exchgrate:'CNY':market.currency|number}}</td>
         <td style="text-align:right;color:gray" *ngIf="gv.lang==0">{{gateway.price.value|exchgrate:'USD':market.currency|number}}</td>

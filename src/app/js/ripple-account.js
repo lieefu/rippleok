@@ -76,7 +76,7 @@ function accountlines(cur_address) {
     //console.log("account_lines .............");
     funds = [];
     issuers = [];
-    freshNg("account");
+    freshNg("account",ngChangeDetector);
     if (istimeout) {
         $("#requery").attr("class", "hide");
     } else istimeout = true;
@@ -118,7 +118,7 @@ function getLines(options) {
 function accountoffers(cur_address) {
     //console.log("account_offers .............");
     offers = [];
-    freshNg("account");
+    freshNg("account",ngChangeDetector);
 
     var req = remote.request('account_offers', {
         account: cur_address
@@ -250,7 +250,7 @@ function procAccountInfo(accountinfo) {
         });
     }
     //if (ngChangeDetector.ref) ngChangeDetector.ref.detectChanges();
-    freshNg("account");
+    freshNg("account",ngChangeDetector);
 }
 
 function procAccountLines(data) {
@@ -302,7 +302,7 @@ function procAccountLines(data) {
             depositor: debtCount[cur]
         });
     }
-    freshNg("account");
+    freshNg("account",ngChangeDetector);
 }
 
 function procAccountOffers(data) {
@@ -353,7 +353,7 @@ function procAccountOffers(data) {
             });
         }
     });
-    freshNg("account");
+    freshNg("account",ngChangeDetector);
 }
 
 function procTransactions(data) {
@@ -384,7 +384,7 @@ function procTransactions(data) {
                 break;
         }
     });
-    freshNg("account");
+    freshNg("account",ngChangeDetector);
     //console.log("proc tx"+transactions.length);
 }
 
@@ -647,12 +647,4 @@ function parseMemos(memos) {
 
 function toTransferRate(rate) {
     return (rate / 1000000 - 1000) / 10;
-}
-////////////////////////////////////////////////////////////////////////////////////////
-function freshNg(view) {
-    //console.log(window.location.pathname);
-    //消除 Attempt to use a destroyed view: detectChanges
-    if (window.location.pathname.indexOf(view) >= 0) {
-        if (ngChangeDetector.ref) ngChangeDetector.ref.detectChanges();
-    }
 }

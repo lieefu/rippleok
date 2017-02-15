@@ -18,6 +18,7 @@ import { CheckmarkPipe } from './checkmark.pipe';
 import { ShortPipe } from './short.pipe';
 import { TonamePipe } from './toname.pipe';
 import { BracketPipe } from './bracket.pipe';
+import { LimitToPipe } from './limit-to.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { BracketPipe } from './bracket.pipe';
     CheckmarkPipe,
     ShortPipe,
     TonamePipe,
-    BracketPipe
+    BracketPipe,
+    LimitToPipe
   ],
   imports: [
     BrowserModule,

@@ -355,7 +355,7 @@ function tradeListener(action, tradeGets, tradePays, currency, gateway) {
         gateway.volume.iou += volumeiou;
         RangeTime.endTime = moment().format('YYYY-MM-DD HH:mm:ss');
         //g$scope.$apply();
-				freshNg("price");
+        freshNg("price", ngChangeDetector);
         var trade = {};
         trade.price = price;
         trade.time = stringDate(new Date());
@@ -401,16 +401,9 @@ function initprice() {
 initprice();
 export function startGetPrice() {
     console.log("Begin get ripple price");
-		if(rippleconnected){
-			subscribe();
-			return;
-		}
-		rippleConnect(subscribe);
-	}
-	function freshNg(view){
-	  //console.log(window.location.pathname);
-	  //消除 Attempt to use a destroyed view: detectChanges
-	  if(window.location.pathname.indexOf(view)>=0){
-	      if (ngChangeDetector.ref) ngChangeDetector.ref.detectChanges();
-	  }
-	}
+    if (rippleconnected) {
+        subscribe();
+        return;
+    }
+    rippleConnect(subscribe);
+}
