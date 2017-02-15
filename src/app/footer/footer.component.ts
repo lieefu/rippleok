@@ -9,11 +9,10 @@ export class FooterComponent implements OnInit {
 
     constructor(private gv: GlobalVariable) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
     setlang(value) {
         console.log(value);
-        this.gv.lang = value;
+        this.gv.setlang(value);
         return false;
     }
 }

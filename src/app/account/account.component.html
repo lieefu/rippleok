@@ -106,11 +106,11 @@
                         <div class="row" *ngFor="let offer of account.offers,let index=index" [class.even]="index%2==0" [class.even]="index%2==1">
                             <div class="col-md-5 gap" style="text-align:right">
                                 <span [style.color]="offer.color"><b>{{offer.prompt1}}</b></span> {{offer.goods}}
-                                <span [title]='offer.goodsissuer'><a href='account.html#{{offer.goodsissuer}}' target="_blank">{{offer.goodsissuer|short:'Account'|bracket}}</a></span>
+                                <span [title]='offer.goodsissuer'><a href='./account/{{offer.goodsissuer}}' target="_blank">{{offer.goodsissuer|short:'Account'|bracket}}</a></span>
                             </div>
                             <div class="col-md-5 gap">
                                 <span [style.color]="offer.color"><b>{{offer.prompt2}}</b></span> {{offer.money}}
-                                <span [title]='offer.moneyissuer'><a href='account.html#{{offer.moneyissuer}}' target="_blank">{{offer.moneyissuer|short:'Account'|bracket}}</a></span>
+                                <span [title]='offer.moneyissuer'><a href='./account/{{offer.moneyissuer}}' target="_blank">{{offer.moneyissuer|short:'Account'|bracket}}</a></span>
                             </div>
                             <div class="col-md-2">{{offer.price}}</div>
                         </div>
@@ -148,9 +148,9 @@
                                 <span class="date" style="color:grey">{{tx.date}}</span>
                                 <span class="txtype">{{tx.TransactionType}}</span> Seq:
                                 <b>{{tx.Sequence}}</b>
-                                <span><b>Trust Amount</b> {{tx.LimitAmount.value}}{{tx.LimitAmount.currency}} <a href='account.html#{{tx.LimitAmount.issuer}}' target="_blank">{{tx.LimitAmount.issuer}}{{tx.LimitAmount.issuer|toname|bracket}}</a></span>
+                                <span><b>Trust Amount</b> {{tx.LimitAmount.value}}{{tx.LimitAmount.currency}} <a href='./account/{{tx.LimitAmount.issuer}}' target="_blank">{{tx.LimitAmount.issuer}}{{tx.LimitAmount.issuer|toname|bracket}}</a></span>
                                 <span><b>Fee:</b> {{tx.Fee}}drop</span>
-                                <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                                <span>TX hash:<a href='./transaction/{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
                             </div>
                         </div>
                         <!-- -----------------------------------------------*ngIf="tx.TransactionType=='TrustSet'" end -->
@@ -162,7 +162,7 @@
                                 <b>{{tx.Sequence}}</b>
                                 <span><b>Cancel OfferSequence</b> {{tx.OfferSequence}} </span>
                                 <span><b>Fee:</b> {{tx.Fee}}drop</span>
-                                <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                                <span>TX hash:<a href='./transaction/{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
                             </div>
                         </div>
                         <!-- -----------------------------------------------*ngIf="tx.TransactionType=='OfferCancel'" end -->
@@ -172,9 +172,9 @@
                                 <span class="date" style="color:grey">{{tx.date}}</span>
                                 <span class="txtype">{{tx.TransactionType}}</span> Seq:
                                 <b>{{tx.Sequence}}</b>
-                                <span><b>{{tx.type}}</b> {{tx.amount.value}}{{tx.amount.currency}}<a href='account.html#{{tx.amount.issuer}}' target="_blank">{{tx.amount.issuer|short:'Account'|bracket}}</a> </span>
-                                <span><b>{{tx.prep}}</b> <a href='account.html#{{tx.counterparty}}' target="_blank">{{tx.counterparty}}{{tx.counterparty|toname|bracket}}</a></span>
-                                <span>TX hash:<a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                                <span><b>{{tx.type}}</b> {{tx.amount.value}}{{tx.amount.currency}}<a href='./account/{{tx.amount.issuer}}' target="_blank">{{tx.amount.issuer|short:'Account'|bracket}}</a> </span>
+                                <span><b>{{tx.prep}}</b> <a href='./account/{{tx.counterparty}}' target="_blank">{{tx.counterparty}}{{tx.counterparty|toname|bracket}}</a></span>
+                                <span>TX hash:<a href='./transaction/{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
                             </div>
                         </div>
                         <!-- -----------------------------------------------*ngIf="tx.TransactionType=='Payment'" end -->
@@ -190,7 +190,7 @@
                                 <span [title]='tx.moneyissuer'><a href='/account/{{tx.moneyissuer}}' target="_blank">{{tx.moneyissuer|short:'Account'|bracket}}</a></span>
                                 <b>Price:</b>{{tx.price}}
                                 <b>TX hash:</b>
-                                <span [title]='tx.txhash'><a href='transaction.html#{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
+                                <span [title]='tx.txhash'><a href='./transaction/{{tx.txhash}}' target="_blank">{{tx.txhash|short:'TX'}}</a></span>
                             </div>
                             <div class="col-md-1" style="text-align:right;cursor:pointer" (click)="account.showfills('#fill'+tx.Sequence);" [hidden]="tx.fills.length<=0">
                                 Filled log
@@ -203,15 +203,15 @@
                                         <span class="txtype">{{fill.TransactionType}}</span> Seq:
                                         <b>{{fill.Sequence}}</b>
                                         <b>TX hash:</b>
-                                        <span title='{{fill.txhash}}'><a href='transaction.html#{{fill.txhash}}' target="_blank">{{fill.txhash|short:'TX'}}</a></span>
+                                        <span title='{{fill.txhash}}'><a href='./transaction/{{fill.txhash}}' target="_blank">{{fill.txhash|short:'TX'}}</a></span>
                                         <br>
                                     </div>
                                     <div class="col-md-12" *ngIf="fill.TransactionType!='OfferCancel'">
                                         <span class="filldate">{{fill.date}}</span>
                                         <span><b>Volume:</b>{{fill.volume[0]}} {{fill.volume[1]}}</span>
-                                        <span><b>Trader:</b><a href='account.html#{{fill.Account}}' target="_blank">{{fill.Account|short:'Account'|bracket}}</a> <b>{{fill.TransactionType}}</b></span>
+                                        <span><b>Trader:</b><a href='./account/{{fill.Account}}' target="_blank">{{fill.Account|short:'Account'|bracket}}</a> <b>{{fill.TransactionType}}</b></span>
                                         <b>TX hash:</b>
-                                        <span title='{{fill.txhash}}'><a href='transaction.html#{{tx.txhash}}' target="_blank">{{fill.txhash|short:'TX'}}</a></span>
+                                        <span title='{{fill.txhash}}'><a href='./transaction/{{tx.txhash}}' target="_blank">{{fill.txhash|short:'TX'}}</a></span>
                                         <br>
                                         <span class="filldate"></span>
                                         <span><b>OfferBalance:</b>{{fill.OfferBalance[0]}} {{fill.OfferBalance[1]}}</span>

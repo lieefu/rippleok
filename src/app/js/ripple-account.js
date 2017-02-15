@@ -3,19 +3,19 @@
 export var ngChangeDetector = {
     ref: null
 };
-export var address;
+export var cur_address;
 export var setting = [];
 export var txs = [];
 export var funds = [];
 export var issuers = [];
 export var offers = [];
 export function start(accountid) {
-    address = accountid;
+    cur_address = accountid;
     rippleName();
 }
 
 function getAccountinfo(accountid) {
-    console.log("Begin get ripple account info" + address);
+    console.log("Begin get ripple account info" + cur_address);
     if (rippleconnected) {
         accountinfo();
         return;
@@ -25,24 +25,24 @@ function getAccountinfo(accountid) {
 
 function rippleName() {
     $("#ripplename").html("loading");
-    $.getJSON("https://id.ripple.com/v1/user/" + address, {}, function(res) {
+    $.getJSON("https://id.ripple.com/v1/user/" + cur_address, {}, function(res) {
         if (res.exists) {
-            if (address[0] == '~') {
-                address = res.address;
+            if (cur_address[0] == '~') {
+                cur_address = res.address;
             }
             $("#ripplename").html("~" + res.username);
-            //saveripplenameMap(res.address, res.username);
+            saveripplenameMap(res.address, res.username);
         } else {
             $("#ripplename").html("no ripple name");
         }
-        getAccountinfo(address);
-        accountoffers(address);
+        getAccountinfo(cur_address);
+        accountoffers(cur_address);
         loadTXS();
     });
 }
 
 var options = {
-    account: address,
+    account: cur_address,
     ledger: 'validated'
 }
 var debt = {}; //amount
@@ -50,15 +50,15 @@ var debtCount = {}; //funded accounts
 var trustCount = {}; //trust without fund
 
 function accountinfo() {
-    //console.log("Begin get ripple account info------" + address);
+    //console.log("Begin get ripple account info------" + cur_address);
     var req = remote.request('account_info', {
-        account: address
+        account: cur_address
     });
     req.request(function(err, res) {
         if (!err) {
             //$("#accountinfo").html(JSON.stringify(res));
             procAccountInfo(res);
-            accountlines(address);
+            accountlines(cur_address);
             //console.log(res);
         } else {
             $("#ripplename").html(err.error_message);
@@ -72,7 +72,7 @@ var debtCount = {}; //funded accounts
 var trustCount = {}; //trust without fund
 var istimeout = false;
 
-function accountlines(address) {
+function accountlines(cur_address) {
     //console.log("account_lines .............");
     funds = [];
     issuers = [];
@@ -86,7 +86,7 @@ function accountlines(address) {
         }
     }, 30000);
     var options = {
-        account: address,
+        account: cur_address,
         ledger: 'validated'
     }
     debt = {}; //amount
@@ -115,13 +115,13 @@ function getLines(options) {
     });
 }
 
-function accountoffers(address) {
+function accountoffers(cur_address) {
     //console.log("account_offers .............");
     offers = [];
     freshNg("account");
 
     var req = remote.request('account_offers', {
-        account: address
+        account: cur_address
     });
     req.request(function(err, res) {
         if (!err) {
@@ -138,7 +138,7 @@ function accountoffers(address) {
 //curl 'https://history.ripple.com/v1/accounts/raQ5Lk4WwEzqYVy83Afwq2FL6vKTaN7PQ/transactions?count=true&type=Payment,OfferCreate,OfferCancel,TrustSet,AccountSet' -H 'Origin: https://www.rippletrade.com' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.152 Safari/537.36' -H 'Accept: application/json, text/plain, */*' -H 'Referer: https://www.rippletrade.com/' -H 'Connection: keep-alive' --compressed
 //{"result":"success","count":1085}
 var txoptions = {
-    account: address,
+    account: cur_address,
     limit: 100,
     offset: 0,
     type: 'Payment,OfferCreate,OfferCancel,TrustSet,AccountSet'
@@ -150,7 +150,7 @@ function loadTXS() {
     $("#loadmore").hide();
     txs = [];
     txoptions.offset = 0;
-    accounttxs(address);
+    accounttxs(cur_address);
 }
 export function showfills (filldiv) {
 		$(filldiv).slideToggle(1000);
@@ -159,15 +159,15 @@ export function loadMoreTXS() {
     $("#txLoading").show();
     $("#loadmore").hide();
     //txoptions.offset += txoptions.limit;
-    accounttxs(address);
+    accounttxs(cur_address);
 }
 
-function accounttxs(address) {
-  console.log("loadTXS accounttxs............."+address);
+function accounttxs(cur_address) {
+  console.log("loadTXS accounttxs............."+cur_address);
   //https://data.ripple.com/v2/accounts/rJwRzFE2rwVWXKb1SfKfuwjbuPFeTedxxP/transactions?descending=true&limit=100&offset=0&type=
-  var txurl="https://data.ripple.com/v2/accounts/" + address + "/transactions?descending=true&limit=" + txoptions.limit + "&type=";// + txoptions.type
+  var txurl="https://data.ripple.com/v2/accounts/" + cur_address + "/transactions?descending=true&limit=" + txoptions.limit + "&type=";// + txoptions.type
   if(txoptions.marker){
-    txurl="https://data.ripple.com/v2/accounts/" + address + "/transactions?descending=true&limit=" + txoptions.limit + "&marker=" + txoptions.marker + "&type=";// + txoptions.type
+    txurl="https://data.ripple.com/v2/accounts/" + cur_address + "/transactions?descending=true&limit=" + txoptions.limit + "&marker=" + txoptions.marker + "&type=";// + txoptions.type
   }
     $.get(txurl,
         function(res) {
@@ -183,7 +183,7 @@ function accounttxs(address) {
             }
             if (res.transactions.length > 0) {
                 //console.log(res.transactions);
-                res.account = address;
+                res.account = cur_address;
                 procTransactions(res);
             }
 
@@ -362,24 +362,25 @@ function procTransactions(data) {
     transactions.forEach(function(transaction) {
         var tx = transaction.tx;
         tx.date = transaction.date;
+        tx.hash = transaction.hash;
         var meta = transaction.meta;
         var TransactionType = tx.TransactionType;
         //console.log(transaction);
         //console.log(tx.Account);
         //console.log(account);
-        //console.log(transaction);
+        //console.log(transaction,tx);
         switch (TransactionType) {
             case "OfferCreate":
-                procOfferCreate(address, tx, meta);
+                procOfferCreate(cur_address, tx, meta);
                 break;
             case "Payment":
-                procPayment(address, tx, meta);
+                procPayment(cur_address, tx, meta);
                 break;
             case "TrustSet":
-                procTrustSet(address, tx, meta);
+                procTrustSet(cur_address, tx, meta);
                 break;
             case "OfferCancel":
-                procOfferCancel(address, tx, meta);
+                procOfferCancel(cur_address, tx, meta);
                 break;
         }
     });
@@ -387,8 +388,8 @@ function procTransactions(data) {
     //console.log("proc tx"+transactions.length);
 }
 
-function procTrustSet(address, tx, meta) {
-    if (tx.Account != address) return;
+function procTrustSet(cur_address, tx, meta) {
+    if (tx.Account != cur_address) return;
     txs.push({
         "Sequence": tx.Sequence,
         "TransactionType": tx.TransactionType,
@@ -399,8 +400,8 @@ function procTrustSet(address, tx, meta) {
     });
 }
 
-function procOfferCancel(address, tx, meta) {
-    if (tx.Account != address) return;
+function procOfferCancel(cur_address, tx, meta) {
+    if (tx.Account != cur_address) return;
     txs.push({
         "Sequence": tx.Sequence,
         "TransactionType": tx.TransactionType,
@@ -420,25 +421,25 @@ function procOfferCancel(address, tx, meta) {
     TXS.fills.unshift(fill);
 }
 
-function procPayment(address, tx, meta) {
-    var amount = toAmount(tx.Amount, meta);
+function procPayment(cur_address, tx, meta) {
+    var amount = oktoAmount(tx.Amount, meta,cur_address);
     var type, prep, counterparty, Sequence;
-    if (tx.Account == address) { //本账户发送支付
+    if (tx.Account == cur_address) { //本账户发送支付
         Sequence = tx.Sequence;
-        if (tx.Destination === address) {
+        if (tx.Destination === cur_address) {
             type = 'Exchange';
         } else {
             type = 'Send';
             prep = "to";
             counterparty = tx.Destination;
         }
-    } else if (tx.Destination == address) { ////本账户接收支付
+    } else if (tx.Destination == cur_address) { ////本账户接收支付
         Sequence = "null";
         type = 'Receive';
         prep = "from";
         counterparty = tx.Account;
     } else { //该支付交易通过本账户的交易挂单完成的，加入offercreate filled数据中
-        procAffectedNodes(address, tx, meta);
+        procAffectedNodes(cur_address, tx, meta);
         return;
     }
     txs.push({
@@ -478,9 +479,9 @@ function getTXS(Sequence) {
     return tx;
 }
 
-function procOfferCreate(address, tx, meta) {
+function procOfferCreate(cur_address, tx, meta) {
 
-    if (tx.Account == address) { //本账户创建的offer
+    if (tx.Account == cur_address) { //本账户创建的offer
 
         var TXS = getTXS(tx.Sequence);
         TXS.TransactionType = tx.TransactionType;
@@ -530,11 +531,11 @@ function procOfferCreate(address, tx, meta) {
         }
         ///////////////////////////////
     } else { //其它账户的Offer,影响改变了(交易了)本账户Offer
-        procAffectedNodes(address, tx, meta);
+        procAffectedNodes(cur_address, tx, meta);
     }
 }
 
-function procAffectedNodes(address, tx, meta) {
+function procAffectedNodes(cur_address, tx, meta) {
     var AffectedNodes = meta.AffectedNodes;
     var fill = {
         volume: [],
@@ -552,7 +553,7 @@ function procAffectedNodes(address, tx, meta) {
             case "Offer":
                 FinalFields = node[nodetype].FinalFields;
                 if (!FinalFields) return; //有些Offer 在 nodetype 是CreatedNode 只有 NewFields
-                if (FinalFields.Account != address) return; //未影响本账户Offer
+                if (FinalFields.Account != cur_address) return; //未影响本账户Offer
                 var PreviousFields = node[nodetype].PreviousFields;
                 //console.log("nodetype="+nodetype+"FinalFields="+FinalFields.Account+"       "+account);
                 if (nodetype == "DeletedNode") { //本Offer已经被完成交易
@@ -609,13 +610,13 @@ function procAffectedNodes(address, tx, meta) {
                 if (!FinalFields) return;
                 var LowLimit = FinalFields.LowLimit;
                 if (!LowLimit) return;
-                if (LowLimit.issuer != address) return;
+                if (LowLimit.issuer != cur_address) return;
                 fill.AccountBalance.push(FinalFields.Balance.value + FinalFields.Balance.currency);
                 break;
             case "AccountRoot": //XRP余额
                 FinalFields = node[nodetype].FinalFields;
                 if (!FinalFields) return;
-                if (FinalFields.Account != address) return;
+                if (FinalFields.Account != cur_address) return;
                 fill.AccountBalance.push(comma(droptoxrp(FinalFields.Balance)) + "XRP");
                 break;
         } //end switch

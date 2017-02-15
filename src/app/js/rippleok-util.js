@@ -2,12 +2,13 @@ var Utils = ripple.utils;
 var DATE_RIPPLE_START = new Date(2000, 0, 1);
 
 function rippleDate(date) {
-   console.log(date);
+    console.log(date);
     var d = new Date(DATE_RIPPLE_START.getTime() - DATE_RIPPLE_START.getTimezoneOffset() * 60 * 1000 + date * 1000);
     return stringDate(d);
 }
+
 function formatDate(date) {
-  return date.substring(0,date.indexOf("+"));
+    return date.substring(0, date.indexOf("+"));
 }
 
 function stringDate(date) {
@@ -84,7 +85,7 @@ function saveripplenameMap(account, name) {
     }
 }
 
-function toAmount(amount, meta) {
+function oktoAmount(amount, meta, account) {
     var amt = {
         value: 0,
         currency: '',
@@ -93,7 +94,7 @@ function toAmount(amount, meta) {
     if (amount.currency) {
         amt.value = amount.value;
         amt.currency = amount.currency;
-        amt.issuer = meta ? getIssuer(meta, amount) : amount.issuer;
+        amt.issuer = meta ? getIssuer(meta, amount, account) : amount.issuer;
     } else {
         amt.value = droptoxrp(amount);
         amt.currency = 'XRP';
@@ -102,15 +103,15 @@ function toAmount(amount, meta) {
     return amt;
 }
 
-function getIssuer(meta, amount) {
+function getIssuer(meta, amount, account) {
     for (i in meta.AffectedNodes) {
         var n = meta.AffectedNodes[i].ModifiedNode;
         if (n && n.LedgerEntryType === "RippleState" && n.FinalFields.HighLimit &&
             n.FinalFields.HighLimit.currency === amount.currency) {
             var high = n.FinalFields.HighLimit;
             var low = n.FinalFields.LowLimit;
-            //if(high.issuer === account) return low.issuer;
-            //else if(low.issuer === account) return high.issuer;
+            if (high.issuer === account) return low.issuer;
+            else if (low.issuer === account) return high.issuer;
         }
     }
     return amount.issuer;

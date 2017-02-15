@@ -8,7 +8,7 @@ import * as account from '../js/ripple-account.js';
     styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-    account=account;
+    account = account;
     constructor(
         private ref: ChangeDetectorRef,
         private router: ActivatedRoute,
@@ -20,10 +20,9 @@ export class AccountComponent implements OnInit {
     ngOnInit() {
         this.router.params.subscribe(params => {
             let args = params['args'];
-            if (args === "0") {
-                return;
+            if (args !== "0") {
+                account.start(args);
             }
-            account.start(args);
         });
     }
 }
