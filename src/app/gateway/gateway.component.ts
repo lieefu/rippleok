@@ -9,7 +9,6 @@ import * as ripgw from '../js/ripple-gateway.js';
 })
 export class GatewayComponent implements OnInit {
     ripgw = ripgw;
-    pagesize=25;
     constructor(
         private ref: ChangeDetectorRef,
         private router: ActivatedRoute,

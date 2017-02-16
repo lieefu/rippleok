@@ -3,15 +3,21 @@ export var ngChangeDetector = {
 };
 export function start(args) {
     parseGoodsmoneyissuer(args);
-    loadoffers();
+    if (rippleconnected) {
+        loadoffers();
+        return;
+    }
+    rippleConnect(loadoffers());
+
 }
+export var onOfferlog = false; //是否显示Offer日志开关
+export var pagesize = 25;
 export var saleofferstime;
 export var saleoffers = [];
 export var restsaleofferssize;
 export var buyofferstime;
 export var buyoffers = [];
 export var restbuyofferssize;
-export var onOfferlog;
 export var loglist = [];
 export var gateway = {
     name: '',
@@ -62,7 +68,7 @@ function parseGoodsmoneyissuer(goodsmoneyissuer) {
 var asksbook, bidsbook;
 
 function booksubscribe() {
-    console.log("booksubscribe...................");
+    console.log("booksubscribe...................", goods, money);
     asksbook = remote.book({
         currency_gets: goods.currency,
         issuer_gets: goods.issuer,
@@ -113,7 +119,7 @@ function bookresubscribe() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function loadoffers(callback) {
-    //console.log("下载挂单数据...............");
+    console.log("下载挂单数据...............");
     if (money.currency == '') return;
     $("#txLoading").show();
     bookresubscribe();
@@ -161,6 +167,8 @@ setInterval(function() {
 }, 30000); //超过3分钟强制刷新数据，解决自动刷新意外终止问题
 
 
+var takerGets, takerPays;
+
 function receiveOffers(action, Offers, type) {
     console.log("receiveOffers..................." + action + "  " + type);
     lastfreshdate = new Date();
@@ -168,7 +176,6 @@ function receiveOffers(action, Offers, type) {
     var moneysize, moneysum = 0;
     var price;
     var account;
-    var takerGets, takerPays;
     var tmp_buyoffers = [];
     var tmp_saleoffers = [];
     //console.log("action："+action+"  tradeGets："+JSON.stringify(offers[0])+"   currency:"+currency+"    gatewayName"+gatewayName);
@@ -207,11 +214,11 @@ function receiveOffers(action, Offers, type) {
     if (action == "asks") {
         saleofferstime = nowdatetime() + " via " + type;
         saleoffers = tmp_saleoffers;
-        restsaleofferssize = tmp_saleoffers.length - g$scope.pagesize;
+        restsaleofferssize = tmp_saleoffers.length - pagesize;
     } else {
         buyofferstime = nowdatetime() + " via " + type;
         buyoffers = tmp_buyoffers;
-        restbuyofferssize = tmp_buyoffers.length - g$scope.pagesize;
+        restbuyofferssize = tmp_buyoffers.length - pagesize;
     }
     freshNg("gateway", ngChangeDetector);
     //Offers.length=0;//ripple_lib bug,after a long time,offers become biger
@@ -219,7 +226,7 @@ function receiveOffers(action, Offers, type) {
 }
 
 function offerListener(action, offer, op) {
-    console.log("offerListener..................." + action + "  " + op + g$scope.onOfferlog);
+    console.log("offerListener..................." + action + "  " + op + onOfferlog);
     if (!onOfferlog) return;
     var goodssize;
     var moneysize;
@@ -316,4 +323,43 @@ function nowdatetime() {
     //var arr_week = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
     //week = arr_week[day];
     return year + "/" + month + "/" + date + "/" + " " + hour + ":" + minu + ":" + sec;
+}
+export function getmore() {
+    pagesize += 20;
+    restsaleofferssize = saleoffers.length - pagesize;
+    restbuyofferssize = buyoffers.length - pagesize;
+}
+export function getall() {
+    pagesize = saleoffers.length;
+    if (pagesize < buyoffers.length) pagesize = buyoffers.length
+    restsaleofferssize = saleoffers.length - pagesize;
+    restbuyofferssize = buyoffers.length - pagesize;
+}
+export function getfirstpage() {
+    pagesize = 20;
+    restsaleofferssize = saleoffers.length - pagesize;
+    restbuyofferssize = buyoffers.length - pagesize;
+}
+export function onoffOfferLog() {
+    var togglebtn = $("#onoffofferlog");
+    togglebtn.find('.btn').toggleClass('active');
+    togglebtn.find('.btn').toggleClass('btn-info');
+    togglebtn.find('.btn').toggleClass('btn-default');
+    //console.log(togglebtn.find('.active').attr("value"));
+    onOfferlog = togglebtn.find('.active').attr("value") == "true";
+    //if($scope.onOfferlog) console.log("真");else console.log("假");
+}
+export function loadoffersbtnclick() {
+    var $btn = $("#loadoffersbtn").button('loading');
+    loadoffers(function() {
+        $btn.button('reset');
+    });
+}
+export function showoffersbtnclick() {
+    $("#showoffersbtn").button('toggle');
+    if ($("#showoffersbtn").text() === "-") {
+        $("#showoffersbtn").button('open');
+    } else {
+        $("#showoffersbtn").button('reset');
+    }
 }
