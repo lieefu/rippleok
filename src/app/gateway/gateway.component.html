@@ -130,7 +130,7 @@
                 <div class="row" *ngFor="let log of ripgw.loglist|slice:0:300">
                     <div class="col-md-12">
                         <span>{{log.datetime}}</span>
-                        <span style="color:{{log.color}};padding-left:20px;">{{log.info}}</span>
+                        <span [style.color]="log.color" style="padding-left:20px;">{{log.info}}</span>
                     </div>
                 </div>
             </div>

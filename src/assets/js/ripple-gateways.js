@@ -32,7 +32,7 @@ var Gateways={
 		currencies:'USD,EUR,BTC',
 		weburl:'https://snapswap.us',
 		hotaddress:[
-          "ra7JkEzrgeKHdzKgo4EUUVBnxggY4z37kt", 
+          "ra7JkEzrgeKHdzKgo4EUUVBnxggY4z37kt",
           "rQsAshmCjPsxkYnxY9GnmBTAeEUaePDAie",
           "rsTQ7iwrCik9Ugc3zbpcbo2K3SbAdYJss1",
           "rwm98fCBS8tV1YB8CGho8zUPW5J7N41th2",
@@ -122,7 +122,7 @@ var Gateways={
 		ripplename:'~Coinex',
 		currencies:'BTC, USD, NZD, AUD',
 		weburl:'https://www.coinex.co.nz/',
-		hotaddress:["rGAmy1w1ENyTJ9BCAEicYyRM2Yk1iWZ7Z5"] 
+		hotaddress:["rGAmy1w1ENyTJ9BCAEicYyRM2Yk1iWZ7Z5"]
 	},
 	r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ:{
 		name:'Ripplex',
@@ -158,6 +158,14 @@ var Gateways={
 		currencies:'KRW',
 		weburl:'https://www.paxmoneta.com/',
 		hotaddress:["rhLSigWL4J9JBBW1JFMBvaduDkVghG7cc2"]
+	},
+	rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq:{
+		name:'Gatehub',
+		ripplename:'~gatehub',
+		currencies:'EUR,USD',
+		weburl:'https://gatehub.net/',
+		hotaddress:[]
 	}
+
 //////////////////////////////////////////////
 }

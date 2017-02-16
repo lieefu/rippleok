@@ -51,6 +51,22 @@ export var Markets = [{
                     iou: null
                 },
                 url: ''
+            },
+            {
+                name: 'Gatehub',
+                iou: 'USD',
+                address: 'rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq',
+                price: {
+                    value: 0,
+                    action: 'asks',
+                    low: null,
+                    high: null
+                },
+                volume: {
+                    xrp: null,
+                    iou: null
+                },
+                url: ''
             }
         ]
     },
@@ -102,10 +118,11 @@ export var Markets = [{
         symbol: '€',
         gateways: [
             /*{name: 'bitstamp',iou:'EUR', address: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',price:{value:0,action:'asks',low:null,high:null},volume:{xrp:null,iou:null},url:''},*/
+
             {
-                name: 'SnapSwap',
+                name: 'Gatehub',
                 iou: 'EUR',
-                address: 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q',
+                address: 'rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq',
                 price: {
                     value: 0,
                     action: 'asks',
