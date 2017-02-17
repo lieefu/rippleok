@@ -5,7 +5,7 @@ var Gateways={
 		name:'Ripple China',
 		ripplename:' ~RippleChina',
 		currencies:'BTC,CNY,LTC',
-		weburl:'https://trade.ripplechina.net/',
+		weburl:'http://trade.ripplechina.net/',
 		hotaddress:['r45dBj4S3VvMMYXxr9vHX4Z4Ma6ifPMCkK'],
 	},
 	rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK:{
