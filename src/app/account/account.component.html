@@ -54,7 +54,7 @@
                         <div class="row" *ngFor="let fund of account.funds,let index=index" [class.even]="index%2==0" [class.even]="index%2==1">
                             <div class="col-md-1 gap" style="text-align:center">{{fund.currency}}</div>
                             <div class="col-md-5 gap" style="text-align:left">
-                                <a href='account.html#{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a>
+                                <a href='account/{{fund.issuer}}' target="_blank">{{fund.issuer}}{{fund.issuer|toname|bracket}}</a>
                             </div>
                             <div class="col-md-3 gap" style="text-align:right">{{fund.amount}}</div>
                             <div class="col-md-2 gap" style="text-align:right">{{fund.limit}}</div>
