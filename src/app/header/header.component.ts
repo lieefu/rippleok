@@ -8,8 +8,8 @@ import { Router }   from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-    constructor(private gv: GlobalVariable, private router: Router) { }
-
+    constructor(public gv: GlobalVariable, private router: Router) { }
+    xid = "";
     ngOnInit() {
     }
     isActive(path: string) {
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
         return false;
     }
     getCurrentUser() {
-        return {};
+        return {name:"world"};
     }
     menu = [];
   		//  [{

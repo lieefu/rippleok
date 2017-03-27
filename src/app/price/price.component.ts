@@ -9,7 +9,7 @@ import { GlobalVariable } from '../global-variable';
 export class PriceComponent implements OnInit {
     constructor(
         private ref: ChangeDetectorRef,
-        private gv: GlobalVariable
+        public gv: GlobalVariable
     ) {
         ngChangeDetector.ref = ref;
     }

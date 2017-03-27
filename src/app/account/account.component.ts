@@ -12,7 +12,7 @@ export class AccountComponent implements OnInit {
     constructor(
         private ref: ChangeDetectorRef,
         private router: ActivatedRoute,
-        private gv: GlobalVariable
+        public gv: GlobalVariable
     ) {
         account.ngChangeDetector.ref = ref;
     }

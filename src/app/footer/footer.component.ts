@@ -7,7 +7,7 @@ import { GlobalVariable } from '../global-variable';
 })
 export class FooterComponent implements OnInit {
 
-    constructor(private gv: GlobalVariable) { }
+    constructor(public gv: GlobalVariable) { }
 
     ngOnInit() {}
     setlang(value) {

@@ -12,7 +12,7 @@ export class GatewayComponent implements OnInit {
     constructor(
         private ref: ChangeDetectorRef,
         private router: ActivatedRoute,
-        private gv: GlobalVariable
+        public gv: GlobalVariable
     ) {
         ripgw.ngChangeDetector.ref = ref;
     }
