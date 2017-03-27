@@ -6,11 +6,11 @@ import { GlobalVariable } from './global-variable';
 describe('GlobalVariable', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [GlobalVariableService]
+      providers: [GlobalVariable]
     });
   });
 
-  it('should ...', inject([GlobalVariableService], (service: GlobalVariable) => {
+  it('should ...', inject([GlobalVariable], (service: GlobalVariable) => {
     expect(service).toBeTruthy();
   }));
 });
