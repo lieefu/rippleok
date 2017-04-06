@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {ExchgRate} from './js/ripple-price.js';
+import {ExchgRate} from '../js/ripple-price.js';
 
 @Pipe({
     name: 'exchgrate'
